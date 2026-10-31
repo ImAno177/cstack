@@ -6,6 +6,8 @@ from pathlib import Path
 
 import yaml
 
+from skill_artifacts import ignore_test_artifacts
+
 
 ALLOWED_FRONTMATTER = {"name", "description", "license", "metadata", "allowed-tools"}
 
@@ -21,11 +23,13 @@ def copy_tree(source: Path, destination: Path) -> None:
         target = destination / skill.name
         if target.exists():
             shutil.rmtree(target)
-        shutil.copytree(skill, target)
+        shutil.copytree(skill, target, ignore=ignore_test_artifacts)
 
 
 def normalize_skill(path: Path) -> None:
-    text = path.read_text(encoding="utf-8")
+    raw = path.read_bytes().decode("utf-8")
+    newline = "\r\n" if "\r\n" in raw else "\n"
+    text = raw.replace("\r\n", "\n")
     if not text.startswith("---\n"):
         raise ValueError(f"missing frontmatter: {path}")
     end = text.find("\n---", 4)
@@ -39,7 +43,7 @@ def normalize_skill(path: Path) -> None:
         raise ValueError(f"name and description are required: {path}")
     body = text[end + len("\n---"):]
     serialized = yaml.safe_dump(normalized, allow_unicode=True, sort_keys=False, width=120).strip()
-    path.write_text(f"---\n{serialized}\n---{body}", encoding="utf-8")
+    path.write_bytes(f"---\n{serialized}\n---{body}".replace("\n", newline).encode("utf-8"))
 
 
 def main() -> int:

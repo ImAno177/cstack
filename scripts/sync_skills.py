@@ -4,6 +4,8 @@ import argparse
 import shutil
 from pathlib import Path
 
+from skill_artifacts import ignore_test_artifacts
+
 
 def copy_skill_tree(source: Path, destination: Path) -> int:
     source = source.resolve()
@@ -20,7 +22,7 @@ def copy_skill_tree(source: Path, destination: Path) -> int:
         else:
             child.unlink()
     for skill in skills:
-        shutil.copytree(skill, destination / skill.name)
+        shutil.copytree(skill, destination / skill.name, ignore=ignore_test_artifacts)
     return len(skills)
 
 

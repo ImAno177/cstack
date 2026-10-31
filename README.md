@@ -8,6 +8,8 @@
 
 The generated plugin is rebuilt by GitHub Actions. The build workflow runs on pushes, pull requests, manual dispatches, and the `build-plugin` repository dispatch event. The upstream workflow runs daily, on manual dispatch, and on the `sync-upstream` repository dispatch event. It imports `cursor/plugins/pstack/skills` and `DietrichGebert/ponytail/skills` before rebuilding the plugin.
 
+Test suites and test fixtures are excluded from synchronized sources and generated plugin payloads. Testing guidance documents remain available inside the relevant skills.
+
 ## Local synchronization
 
 Run a one-time sync from the current Codex skills directory.

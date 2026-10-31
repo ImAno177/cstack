@@ -5,6 +5,8 @@ import json
 import shutil
 from pathlib import Path
 
+from skill_artifacts import ignore_test_artifacts
+
 
 def replace_tree(source: Path, destination: Path) -> list[str]:
     source = source.resolve()
@@ -20,7 +22,7 @@ def replace_tree(source: Path, destination: Path) -> list[str]:
     names = []
     for skill in sorted(source.iterdir()):
         if skill.is_dir() and (skill / "SKILL.md").is_file():
-            shutil.copytree(skill, destination / skill.name)
+            shutil.copytree(skill, destination / skill.name, ignore=ignore_test_artifacts)
             names.append(skill.name)
     return names
 
