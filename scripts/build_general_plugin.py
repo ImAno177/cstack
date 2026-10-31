@@ -110,6 +110,9 @@ def main() -> int:
     manifest = source_root / "plugin.json"
     if manifest.is_file():
         shutil.copy2(manifest, destination / "plugin.json")
+    readme = source_root / "README.md"
+    if readme.is_file():
+        shutil.copy2(readme, destination / "README.md")
     for skill in skill_dirs(skills_destination, excluded):
         normalize_skill(skill / "SKILL.md")
         compact_skill(skill, max_entry_lines)
