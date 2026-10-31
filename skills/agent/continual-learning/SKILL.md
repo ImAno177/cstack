@@ -1,6 +1,6 @@
 ---
 name: continual-learning
-description: Help an agent improve its reusable skills, rules, and memory from ordered task experience with audit, replay, transfer checks, and retirement.
+description: Improve reusable skills or agent memory from task experience with audit, replay, transfer checks, and retirement.
 license: MIT
 ---
 

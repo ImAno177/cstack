@@ -126,8 +126,11 @@ def main() -> int:
     for name in sorted(catalog - source_catalog):
         errors.append(f"plugin skill has no source provenance: {name}")
 
-    router = args.plugin_root / "skills" / "skills-router" / "SKILL.md"
-    if router.is_file():
+    router = next(
+        (skill / "SKILL.md" for skill in plugin_skills if skill.name == "skills-router"),
+        None,
+    )
+    if router is not None and router.is_file():
         for line in router.read_text(encoding="utf-8").splitlines():
             if not ROUTE_PATTERN.search(line):
                 continue

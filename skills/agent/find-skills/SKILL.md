@@ -1,6 +1,6 @@
 ---
 name: find-skills
-description: Find and install an existing agent skill when the user asks for a capability, tool, template, or workflow that may already exist.
+description: Find or install an existing skill when the user asks for a capability, tool, template, or workflow.
 ---
 
 # Find skills

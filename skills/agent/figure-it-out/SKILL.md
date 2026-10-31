@@ -1,7 +1,6 @@
 ---
 name: figure-it-out
-description: Design an auditable playbook when no narrower skill owns a large migration, multi-part change, or ambiguous engineering
-  task.
+description: Plan ambiguous multi-part engineering work when no narrower skill owns the outcome.
 ---
 
 # Figure it out

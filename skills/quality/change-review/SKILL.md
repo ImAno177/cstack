@@ -1,6 +1,6 @@
 ---
 name: change-review
-description: Review a change for correctness, safety, load, tests, speed, and unnecessary code. Use for code review, PR review, or "is this over-engineered?".
+description: Review a code change for correctness, safety, load, tests, speed, and unnecessary code. Use for code or PR review.
 ---
 
 # Change review

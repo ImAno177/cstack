@@ -1,13 +1,12 @@
 ---
 name: skills-router
-description: Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains,
-  artifacts, or connected apps.
+description: Choose the smallest skill set for ambiguous or multi-capability requests.
 license: MIT
 ---
 
 # Skills router
 
-Use this router only when selection is ambiguous or the request spans more than one capability. If the user explicitly names a skill, use it. If one skill clearly owns the task, use that skill directly.
+The session hook already loads `poteto-mode` as the default workflow for non-trivial engineering work. Use this router only when selection is ambiguous or the request spans more than one capability. If the user explicitly names a skill, use it. If one skill clearly owns the task, use that skill directly.
 
 ## Routes
 

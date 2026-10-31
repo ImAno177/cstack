@@ -1,6 +1,6 @@
 ---
 name: repo-audit
-description: Audit a whole repository for bugs, security holes, load failures, missing tests, slow paths, and code to delete. Use for a repository-wide audit. This skill changes nothing.
+description: Audit a repository for concrete bugs, security risks, load failures, missing tests, and dead code. Use for repository-wide review.
 ---
 
 # Repository audit

@@ -1,6 +1,6 @@
 ---
 name: prompt-audit
-description: Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering.
+description: Audit skills, rules, hooks, and agent configuration for stale assumptions, broken paths, conflicts, and over-steering.
 license: MIT
 ---
 
