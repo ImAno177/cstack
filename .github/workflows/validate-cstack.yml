@@ -1,0 +1,52 @@
+name: validate cstack plugin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".cstack/**"
+      - "skills/**"
+      - "hooks/**"
+      - ".codex-plugin/**"
+      - ".grok-plugin/**"
+      - "plugin.json"
+      - "AGENTS.md"
+      - ".grok-plugin/marketplace.json"
+      - "scripts/generate_grok_plugin_index.py"
+      - "scripts/validate_plugin.py"
+      - "scripts/validate_skill_stack.py"
+  pull_request:
+    paths:
+      - ".cstack/**"
+      - "skills/**"
+      - "hooks/**"
+      - ".codex-plugin/**"
+      - ".grok-plugin/**"
+      - "plugin.json"
+      - "AGENTS.md"
+      - ".grok-plugin/marketplace.json"
+      - "scripts/generate_grok_plugin_index.py"
+      - "scripts/validate_plugin.py"
+      - "scripts/validate_skill_stack.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyyaml
+      - run: python scripts/validate_plugin.py --root .
+      - run: >-
+          python scripts/validate_skill_stack.py
+          --source-root .
+          --plugin-root .
+          --policy .cstack/skill-policy.json
+      - run: python scripts/generate_grok_plugin_index.py
+      - run: python scripts/generate_grok_plugin_index.py --check

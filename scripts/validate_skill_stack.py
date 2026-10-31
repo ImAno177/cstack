@@ -62,6 +62,7 @@ def main() -> int:
     parser.add_argument("--source-root", required=True, type=Path)
     parser.add_argument("--plugin-root", required=True, type=Path)
     parser.add_argument("--policy", required=True, type=Path)
+    parser.add_argument("--upstreams", type=Path)
     args = parser.parse_args()
 
     policy = json.loads(args.policy.read_text(encoding="utf-8"))
@@ -70,6 +71,15 @@ def main() -> int:
     external_routes = set(policy.get("external_routes", []))
     max_entry_lines = int(policy.get("max_entry_lines", 160))
     errors: list[str] = []
+    upstreams_path = args.upstreams or (args.source_root / ".cstack" / "upstreams.json")
+    upstreams = {}
+    if upstreams_path.is_file():
+        upstreams = json.loads(upstreams_path.read_text(encoding="utf-8"))
+    managed_entrypoints = {
+        (args.plugin_root / entry["destination"] / "SKILL.md").resolve()
+        for entry in upstreams.get("skills", [])
+        if isinstance(entry, dict) and isinstance(entry.get("destination"), str)
+    }
 
     plugin_skills = skill_dirs(args.plugin_root / "skills", excluded)
     catalog: set[str] = set()
@@ -90,7 +100,7 @@ def main() -> int:
             if name in catalog:
                 errors.append(f"duplicate skill name: {name}")
             catalog.add(name)
-        if len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
+        if entrypoint.resolve() not in managed_entrypoints and len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
             errors.append(f"entrypoint exceeds {max_entry_lines} lines: {entrypoint}")
         for artifact in skill.rglob("*"):
             if not artifact.is_file():
@@ -126,6 +136,17 @@ def main() -> int:
                 if route_allowed(route, catalog, external_routes):
                     continue
                 errors.append(f"router points to missing skill: {route}")
+
+    if upstreams_path.is_file():
+        for entry in upstreams.get("skills", []):
+            destination = entry.get("destination")
+            name = entry.get("name")
+            if not isinstance(destination, str) or not isinstance(name, str):
+                errors.append(f"invalid upstream entry: {entry}")
+                continue
+            target = args.plugin_root / destination
+            if not target.is_dir() or not (target / "SKILL.md").is_file():
+                errors.append(f"upstream skill is missing: {name} -> {destination}")
 
     if errors:
         raise SystemExit("\n".join(errors))

@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact|fork",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const p=require('path');require(p.join(process.env.GROK_PLUGIN_ROOT,'hooks/cstack-session-start.js'))\"",
+            "timeout": 15,
+            "statusMessage": "Loading cstack skill router..."
+          }
+        ]
+      }
+    ]
+  }
+}

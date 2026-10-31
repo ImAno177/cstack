@@ -8,7 +8,7 @@
       "name": "cstack",
       "source": {
         "source": "local",
-        "path": "./plugins/cstack"
+        "path": "./"
       },
       "policy": {
         "installation": "AVAILABLE",

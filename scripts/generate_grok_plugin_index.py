@@ -32,7 +32,7 @@ def resolve_local(repo_root: Path, source: object, name: str) -> Path:
     else:
         raise ValueError(f"plugin '{name}' has an unsupported source")
     resolved = (repo_root / path).resolve()
-    if repo_root.resolve() not in resolved.parents:
+    if resolved != repo_root.resolve() and repo_root.resolve() not in resolved.parents:
         raise ValueError(f"plugin '{name}' source escapes the repository: {path}")
     if not resolved.is_dir():
         raise ValueError(f"plugin '{name}' source is missing: {path}")

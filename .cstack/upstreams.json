@@ -1,0 +1,32 @@
+{
+  "skills": [
+    {
+      "name": "kaggle-cli",
+      "repository": "Kaggle/kaggle-cli",
+      "ref": "main",
+      "path": "skills",
+      "destination": "skills/kaggle-cli"
+    },
+    {
+      "name": "colab-operator",
+      "repository": "googlecolab/google-colab-cli",
+      "ref": "main",
+      "path": "skills/colab-operator",
+      "destination": "skills/colab-operator"
+    },
+    {
+      "name": "hf-cli",
+      "repository": "huggingface/skills",
+      "ref": "main",
+      "path": "skills/hf-cli",
+      "destination": "skills/hf-cli"
+    },
+    {
+      "name": "trl-training",
+      "repository": "huggingface/skills",
+      "ref": "main",
+      "path": "skills/trl-training",
+      "destination": "skills/trl-training"
+    }
+  ]
+}

@@ -1,27 +1,25 @@
 # cstack
 
-Portable cstack skills for ChatGPT, Codex, Grok Build, and Grok Bot.
+Portable cstack plugin for ChatGPT, Codex, Grok Build, and Grok Bot.
 
 ## Layout
 
-`source/cstack` is the canonical source. `plugins/cstack` is the generated package.
+The repository root is the canonical, installable plugin.
 
 ```text
-source/cstack/skills/           skill sources
-source/cstack/hooks/            shared hook
-source/cstack/.codex-plugin/    Codex manifest
-source/cstack/.grok-plugin/     Grok manifest
-plugins/cstack/                 installable package
+skills/                         canonical skills
+hooks/                          host-specific hook configs and shared runtime
+.codex-plugin/                  Codex manifest
+.grok-plugin/                   Grok manifest, marketplace, and index
+.cstack/                        routing policy and upstream manifest
 .agents/plugins/                Codex marketplace
-.grok-plugin/                   Grok marketplace and plugin index
 ```
 
 ## Build and validate
 
 ```powershell
-python scripts/build_cstack_plugin.py --source-root source/cstack --destination plugins/cstack --policy .cstack/skill-policy.json
-python scripts/validate_plugin.py --root plugins/cstack
-python scripts/validate_skill_stack.py --source-root source/cstack --plugin-root plugins/cstack --policy .cstack/skill-policy.json
+python scripts/validate_plugin.py --root .
+python scripts/validate_skill_stack.py --source-root . --plugin-root . --policy .cstack/skill-policy.json
 python scripts/generate_grok_plugin_index.py --check
 ```
 
@@ -45,6 +43,6 @@ Grok Bot uses the same marketplace and skills. Refresh the plugin after a new re
 
 ## CI
 
-`.github/workflows/build-cstack-plugin.yml` builds the package, validates the skills, and regenerates `.grok-plugin/plugin-index.json`.
+`.github/workflows/validate-cstack.yml` validates the root plugin and regenerates `.grok-plugin/plugin-index.json`.
 
-The workflow commits generated files on pushes to `main`.
+`.github/workflows/sync-upstream-skills.yml` refreshes managed skills from their original public repositories on schedule or manual dispatch.

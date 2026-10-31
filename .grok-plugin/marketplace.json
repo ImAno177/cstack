@@ -11,7 +11,7 @@
       "description": "Portable cstack skills for Grok Bot and compatible agent hosts.",
       "source": {
         "type": "local",
-        "path": "./plugins/cstack"
+        "path": "./"
       },
       "category": "development",
       "homepage": "https://github.com/ImAno177/cstack",
