@@ -7,13 +7,18 @@ from pathlib import Path
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--manifest", required=True, type=Path)
+    parser.add_argument("--manifest", action="append", required=True, type=Path)
     args = parser.parse_args()
-    manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
-    major, minor, patch = (int(part) for part in manifest["version"].split("."))
-    manifest["version"] = f"{major}.{minor}.{patch + 1}"
-    args.manifest.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(manifest["version"])
+    versions = []
+    for manifest_path in args.manifest:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        major, minor, patch = (int(part) for part in manifest["version"].split("."))
+        manifest["version"] = f"{major}.{minor}.{patch + 1}"
+        manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        versions.append(manifest["version"])
+    if len(set(versions)) != 1:
+        raise ValueError("all manifests must have the same version")
+    print(versions[0])
     return 0
 
 

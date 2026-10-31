@@ -39,11 +39,20 @@ codex plugin marketplace upgrade cstack
 
 The ChatGPT desktop app and Codex use the portable `plugin.json` and `skills/` package. A refresh is still required after a new commit because the host controls plugin installation and trust.
 
-## Grok Bot
+## Grok Build and Grok Bot
 
-The repository includes `.grok-plugin/marketplace.json` and a CI notification adapter. Add the repository's Grok marketplace in the Grok host. To notify a Grok webhook after every successful main-branch build, configure the repository secrets `GROK_BOT_WEBHOOK_URL` and `GROK_BOT_WEBHOOK_KEY`. The key is only sent in the authorization headers by the CI runner.
+This repository is a Grok marketplace. Its `.grok-plugin/marketplace.json` points to the installable `plugins/cstack` plugin, which contains the generated `skills/` payload and the Grok-specific manifest.
 
-## Webhook triggers
+Install it with Grok Build:
+
+```powershell
+grok plugin marketplace add ImAno177/cstack
+grok plugin install cstack --trust
+```
+
+Grok Bot uses the same installed plugin on its bot computer. Refresh the plugin from the Grok plugins/marketplace UI after a new release.
+
+## Repository dispatch triggers
 
 Send `repository_dispatch` with event type `sync-upstream` to import both upstream sources. Send `build-plugin` to rebuild without importing upstream sources. GitHub's `push` event remains the normal trigger for source changes.
 

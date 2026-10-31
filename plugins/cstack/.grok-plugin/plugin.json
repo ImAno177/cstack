@@ -1,0 +1,12 @@
+{
+  "name": "cstack",
+  "version": "0.1.2",
+  "description": "Portable skills plugin for Grok Build and Grok Bot.",
+  "author": {
+    "name": "ImAno177",
+    "url": "https://github.com/ImAno177"
+  },
+  "homepage": "https://github.com/ImAno177/cstack",
+  "repository": "https://github.com/ImAno177/cstack",
+  "license": "MIT"
+}

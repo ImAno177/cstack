@@ -1,6 +1,6 @@
 {
   "name": "cstack",
-  "description": "Portable skills stack for Grok Bot and compatible agent hosts.",
+  "description": "Portable skills plugin for Grok Build and Grok Bot.",
   "owner": {
     "name": "ImAno177",
     "url": "https://github.com/ImAno177"
@@ -9,8 +9,13 @@
     {
       "name": "cstack",
       "description": "Portable skills stack synchronized from local skills, pstack, and Ponytail.",
-      "source": "./plugins/cstack/skills",
-      "category": "productivity"
+      "source": {
+        "type": "local",
+        "path": "./plugins/cstack"
+      },
+      "category": "development",
+      "homepage": "https://github.com/ImAno177/cstack",
+      "keywords": ["cstack", "grok", "grok bot", "grok build", "skills"]
     }
   ]
 }
