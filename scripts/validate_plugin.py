@@ -42,12 +42,8 @@ def main() -> int:
         raise ValueError("plugin.json has no version")
     skills_root = root / "skills"
     seen = set()
-    for skill in sorted(skills_root.iterdir()):
-        if not skill.is_dir() or skill.name.startswith("."):
-            raise ValueError(f"invalid skill directory: {skill}")
-        manifest_path = skill / "SKILL.md"
-        if not manifest_path.is_file():
-            raise ValueError(f"missing SKILL.md: {skill}")
+    for manifest_path in sorted(skills_root.rglob("SKILL.md")):
+        skill = manifest_path.parent
         validate_skill(manifest_path)
         name = yaml.safe_load(manifest_path.read_text(encoding="utf-8").split("\n---", 1)[0][4:])["name"]
         if name in seen:

@@ -44,10 +44,7 @@ def components(plugin_root: Path) -> dict:
     skills = []
     skills_root = plugin_root / "skills"
     if skills_root.is_dir():
-        for skill in sorted(skills_root.iterdir()):
-            entrypoint = skill / "SKILL.md"
-            if not entrypoint.is_file():
-                continue
+        for entrypoint in sorted(skills_root.rglob("SKILL.md")):
             metadata = read_metadata(entrypoint)
             skills.append({"name": metadata["name"], "description": str(metadata["description"]).strip()})
     if skills:

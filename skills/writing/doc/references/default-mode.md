@@ -1,7 +1,7 @@
 # Doc default mode — code/API docs, code-maps, coverage/validate
 
 > **Provenance:** This is the default-mode workflow **moved verbatim** out of
-> `skills/doc/SKILL.md` (generic-craft trim).
+> `skills/writing/doc/SKILL.md` (generic-craft trim).
 > Steps 1-7 below — grep for undocumented functions, stamp function/class markdown,
 > compute coverage, write a report — are frontier-trivial: a capable model does them
 > correctly with no skill payload. The skill's durable value is the references-led

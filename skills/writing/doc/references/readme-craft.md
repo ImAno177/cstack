@@ -271,7 +271,7 @@ evidence; do not rewrite unless the caller asked for `--rewrite`.
 
 ### Step 5: Deterministic checks
 
-Run `bash skills/doc/scripts/validate.sh` and inspect the anti-pattern table
+Run `bash skills/writing/doc/scripts/validate.sh` and inspect the anti-pattern table
 below against the exact README. Record concrete matches, checked scope, and
 anything the local environment could not check. These results are evidence,
 not a semantic verdict.

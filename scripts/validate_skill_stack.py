@@ -18,9 +18,9 @@ def skill_dirs(root: Path, excluded: set[str]) -> list[Path]:
     if not root.is_dir():
         return []
     return [
-        path
-        for path in sorted(root.iterdir())
-        if path.is_dir() and path.name not in excluded and (path / "SKILL.md").is_file()
+        path.parent
+        for path in sorted(root.rglob("SKILL.md"))
+        if path.parent.name not in excluded
     ]
 
 

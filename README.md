@@ -7,13 +7,15 @@ Portable cstack plugin for ChatGPT, Codex, Grok Build, and Grok Bot.
 The repository root is the canonical, installable plugin.
 
 ```text
-skills/                         canonical skills
+skills/                         grouped canonical skills
 hooks/                          host-specific hook configs and shared runtime
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
 .cstack/                        routing policy and upstream manifest
 .agents/plugins/                Codex marketplace
 ```
+
+Skill groups include `kaggle/`, `colab/`, `huggingface/`, `cloudflare/`, `research/`, `android/`, `frontend/`, `writing/`, `verification/`, `agent/`, `engineering/`, and `quality/`.
 
 ## Build and validate
 

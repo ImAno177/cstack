@@ -98,7 +98,7 @@ Full tier definitions: [oss-documentation-tiers.md](oss-documentation-tiers.md).
 
 Per-type content templates: [oss-project-types.md](oss-project-types.md).
 
-For a machine-readable tiered audit (project type + per-tier scores + totals as JSON), run the helper script: `bash skills/doc/scripts/audit-oss-docs.sh --json`.
+For a machine-readable tiered audit (project type + per-tier scores + totals as JSON), run the helper script: `bash skills/writing/doc/scripts/audit-oss-docs.sh --json`.
 
 ---
 

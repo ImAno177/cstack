@@ -1,14 +1,14 @@
 {
-  "name": "cstack",
+  "name": "general",
   "interface": {
-    "displayName": "cstack"
+    "displayName": "General"
   },
   "plugins": [
     {
-      "name": "cstack",
+      "name": "general",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./plugins/general"
       },
       "policy": {
         "installation": "AVAILABLE",
