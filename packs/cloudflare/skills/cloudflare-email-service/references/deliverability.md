@@ -110,7 +110,7 @@ Returns:
   "total": 2,
   "result": [
     {
-      "id": "396a5436-d4b0-42a6-b3fc-48e8fa522321",
+      "id": "396a5436-d4b0-02a6-b3fc-48e8fa522321",
       "email": "bounced@example.com",
       "reason": "hard_bounce",
       "created_at": "2026-03-15T10:00:00Z",

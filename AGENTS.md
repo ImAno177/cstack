@@ -1,6 +1,6 @@
 # cstack
 
-The repository root is the installable plugin. Keep `skills/`, `hooks/`, manifests, scripts, and docs at the root; do not recreate `source/`, `plugins/`, or `general/` layers.
+The repository root is the installable plugin. Keep `skills/`, `hooks/`, manifests, scripts, and docs at the root; do not recreate `source/`, `plugins/`, or `general/` layers. Optional packs live under `packs/` and are not part of the core skill index.
 
 Use the explicitly named skill first. Use `skills/skills-router/SKILL.md` only when several installed skills plausibly apply. Never auto-route `tdd`.
 

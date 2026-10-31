@@ -6,6 +6,7 @@ on:
     paths:
       - ".cstack/**"
       - "skills/**"
+      - "packs/**"
       - "hooks/**"
       - ".codex-plugin/**"
       - ".grok-plugin/**"
@@ -19,6 +20,7 @@ on:
     paths:
       - ".cstack/**"
       - "skills/**"
+      - "packs/**"
       - "hooks/**"
       - ".codex-plugin/**"
       - ".grok-plugin/**"

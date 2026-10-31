@@ -20,7 +20,7 @@ Use this router only when selection is ambiguous or the request spans more than 
 - ChatGPT Pages or Spaces → the matching `pages:*` skill
 - website creation or management → `sites:sites`; Site remix → `sites:sites-remix`
 - ChatGPT Work pets → the matching `work-pets:*` skill
-- Cloudflare work → the narrowest matching skill among `cloudflare`, `agents-sdk`, `durable-objects`, `cloudflare-email-service`, `cloudflare-one`, `cloudflare-one-migrations`, `workers-best-practices`, `wrangler`, and `turnstile-spin`
+- Cloudflare Workers, Wrangler, Durable Objects, Email, Zero Trust, Turnstile, Agents SDK, sandbox, or web performance → optional pack (enable packs/cloudflare first)
 - LoRA or QLoRA fine-tuning → `peft-lora-qlora`
 - bitsandbytes quantization → `bitsandbytes-quantization`
 - TRL training → `trl-training`
@@ -28,12 +28,13 @@ Use this router only when selection is ambiguous or the request spans more than 
 - Google Colab sessions, runtimes, or `colab` CLI → `colab-operator`
 - Hugging Face Hub, `hf` CLI, or Hugging Face ecosystem work → `hf-cli`
 - scientific or publication figures → `scientific-visualization`
-- sandboxed or untrusted code execution → `sandbox-sdk`
+- scientific or research slide decks → `scientific-slides`
 - Android AGP migration → `agp-9-upgrade`; native Android testing → `testing-setup`
-- frontend design → `frontend-design`; scroll animation → `gsap-framer-scroll-animation`; web performance → `web-perf`
+- frontend design → `frontend-design`; scroll animation → `gsap-framer-scroll-animation`; neobrutalism UI → `neobrutalism-design`
 - repository docs → `doc`; conventional commits → `conventional-commit`; pull requests → `create-pr`; architecture boundaries → `architect`; codebase walkthroughs → `how`; Kaggle benchmarks → `write-kaggle-benchmarks`
-- code quality review → `change-review`; whole-repository audit → `repo-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
-- shortcut debt or deferred work → `shortcut-debt`
+- code quality review → `change-review` or `ponytail-review`; whole-repository audit → `repo-audit` or `ponytail-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
+- shortcut debt or deferred work → `shortcut-debt` or `ponytail-debt`
+- lazy smallest-change coding, YAGNI, or ponytail mode → `ponytail`; ponytail help or gain → `ponytail-help` or `ponytail-gain`
 - design rationale, regressions, or postmortems → `why`
 - continual learning, agent memory, skill updates, retention, or transfer → `continual-learning`
 - stale prompts, outdated model assumptions, skill/rule cruft, or conflicting agent instructions → `prompt-audit`

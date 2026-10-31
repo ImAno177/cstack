@@ -40,3 +40,5 @@ End with `<N> markers, <M> with no trigger.` Nothing found: `No shortcut debt. C
 
 Reads and reports only, changes nothing. To persist it, ask and it writes the
 ledger to a file (e.g. `shortcut-DEBT.md`). One-shot.
+
+Related: `ponytail-debt` also harvests older `ponytail:` markers. Keep both.
