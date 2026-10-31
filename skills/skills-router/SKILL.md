@@ -40,7 +40,7 @@ Use this router only when selection is ambiguous or the request spans more than 
 - AI-sounding prose cleanup → `unslop`
 - create or update a skill → `skill-creator`; install or discover skills → `skill-installer` or `find-skills`; plugin management → `plugin-management:plugin-management`
 - Codex or OpenAI product behavior and configuration → `openai-docs`
-- non-trivial engineering workflow → `poteto-mode`; broad multi-part work with no narrower owner → `figure-it-out`
+- non-trivial engineering workflow → `potato-mode`; broad multi-part work with no narrower owner → `figure-it-out`
 
 ## Selection rules
 
@@ -50,4 +50,3 @@ Use this router only when selection is ambiguous or the request spans more than 
 4. Read the selected `SKILL.md` before acting and follow its required tools, references, and validation.
 5. Use only skills present in the active catalog and allowed by policy. Never invent a missing route or load a host-specific skill.
 6. Treat review skills as alternatives unless the user asks for independent review passes.
-7. Do not automatically route to `tdd`; use it only if an active policy explicitly permits it and the user asks for test-first, a failing test, or a regression test.
