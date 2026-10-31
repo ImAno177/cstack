@@ -30,11 +30,10 @@ Use this router only when selection is ambiguous or the request spans more than 
 - scientific or publication figures → `scientific-visualization`
 - scientific or research slide decks → `scientific-slides`
 - Android AGP migration → `agp-9-upgrade`; native Android testing → `testing-setup`
-- frontend design → `frontend-design`; scroll animation → `gsap-framer-scroll-animation`; neobrutalism UI → `neobrutalism-design`
+- frontend design → `frontend-design`; scroll animation → `gsap-framer-scroll-animation`
 - repository docs → `doc`; conventional commits → `conventional-commit`; pull requests → `create-pr`; architecture boundaries → `architect`; codebase walkthroughs → `how`; Kaggle benchmarks → `write-kaggle-benchmarks`
-- code quality review → `change-review` or `ponytail-review`; whole-repository audit → `repo-audit` or `ponytail-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
-- shortcut debt or deferred work → `shortcut-debt` or `ponytail-debt`
-- lazy smallest-change coding, YAGNI, or ponytail mode → `ponytail`; ponytail help or gain → `ponytail-help` or `ponytail-gain`
+- code quality review → `change-review`; whole-repository audit → `repo-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
+- shortcut debt or deferred work → `shortcut-debt`
 - design rationale, regressions, or postmortems → `why`
 - continual learning, agent memory, skill updates, retention, or transfer → `continual-learning`
 - stale prompts, outdated model assumptions, skill/rule cruft, or conflicting agent instructions → `prompt-audit`

@@ -26,10 +26,6 @@
             "description": "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it's safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', or reviewing a small diff you don't trust."
           },
           {
-            "name": "bro",
-            "description": "Restate the last message in plain human language, with no jargon."
-          },
-          {
             "name": "change-review",
             "description": "Quality review of a change: is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\"."
           },
@@ -110,36 +106,8 @@
             "description": "Bring a project's formal verification back in line with the code after the code changes: find the commits that touched verified code, update the model, harness, or properties to describe the code as it is now, rerun, and say whether each failure is drift in the verification or a bug in the code. Use for /maintain-formal-verification-skill, \"is the model still true to the code\", or after merges and refactors that touched verified code without rechecking it."
           },
           {
-            "name": "neobrutalism-design",
-            "description": "Use when designing or styling UI, slides, or charts in a neobrutalism style — bold black borders, hard offset shadows, vivid flat accent colors, high-contrast layouts on warm surfaces."
-          },
-          {
             "name": "peft-lora-qlora",
             "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
-          },
-          {
-            "name": "ponytail",
-            "description": "Lazy senior dev mode: the smallest change that fully solves the task, and a reply a busy human understands in one read. Use on any coding task (writing, fixing, refactoring, reviewing, choosing dependencies) and when the user says \"ponytail\", \"be lazy\", \"simplest solution\", \"yagni\", or complains about over-engineering or bloat. Levels: lite, full (default), ultra."
-          },
-          {
-            "name": "ponytail-audit",
-            "description": "Quality audit of a whole repo: bugs, security holes, what breaks under real load, risky code without tests, slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes nothing. Use for \"audit this codebase\", \"review the whole repo\", \"find bloat\", \"what can I delete\", /ponytail-audit."
-          },
-          {
-            "name": "ponytail-debt",
-            "description": "List every `shortcut:` comment (and older `ponytail:` ones) as a debt ledger. One-shot report, changes nothing. Use for \"ponytail debt\", \"what did ponytail defer\", \"list the shortcuts\", /ponytail-debt."
-          },
-          {
-            "name": "ponytail-gain",
-            "description": "Show ponytail's measured savings (code, cost, speed) from the benchmark. One-shot display. Use for /ponytail-gain, \"what does ponytail save\", \"ponytail impact\"."
-          },
-          {
-            "name": "ponytail-help",
-            "description": "Quick reference for ponytail levels, skills and commands. One-shot display. Use for /ponytail-help, \"ponytail help\", \"how do I use ponytail\"."
-          },
-          {
-            "name": "ponytail-review",
-            "description": "Quality review of a change: is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", \"is this over-engineered\", /ponytail-review."
           },
           {
             "name": "poteto-mode",
@@ -162,10 +130,6 @@
             "description": "Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text."
           },
           {
-            "name": "principle-exhaust-the-design-space",
-            "description": "Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing."
-          },
-          {
             "name": "principle-experience-first",
             "description": "Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience; ship fewer polished features over more rough ones."
           },
@@ -186,10 +150,6 @@
             "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads."
           },
           {
-            "name": "principle-laziness-protocol",
-            "description": "Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem."
-          },
-          {
             "name": "principle-make-operations-idempotent",
             "description": "Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs."
           },
@@ -204,10 +164,6 @@
           {
             "name": "principle-model-the-domain",
             "description": "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files."
-          },
-          {
-            "name": "principle-never-block-on-the-human",
-            "description": "Apply when tempted to ask 'should I do X?' on reversible work."
           },
           {
             "name": "principle-outcome-oriented-execution",
@@ -228,10 +184,6 @@
           {
             "name": "principle-sequence-verifiable-units",
             "description": "Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer."
-          },
-          {
-            "name": "principle-subtract-before-you-add",
-            "description": "Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base."
           },
           {
             "name": "principle-test-behavior-not-implementation",
