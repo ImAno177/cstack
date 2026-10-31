@@ -1,0 +1,28 @@
+{
+  "exclude": [],
+  "host_markers": [
+    "cursor-team-kit",
+    "api2.cursor.sh",
+    ".cursor/",
+    "Cursor's built-in"
+  ],
+  "external_routes": [
+    "imagegen",
+    "documents:documents",
+    "pdf:pdf",
+    "presentations:Presentations",
+    "spreadsheets:Spreadsheets",
+    "spreadsheets:excel-live-control",
+    "google-drive:*",
+    "pages:*",
+    "sites:sites",
+    "sites:sites-remix",
+    "work-pets:*",
+    "plugin-management:plugin-management",
+    "openai-docs",
+    "skill-creator",
+    "skill-installer",
+    "find-skills"
+  ],
+  "max_entry_lines": 160
+}

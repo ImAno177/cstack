@@ -1,0 +1,7 @@
+ts	phase	decision	why	evidence	result
+2026-10-31T10:20:00+07:00	frame	made General the only canonical source	one plugin needs one authoritative skill tree	README.md; source/general	standalone source selected
+2026-10-31T10:35:00+07:00	design	removed external synchronization	General must update from this repository, not hidden upstream jobs	.github/workflows/build-general-plugin.yml; source/general	one internal build workflow
+2026-10-31T10:48:00+07:00	verification	normalized generated frontmatter and references	plugin metadata and internal links need deterministic validation	scripts/build_general_plugin.py; scripts/validate_plugin.py	78 skills validate
+2026-10-31T10:55:00+07:00	platforms	kept one portable payload for ChatGPT Codex and Grok	platform manifests should not fork skill content	plugins/general/plugin.json; .grok-plugin/marketplace.json	platform adapters point to General
+2026-10-31T11:20:00+07:00	continual-learning	separated model learning from agent skill evolution	memory and text updates cannot prove parameter retention	source/general/skills/continual-learning/references	result matrix and promotion gates documented
+2026-10-31T11:35:00+07:00	prompt-audit	added a portable audit for stale model and host assumptions	legacy prompt surfaces need evidence-based cleanup without silently porting workarounds	source/general/skills/prompt-audit; anthropics/skills prompt-audit	report and proposed-diff contract documented

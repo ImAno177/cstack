@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "general",
+  "version": "0.1.0",
+  "description": "Portable General skills for concise engineering, academic research, and continual learning.",
+  "author": {
+    "name": "ImAno177",
+    "url": "https://github.com/ImAno177"
+  },
+  "repository": "https://github.com/ImAno177/cstack",
+  "license": "MIT",
+  "keywords": ["skills", "codex", "chatgpt", "grok", "academic-research", "continual-learning"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "General",
+        "shortDescription": "Portable General skills for ChatGPT and Codex",
+        "longDescription": "A standalone skill collection with General mode, academic research, and evidence-based continual learning.",
+        "developerName": "ImAno177",
+        "category": "Productivity",
+        "websiteURL": "https://github.com/ImAno177/cstack",
+        "brandColor": "#111111"
+      }
+    }
+  }
+}

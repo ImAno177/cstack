@@ -1,0 +1,63 @@
+name: build general plugin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "source/general/**"
+      - ".general/**"
+      - ".grok-plugin/marketplace.json"
+      - "scripts/build_general_plugin.py"
+      - "scripts/generate_grok_plugin_index.py"
+      - "scripts/validate_plugin.py"
+      - "scripts/validate_skill_stack.py"
+      - "plugins/general/**"
+  pull_request:
+    paths:
+      - "source/general/**"
+      - ".general/**"
+      - ".grok-plugin/marketplace.json"
+      - "scripts/build_general_plugin.py"
+      - "scripts/generate_grok_plugin_index.py"
+      - "scripts/validate_plugin.py"
+      - "scripts/validate_skill_stack.py"
+      - "plugins/general/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyyaml
+      - run: >-
+          python scripts/build_general_plugin.py
+          --source-root source/general
+          --destination plugins/general
+          --policy .general/skill-policy.json
+      - run: python scripts/validate_plugin.py --root plugins/general
+      - run: >-
+          python scripts/validate_skill_stack.py
+          --source-root source/general
+          --plugin-root plugins/general
+          --policy .general/skill-policy.json
+      - run: python scripts/generate_grok_plugin_index.py
+      - run: python scripts/generate_grok_plugin_index.py --check
+      - name: commit generated plugin
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins/general
+          git add -f .grok-plugin/plugin-index.json
+          git commit -m "build general plugin [skip ci]"
+          git push

@@ -1,5 +1,0 @@
-ts	phase	decision	why	evidence	result
-2026-10-31T10:20:00+07:00	frame	kept local skills and upstream skills as separate inputs	local edits must not erase upstream synchronization state	README.md; source/	86 generated skills after merge
-2026-10-31T10:35:00+07:00	design	used two CI workflows for upstream sync and plugin build	upstream freshness and package publication have different triggers and failure modes	.github/workflows/sync-upstream.yml; .github/workflows/build-plugin.yml	workflow split implemented
-2026-10-31T10:48:00+07:00	verification	normalized generated frontmatter during build	several imported skills used host-specific metadata not accepted by the plugin validator	scripts/build_plugin.py; scripts/validate_plugin.py	plugin validates with 86 skills
-2026-10-31T10:55:00+07:00	platforms	added ChatGPT Codex and Grok marketplace metadata	one portable skill payload should serve multiple hosts	plugins/cstack/plugin.json; .grok-plugin/marketplace.json	platform adapters present
