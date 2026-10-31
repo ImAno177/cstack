@@ -1,0 +1,50 @@
+# cstack
+
+`cstack` packages the installed local skills together with upstream `pstack` and Ponytail skills for ChatGPT, Codex, and compatible agent hosts.
+
+## Data flow
+
+`~/.agents/skills` is an optional local input. `source/local/skills` stores its synchronized snapshot. `source/upstream` stores the two upstream snapshots. `plugins/cstack/skills` is generated from both and is the installable plugin payload.
+
+The generated plugin is rebuilt by GitHub Actions. The build workflow runs on pushes, pull requests, manual dispatches, and the `build-plugin` repository dispatch event. The upstream workflow runs daily, on manual dispatch, and on the `sync-upstream` repository dispatch event. It imports `cursor/plugins/pstack/skills` and `DietrichGebert/ponytail/skills` before rebuilding the plugin.
+
+## Local synchronization
+
+Run a one-time sync from the current Codex skills directory.
+
+```powershell
+python scripts/sync_skills.py --source "$env:USERPROFILE\.agents\skills" --destination source/local/skills
+python scripts/build_plugin.py --source-root source --destination plugins/cstack/skills
+python scripts/validate_plugin.py --root plugins/cstack
+```
+
+To watch local changes and push them automatically, run this from a trusted clone.
+
+```powershell
+pwsh -File scripts/watch-local-skills.ps1
+```
+
+The watcher only stages `source/local` and the generated plugin. It does not stage unrelated files.
+
+## ChatGPT and Codex
+
+Add the repository as a Git-backed marketplace, then install `cstack` from the plugin directory.
+
+```powershell
+codex plugin marketplace add ImAno177/cstack --ref main
+codex plugin marketplace upgrade cstack
+```
+
+The ChatGPT desktop app and Codex use the portable `plugin.json` and `skills/` package. A refresh is still required after a new commit because the host controls plugin installation and trust.
+
+## Grok Bot
+
+The repository includes `.grok-plugin/marketplace.json` and a CI notification adapter. Add the repository's Grok marketplace in the Grok host. To notify a Grok webhook after every successful main-branch build, configure the repository secrets `GROK_BOT_WEBHOOK_URL` and `GROK_BOT_WEBHOOK_KEY`. The key is only sent in the authorization headers by the CI runner.
+
+## Webhook triggers
+
+Send `repository_dispatch` with event type `sync-upstream` to import both upstream sources. Send `build-plugin` to rebuild without importing upstream sources. GitHub's `push` event remains the normal trigger for source changes.
+
+## Other platforms
+
+The canonical skill payload is the portable `plugins/cstack/skills` directory. Platform-specific marketplace files can point at that directory without changing the skills themselves. New adapters should live under `platforms/` and must not write into the generated plugin directly.

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "cstack",
+  "version": "0.1.0",
+  "description": "Portable skills stack synchronized from local skills, pstack, and Ponytail.",
+  "author": {
+    "name": "ImAno177",
+    "url": "https://github.com/ImAno177"
+  },
+  "repository": "https://github.com/ImAno177/cstack",
+  "license": "MIT",
+  "keywords": ["skills", "codex", "chatgpt", "pstack", "ponytail"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "cstack",
+        "shortDescription": "Portable skills stack for ChatGPT and Codex",
+        "longDescription": "A synchronized skill collection for ChatGPT, Codex, and compatible agent hosts.",
+        "developerName": "ImAno177",
+        "category": "Productivity",
+        "websiteURL": "https://github.com/ImAno177/cstack",
+        "brandColor": "#10A37F"
+      }
+    }
+  }
+}

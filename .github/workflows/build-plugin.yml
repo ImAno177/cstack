@@ -1,0 +1,71 @@
+name: build cstack plugin
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [build-plugin]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyyaml
+      - name: build plugin
+        run: >-
+          python scripts/build_plugin.py
+          --source-root source
+          --destination plugins/cstack/skills
+      - name: validate plugin
+        run: python scripts/validate_plugin.py --root plugins/cstack
+      - name: commit generated plugin
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins/cstack/skills
+          git commit -m "build cstack plugin [skip ci]"
+          git push
+      - name: package plugin
+        run: |
+          mkdir -p dist
+          cd plugins/cstack
+          zip -qr "../../dist/cstack-${GITHUB_SHA}.zip" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cstack-plugin-${{ github.sha }}
+          path: dist/*.zip
+      - name: publish build release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: cstack build ${{ github.run_number }}
+          generate_release_notes: true
+          files: dist/*.zip
+      - name: notify Grok Bot
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.GROK_BOT_WEBHOOK_URL != '' && secrets.GROK_BOT_WEBHOOK_KEY != ''
+        env:
+          GROK_BOT_WEBHOOK_URL: ${{ secrets.GROK_BOT_WEBHOOK_URL }}
+          GROK_BOT_WEBHOOK_KEY: ${{ secrets.GROK_BOT_WEBHOOK_KEY }}
+        run: >-
+          python scripts/notify_grok.py
+          --event plugin-built
+          --repository "$GITHUB_REPOSITORY"
+          --sha "$GITHUB_SHA"
+          --release-url "https://github.com/$GITHUB_REPOSITORY/releases/tag/build-${GITHUB_RUN_NUMBER}"
