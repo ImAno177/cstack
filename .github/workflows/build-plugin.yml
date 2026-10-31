@@ -30,6 +30,13 @@ jobs:
           --destination plugins/cstack/skills
       - name: validate plugin
         run: python scripts/validate_plugin.py --root plugins/cstack
+      - name: bump plugin version on source changes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          changed=$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA")
+          if echo "$changed" | grep -Eq '^(source/|plugins/cstack/skills/)'; then
+            python scripts/bump_version.py --manifest plugins/cstack/plugin.json
+          fi
       - name: commit generated plugin
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
