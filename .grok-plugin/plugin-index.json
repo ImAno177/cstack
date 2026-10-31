@@ -1,7 +1,7 @@
 {
   "version": 1,
   "plugins": {
-    "general": {
+    "cstack": {
       "version": "0.1.0",
       "components": {
         "skills": [
@@ -32,6 +32,10 @@
           {
             "name": "bro",
             "description": "Restate the last message in plain human language, with no jargon."
+          },
+          {
+            "name": "change-review",
+            "description": "Quality review of a change: is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\"."
           },
           {
             "name": "cloudflare",
@@ -88,30 +92,6 @@
           {
             "name": "frontend-design",
             "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults."
-          },
-          {
-            "name": "general",
-            "description": "Lazy senior dev mode: the smallest change that fully solves the task, and a reply a busy human understands in one read. Use on any coding task (writing, fixing, refactoring, reviewing, choosing dependencies) and when the user says \"general\", \"be lazy\", \"simplest solution\", \"yagni\", or complains about over-engineering or bloat. Levels: lite, full (default), ultra."
-          },
-          {
-            "name": "general-audit",
-            "description": "Quality audit of a whole repo: bugs, security holes, what breaks under real load, risky code without tests, slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes nothing. Use for \"audit this codebase\", \"review the whole repo\", \"find bloat\", \"what can I delete\", /general-audit."
-          },
-          {
-            "name": "general-debt",
-            "description": "List every `shortcut:` comment (and older `general:` ones) as a debt ledger. One-shot report, changes nothing. Use for \"general debt\", \"what did general defer\", \"list the shortcuts\", /general-debt."
-          },
-          {
-            "name": "general-gain",
-            "description": "Show general's measured savings (code, cost, speed) from the benchmark. One-shot display. Use for /general-gain, \"what does general save\", \"general impact\"."
-          },
-          {
-            "name": "general-help",
-            "description": "Quick reference for general levels, skills and commands. One-shot display. Use for /general-help, \"general help\", \"how do I use general\"."
-          },
-          {
-            "name": "general-review",
-            "description": "Quality review of a change: is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", \"is this over-engineered\", /general-review."
           },
           {
             "name": "gsap-framer-scroll-animation",
@@ -254,6 +234,10 @@
             "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering."
           },
           {
+            "name": "repo-audit",
+            "description": "Quality audit of a whole repo: bugs, security holes, what breaks under real load, risky code without tests, slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes nothing. Use for \"audit this codebase\", \"review the whole repo\", \"find bloat\", or \"what can I delete\"."
+          },
+          {
             "name": "sandbox-sdk",
             "description": "Build sandboxed applications for secure code execution. Load when building AI code execution, code interpreters, CI/CD systems, interactive dev environments, or executing untrusted code. Covers Sandbox SDK lifecycle, commands, files, code interpreter, and preview URLs. Biases towards retrieval from Cloudflare docs over pre-trained knowledge."
           },
@@ -264,6 +248,10 @@
           {
             "name": "sharpen",
             "description": "Make a task deeper, not bigger, then rewrite the prompt. Use for /sharpen."
+          },
+          {
+            "name": "shortcut-debt",
+            "description": "List every `shortcut:` comment as a debt ledger. One-shot report, changes nothing. Use for \"shortcut debt\" or \"list the shortcuts\"."
           },
           {
             "name": "skills-router",

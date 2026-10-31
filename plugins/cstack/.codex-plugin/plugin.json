@@ -1,0 +1,22 @@
+{
+  "name": "cstack",
+  "version": "0.1.0",
+  "description": "Portable cstack skills for ChatGPT and Codex.",
+  "author": {
+    "name": "ImAno177",
+    "url": "https://github.com/ImAno177"
+  },
+  "repository": "https://github.com/ImAno177/cstack",
+  "license": "MIT",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "cstack",
+    "shortDescription": "Portable cstack skills for ChatGPT and Codex",
+    "longDescription": "A standalone skill collection for engineering, academic research, and evidence-based continual learning.",
+    "developerName": "ImAno177",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/ImAno177/cstack",
+    "brandColor": "#111111"
+  }
+}
