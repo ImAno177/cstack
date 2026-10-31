@@ -6,64 +6,28 @@
       "components": {
         "skills": [
           {
-            "name": "continual-learning",
-            "description": "Improve reusable skills or agent memory from task experience with audit, replay, transfer checks, and retirement."
-          },
-          {
-            "name": "figure-it-out",
-            "description": "Plan ambiguous multi-part engineering work when no narrower skill owns the outcome."
-          },
-          {
-            "name": "find-skills",
-            "description": "Find or install an existing skill when the user asks for a capability, tool, template, or workflow."
-          },
-          {
-            "name": "improve-codebase-architecture",
-            "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick."
-          },
-          {
-            "name": "in-your-own-words",
-            "description": "Restate in your own words what you think the user's goals are and what problem they're trying to solve. Use for /in-your-own-words."
-          },
-          {
-            "name": "ketchup",
-            "description": "Catch the user up on what changed in this chat since their last message, in plain words and small visuals. List every item waiting on them with what they need to decide it from the reply alone. Use for /ketchup."
-          },
-          {
-            "name": "ketchup-video",
-            "description": "Catch the user up like /ketchup, with a short subtitled video of slides for what happened and the waiting calls as text under it. Use for /ketchup-video."
-          },
-          {
-            "name": "poteto-mode",
-            "description": "Default workflow for non-trivial engineering changes with multiple files, boundaries, or risk."
-          },
-          {
-            "name": "principle-guard-the-context-window",
-            "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads."
-          },
-          {
-            "name": "prompt-audit",
-            "description": "Audit skills, rules, hooks, and agent configuration for stale assumptions, broken paths, conflicts, and over-steering."
-          },
-          {
-            "name": "sharpen",
-            "description": "Make a task deeper, not bigger, then rewrite the prompt. Use for /sharpen."
-          },
-          {
-            "name": "skills-router",
-            "description": "Choose the smallest skill set for ambiguous or multi-capability requests."
-          },
-          {
-            "name": "teach",
-            "description": "Explain a body of work plainly so a person actually understands it. Runs the `how` and `why` skills and weaves what they find into one clear explanation. Use for 'teach me this', 'help me really understand X', 'explain this change or subsystem to me'."
-          },
-          {
             "name": "agp-9-upgrade",
             "description": "Upgrades, or migrates, an Android project to use Android Gradle Plugin (AGP) version 9. Do not use this skill for migrating Kotlin Multiplatform (KMP) projects."
           },
           {
-            "name": "testing-setup",
-            "description": "Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure, create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests."
+            "name": "architect",
+            "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
+          },
+          {
+            "name": "benchmark-checklist",
+            "description": "Vet a perf measurement (limiter, tuning, limits, errors, repeatability, relevance, and whether the work happened) before you report or act on it. Use when you run a benchmark or report a speedup or regression you measured."
+          },
+          {
+            "name": "bitsandbytes-quantization",
+            "description": "Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers."
+          },
+          {
+            "name": "blast-radius",
+            "description": "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it's safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', or reviewing a small diff you don't trust."
+          },
+          {
+            "name": "change-review",
+            "description": "Quality review of a change: is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\"."
           },
           {
             "name": "agents-sdk",
@@ -110,12 +74,96 @@
             "description": "Operate Google Colab environments via the `colab` CLI. Use when asked to create or manage GPU/TPU sessions, run Python/shell on a remote Colab VM, sync files, automate environment setup (packages, auth, Drive), or export session history."
           },
           {
-            "name": "architect",
-            "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
+            "name": "continual-learning",
+            "description": "Help an agent improve its reusable skills, rules, and memory from ordered task experience with audit, replay, transfer checks, and retirement."
+          },
+          {
+            "name": "conventional-commit",
+            "description": "Create conventional commit messages following best conventions. Use when committing code changes, writing commit messages, or formatting git history. Follows conventional commits specification."
+          },
+          {
+            "name": "correct",
+            "description": "Find the mistakes agents keep repeating in this repo and make each one impossible. Try architecture first, then types, then a lint whose error names the fix, then a test, and write docs last. Prove each check fails on a real past mistake. Repeat this each time the operator corrects you. Use for /correct."
+          },
+          {
+            "name": "create-formal-verification-skill",
+            "description": "Generate a project-local skill that formally verifies the code where a bug costs the most and tests reach the least, in any language, with whichever verification tool fits. Use for /create-formal-verification-skill, \"model-check this race\", \"prove this invariant\", or when concurrency, retries, state machines, parsers, or unsafe code need more than tests."
+          },
+          {
+            "name": "create-pr",
+            "description": "Create Pull Requests following best conventions. Use when opening PRs, writing PR descriptions, or preparing changes for review."
+          },
+          {
+            "name": "doc",
+            "description": "Generate and validate repo docs, READMEs, and OSS doc packs. Triggers: \"doc\", \"generate and validate repo docs\", \"doc skill\"."
+          },
+          {
+            "name": "figure-it-out",
+            "description": "Design an auditable playbook when no narrower skill owns a large migration, multi-part change, or ambiguous engineering task."
+          },
+          {
+            "name": "find-skills",
+            "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill."
+          },
+          {
+            "name": "web-perf",
+            "description": "Analyzes web performance using Chrome DevTools MCP. Measures Core Web Vitals (LCP, INP, CLS) and supplementary metrics (FCP, TBT, Speed Index), identifies render-blocking resources, network dependency chains, layout shifts, caching issues, and accessibility gaps. Use when asked to audit, profile, debug, or optimize page load performance, Lighthouse scores, or site speed. Biases towards retrieval from current documentation over pre-trained knowledge."
+          },
+          {
+            "name": "frontend-design",
+            "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults."
+          },
+          {
+            "name": "gsap-framer-scroll-animation",
+            "description": "Use this skill whenever the user wants to build scroll animations, scroll effects, parallax, scroll-triggered reveals, pinned sections, horizontal scroll, text animations, or any motion tied to scroll position — in vanilla JS, React, or Next.js. Covers GSAP ScrollTrigger (pinning, scrubbing, snapping, timelines, horizontal scroll, ScrollSmoother, matchMedia) and Framer Motion / Motion v12 (useScroll, useTransform, useSpring, whileInView, variants). Use this skill even if the user just says \"animate on scroll\", \"fade in as I scroll\", \"make it scroll like Apple\", \"parallax effect\", \"sticky section\", \"scroll progress bar\", or \"entrance animation\". Also triggers for Copilot prompt patterns for GSAP or Framer Motion code generation. Pairs with the premium-frontend-ui skill for creative philosophy and design-level polish."
           },
           {
             "name": "how",
             "description": "Explain how a codebase works, where behavior belongs, and what a change can affect before implementation."
+          },
+          {
+            "name": "hf-cli",
+            "description": "Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, buckets, repos, papers, jobs, and more on the Hugging Face Hub. Use when: handling authentication; managing local cache; managing Hugging Face Buckets; running or scheduling jobs on Hugging Face infrastructure; managing Hugging Face repos; discussions and pull requests; browsing models, datasets and spaces; reading, searching, or browsing academic papers; managing collections; querying datasets; configuring spaces; setting up webhooks; or deploying and managing HF Inference Endpoints. Make sure to use this skill whenever the user mentions 'hf', 'huggingface', 'Hugging Face', 'huggingface-cli', or 'hugging face cli', or wants to do anything related to the Hugging Face ecosystem and to AI and ML in general. Also use for cloud storage needs like training checkpoints, data pipelines, or agent traces. Use even if the user doesn't explicitly ask for a CLI command. Replaces the deprecated `huggingface-cli`."
+          },
+          {
+            "name": "trl-training",
+            "description": "Post-train LLMs with TRL (Transformers Reinforcement Learning) — SFT, DPO, GRPO, KTO, and reward-model training. Use when writing or debugging training code with the TRL Python API or the trl CLI."
+          },
+          {
+            "name": "improve-codebase-architecture",
+            "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick."
+          },
+          {
+            "name": "in-your-own-words",
+            "description": "Restate in your own words what you think the user's goals are and what problem they're trying to solve. Use for /in-your-own-words."
+          },
+          {
+            "name": "kaggle-cli",
+            "description": "Use the local Kaggle CLI skill for command guidance, workflows, and troubleshooting across competitions, datasets, kernels/notebooks, models, model variations and versions, inbox file uploads, forums/discussions, benchmarks, configuration, OAuth/API-token authentication, and accelerator quota. Activate this skill when the user asks about kaggle CLI commands, examples, flags, metadata files, download/upload flows, submissions, benchmark tasks, or Kaggle CLI behavior."
+          },
+          {
+            "name": "write-kaggle-benchmarks",
+            "description": "Write, push, run, publish, and manage Kaggle Benchmark tasks using the kaggle CLI and the kaggle-benchmarks Python SDK. Use when the user wants to create or push a benchmark task (optionally with attached Kaggle datasets), run benchmarks against LLM models, check task/run status, stream or fetch execution logs, download results and source notebooks, publish a task to make it public, or troubleshoot benchmark workflows."
+          },
+          {
+            "name": "ketchup",
+            "description": "Catch the user up on what changed in this chat since their last message, in plain words and small visuals. List every item waiting on them with what they need to decide it from the reply alone. Use for /ketchup."
+          },
+          {
+            "name": "ketchup-video",
+            "description": "Catch the user up like /ketchup, with a short subtitled video of slides for what happened and the waiting calls as text under it. Use for /ketchup-video."
+          },
+          {
+            "name": "maintain-formal-verification-skill",
+            "description": "Bring a project's formal verification back in line with the code after the code changes: find the commits that touched verified code, update the model, harness, or properties to describe the code as it is now, rerun, and say whether each failure is drift in the verification or a bug in the code. Use for /maintain-formal-verification-skill, \"is the model still true to the code\", or after merges and refactors that touched verified code without rechecking it."
+          },
+          {
+            "name": "peft-lora-qlora",
+            "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
+          },
+          {
+            "name": "poteto-mode",
+            "description": "Use a small, deliberate workflow for non-trivial engineering changes that need clear scope, safe edits, and real verification."
           },
           {
             "name": "principle-attack-the-premise",
@@ -148,6 +196,10 @@
           {
             "name": "principle-foundational-thinking",
             "description": "Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious."
+          },
+          {
+            "name": "principle-guard-the-context-window",
+            "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads."
           },
           {
             "name": "principle-make-operations-idempotent",
@@ -194,108 +246,60 @@
             "description": "Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, exhaust variants, derive from authoritative schemas."
           },
           {
+            "name": "prompt-audit",
+            "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering."
+          },
+          {
             "name": "repo-audit",
-            "description": "Audit a repository for concrete bugs, security risks, load failures, missing tests, and dead code. Use for repository-wide review."
+            "description": "Quality audit of a whole repo: bugs, security holes, what breaks under real load, risky code without tests, slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes nothing. Use for \"audit this codebase\", \"review the whole repo\", \"find bloat\", or \"what can I delete\"."
           },
           {
-            "name": "why",
-            "description": "Explain why code or a design has its current shape using repository history and directly observable evidence."
-          },
-          {
-            "name": "frontend-design",
-            "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults."
-          },
-          {
-            "name": "gsap-framer-scroll-animation",
-            "description": "Use this skill whenever the user wants to build scroll animations, scroll effects, parallax, scroll-triggered reveals, pinned sections, horizontal scroll, text animations, or any motion tied to scroll position — in vanilla JS, React, or Next.js. Covers GSAP ScrollTrigger (pinning, scrubbing, snapping, timelines, horizontal scroll, ScrollSmoother, matchMedia) and Framer Motion / Motion v12 (useScroll, useTransform, useSpring, whileInView, variants). Use this skill even if the user just says \"animate on scroll\", \"fade in as I scroll\", \"make it scroll like Apple\", \"parallax effect\", \"sticky section\", \"scroll progress bar\", or \"entrance animation\". Also triggers for Copilot prompt patterns for GSAP or Framer Motion code generation. Pairs with the premium-frontend-ui skill for creative philosophy and design-level polish."
-          },
-          {
-            "name": "typescript-best-practices",
-            "description": "TypeScript best practices. Use when reading or editing any .ts or .tsx file."
-          },
-          {
-            "name": "web-perf",
-            "description": "Analyzes web performance using Chrome DevTools MCP. Measures Core Web Vitals (LCP, INP, CLS) and supplementary metrics (FCP, TBT, Speed Index), identifies render-blocking resources, network dependency chains, layout shifts, caching issues, and accessibility gaps. Use when asked to audit, profile, debug, or optimize page load performance, Lighthouse scores, or site speed. Biases towards retrieval from current documentation over pre-trained knowledge."
-          },
-          {
-            "name": "hf-cli",
-            "description": "Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, buckets, repos, papers, jobs, and more on the Hugging Face Hub. Use when: handling authentication; managing local cache; managing Hugging Face Buckets; running or scheduling jobs on Hugging Face infrastructure; managing Hugging Face repos; discussions and pull requests; browsing models, datasets and spaces; reading, searching, or browsing academic papers; managing collections; querying datasets; configuring spaces; setting up webhooks; or deploying and managing HF Inference Endpoints. Make sure to use this skill whenever the user mentions 'hf', 'huggingface', 'Hugging Face', 'huggingface-cli', or 'hugging face cli', or wants to do anything related to the Hugging Face ecosystem and to AI and ML in general. Also use for cloud storage needs like training checkpoints, data pipelines, or agent traces. Use even if the user doesn't explicitly ask for a CLI command. Replaces the deprecated `huggingface-cli`."
-          },
-          {
-            "name": "trl-training",
-            "description": "Post-train LLMs with TRL (Transformers Reinforcement Learning) — SFT, DPO, GRPO, KTO, and reward-model training. Use when writing or debugging training code with the TRL Python API or the trl CLI."
-          },
-          {
-            "name": "kaggle-cli",
-            "description": "Use the local Kaggle CLI skill for command guidance, workflows, and troubleshooting across competitions, datasets, kernels/notebooks, models, model variations and versions, inbox file uploads, forums/discussions, benchmarks, configuration, OAuth/API-token authentication, and accelerator quota. Activate this skill when the user asks about kaggle CLI commands, examples, flags, metadata files, download/upload flows, submissions, benchmark tasks, or Kaggle CLI behavior."
-          },
-          {
-            "name": "write-kaggle-benchmarks",
-            "description": "Write, push, run, publish, and manage Kaggle Benchmark tasks using the kaggle CLI and the kaggle-benchmarks Python SDK. Use when the user wants to create or push a benchmark task (optionally with attached Kaggle datasets), run benchmarks against LLM models, check task/run status, stream or fetch execution logs, download results and source notebooks, publish a task to make it public, or troubleshoot benchmark workflows."
-          },
-          {
-            "name": "benchmark-checklist",
-            "description": "Validate a performance measurement before reporting a speedup or regression."
-          },
-          {
-            "name": "blast-radius",
-            "description": "Find and prove what a change could break beyond its diff before shipping."
-          },
-          {
-            "name": "change-review",
-            "description": "Review a code change for correctness, safety, load, tests, speed, and unnecessary code. Use for code or PR review."
-          },
-          {
-            "name": "correct",
-            "description": "Find the mistakes agents keep repeating in this repo and make each one impossible. Try architecture first, then types, then a lint whose error names the fix, then a test, and write docs last. Prove each check fails on a real past mistake. Repeat this each time the operator corrects you. Use for /correct."
-          },
-          {
-            "name": "shortcut-debt",
-            "description": "List every `shortcut:` comment as a debt ledger. One-shot report, changes nothing. Use for \"shortcut debt\" or \"list the shortcuts\"."
-          },
-          {
-            "name": "bitsandbytes-quantization",
-            "description": "Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers."
-          },
-          {
-            "name": "peft-lora-qlora",
-            "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
+            "name": "scientific-slides",
+            "description": "Use when building or reviewing research/scientific slide decks (conference talks, seminars, defenses) — minimal text, one idea per slide, visual hierarchy, data/results slides, timing, and visual review. Works with PowerPoint, Google Slides, and Beamer."
           },
           {
             "name": "scientific-visualization",
             "description": "Creates and audits truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use it for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
           },
           {
-            "name": "create-formal-verification-skill",
-            "description": "Generate a project-local skill that formally verifies the code where a bug costs the most and tests reach the least, in any language, with whichever verification tool fits. Use for /create-formal-verification-skill, \"model-check this race\", \"prove this invariant\", or when concurrency, retries, state machines, parsers, or unsafe code need more than tests."
+            "name": "sharpen",
+            "description": "Make a task deeper, not bigger, then rewrite the prompt. Use for /sharpen."
           },
           {
-            "name": "maintain-formal-verification-skill",
-            "description": "Bring a project's formal verification back in line with the code after the code changes: find the commits that touched verified code, update the model, harness, or properties to describe the code as it is now, rerun, and say whether each failure is drift in the verification or a bug in the code. Use for /maintain-formal-verification-skill, \"is the model still true to the code\", or after merges and refactors that touched verified code without rechecking it."
+            "name": "shortcut-debt",
+            "description": "List every `shortcut:` comment as a debt ledger. One-shot report, changes nothing. Use for \"shortcut debt\" or \"list the shortcuts\"."
+          },
+          {
+            "name": "skills-router",
+            "description": "Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains, artifacts, or connected apps."
           },
           {
             "name": "statechart",
             "description": "Check a TLA+ model of a system that moves between states, such as a product flow, a protocol, or a service, and draw it as a Mermaid statechart. The report gives the shortest path to each state that breaks a rule. Use for /statechart, or to show a bug as a path through states."
           },
           {
-            "name": "conventional-commit",
-            "description": "Write Conventional Commit messages for code changes and git history."
-          },
-          {
-            "name": "create-pr",
-            "description": "Create Pull Requests following best conventions. Use when opening PRs, writing PR descriptions, or preparing changes for review."
-          },
-          {
-            "name": "doc",
-            "description": "Generate and validate repository docs, READMEs, and open-source doc packs. Use for documentation work."
+            "name": "teach",
+            "description": "Explain a body of work plainly so a person actually understands it. Runs the `how` and `why` skills and weaves what they find into one clear explanation. Use for 'teach me this', 'help me really understand X', 'explain this change or subsystem to me'."
           },
           {
             "name": "technical-writing",
-            "description": "Write and review concise technical docs, READMEs, RFCs, PRs, and commit messages with clear structure and plain language."
+            "description": "Layered technical-writing standard: Diátaxis structure, Google developer style sentences, STE instruction rules, Global English syntax. Use for /technical-writing or when writing or reviewing docs, RFCs, readmes, PR descriptions, or commit messages."
+          },
+          {
+            "name": "testing-setup",
+            "description": "Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure, create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests."
+          },
+          {
+            "name": "typescript-best-practices",
+            "description": "TypeScript best practices. Use when reading or editing any .ts or .tsx file."
           },
           {
             "name": "unslop",
             "description": "Cut AI tells from any writing."
+          },
+          {
+            "name": "why",
+            "description": "Explain why code or a design has its current shape using repository history and directly observable evidence."
           }
         ],
         "hooks": [

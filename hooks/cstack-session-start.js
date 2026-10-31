@@ -2,16 +2,14 @@ const fs = require("fs");
 const path = require("path");
 
 try {
-  const root = path.join(__dirname, "..", "skills", "agent");
-  const files = ["poteto-mode/SKILL.md", "skills-router/SKILL.md"];
-  const context = files.map((file) => fs.readFileSync(path.join(root, file), "utf8").replace(/^---[\s\S]*?---\s*/, "")).join("\n\n---\n\n");
-  const activeContext = `CSTACK DEFAULT WORKFLOW ACTIVE\n\n${context}`;
+  const skill = fs.readFileSync(path.join(__dirname, "..", "skills", "skills-router", "SKILL.md"), "utf8");
+  const context = `CSTACK SKILL ROUTER ACTIVE\n\n${skill.replace(/^---[\s\S]*?---\s*/, "")}`;
   if (process.env.PLUGIN_DATA) {
-    process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: "SessionStart", additionalContext: activeContext } }));
+    process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: "SessionStart", additionalContext: context } }));
   } else if (process.env.GROK_PLUGIN_ROOT || process.env.GROK_HOOK_EVENT) {
     process.exitCode = 0;
   } else {
-    process.stdout.write(activeContext);
+    process.stdout.write(context);
   }
 } catch {
   process.exitCode = 0;
