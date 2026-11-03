@@ -18,10 +18,6 @@
             "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test."
           },
           {
-            "name": "agp-9-upgrade",
-            "description": "Upgrades, or migrates, an Android project to use Android Gradle Plugin (AGP) version 9. Do not use this skill for migrating Kotlin Multiplatform (KMP) projects."
-          },
-          {
             "name": "architect",
             "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
           },

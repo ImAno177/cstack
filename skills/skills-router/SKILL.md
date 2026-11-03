@@ -29,7 +29,7 @@ Use this router only when selection is ambiguous or the request spans more than 
 - Hugging Face Hub, `hf` CLI, or Hugging Face ecosystem work → `hf-cli`
 - scientific or publication figures → `scientific-visualization`
 - scientific or research slide decks → `scientific-slides`
-- Android AGP migration → `agp-9-upgrade`; native Android testing → `testing-setup`
+- native Android testing → `testing-setup`
 - frontend design → `frontend-design`
 - repository docs → `doc`; conventional commits → `conventional-commit`; pull requests → `create-pr`; architecture boundaries → `architect`; codebase walkthroughs → `how`; Kaggle benchmarks → `write-kaggle-benchmarks`
 - code quality review → `change-review`; whole-repository audit → `repo-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
