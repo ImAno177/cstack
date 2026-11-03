@@ -48,7 +48,7 @@ Use this router only when selection is ambiguous or the request spans more than 
 - AI-sounding prose cleanup → `unslop`
 - create or update a skill → `skill-creator`; install or discover skills → `skill-installer` or `find-skills`; plugin management → `plugin-management:plugin-management`
 - Codex or OpenAI product behavior and configuration → `openai-docs`
-- non-trivial engineering workflow → `potato-mode`; broad multi-part work with no narrower owner → `figure-it-out`
+- non-trivial engineering workflow → `default-mode`; broad multi-part work with no narrower owner → `figure-it-out`
 
 ## Selection rules
 

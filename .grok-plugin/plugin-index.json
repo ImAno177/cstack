@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "components": {
         "skills": [
           {
@@ -110,6 +110,10 @@
             "description": "Create Pull Requests following best conventions. Use when opening PRs, writing PR descriptions, or preparing changes for review."
           },
           {
+            "name": "default-mode",
+            "description": "Default workflow for non-trivial cstack work. It selects the smallest relevant skills, sets a checkable outcome, and verifies the real artifact across supported hosts."
+          },
+          {
             "name": "doc",
             "description": "Generate and validate repo docs, READMEs, and OSS doc packs. Triggers: \"doc\", \"generate and validate repo docs\", \"doc skill\"."
           },
@@ -176,10 +180,6 @@
           {
             "name": "peft-lora-qlora",
             "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
-          },
-          {
-            "name": "potato-mode",
-            "description": "Default workflow for non-trivial cstack work. It selects the smallest relevant skills, sets a checkable outcome, and verifies the real artifact across supported hosts."
           },
           {
             "name": "principle-attack-the-premise",

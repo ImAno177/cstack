@@ -1,9 +1,9 @@
 ---
-name: potato-mode
+name: default-mode
 description: Default workflow for non-trivial cstack work. It selects the smallest relevant skills, sets a checkable outcome, and verifies the real artifact across supported hosts.
 ---
 
-# Potato mode
+# Default mode
 
 Use this as the default entrypoint for work that is more than a one-file, one-step edit. Execute the work, not only a plan.
 

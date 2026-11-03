@@ -5,7 +5,7 @@ description: "Design, debug, or evaluate the runtime around a model-driven agent
 
 # Agent harness
 
-Use this skill to turn a model into a bounded, inspectable agent. Read [the harness matrix](references/harness-matrix.md) first when choosing an architecture, and read [the LFM3/Pi notes](references/lfm3-pi.md) for that integration.
+Use this skill to turn a model into a bounded, inspectable agent. Read [the harness matrix](references/harness-matrix.md) first when choosing an architecture, and read [the LFM3/Pi notes](references/lfm3-pi.md) for that integration. Read [the incident guards](references/incident-guards.md) when a new hook, evaluator, batch path, or delegation policy is proposed.
 
 ## Define the boundary
 
@@ -55,6 +55,14 @@ Give each worker an isolated path or session, a bounded budget, an explicit tool
 ## Evaluation gate
 
 Run production-shaped trials in clean environments. Include no-tool answers, valid and malformed calls, deferred discovery, duplicate-write prevention, timeout and tool failure, steering, follow-up, compaction, partial completion, and false completion claims. Grade outcome and trajectory separately: artifact state, tool choice, arguments, policy decisions, errors, turns, latency, tokens, retries, cleanup, and stop reason. Classify model, harness, tool, environment, and evaluator failures separately.
+
+## Operational guardrails
+
+- Tie every new hook, evaluator, or automation to a reproduced incident, a measurable success predicate, a cost budget, and a retirement condition.
+- Make verifiers non-vacuous: record the expected subject count and matched-evidence count; zero matches are `unknown`, never a passing result.
+- Bound delegated work by model, depth, concurrency, time, tokens, and cleanup receipt. A worker report is not evidence that its side effects happened.
+- Write a durable handoff before compaction or a phase boundary. Keep the system contract and tool catalog stable inside a phase; discover new tools at the next boundary.
+- Measure activation and outcome before adding another skill or reference. Retire additions that add load without improving a representative task.
 
 ## Finish
 
