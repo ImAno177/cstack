@@ -2,9 +2,21 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.1.0",
+      "version": "0.1.4",
       "components": {
         "skills": [
+          {
+            "name": "agent-completion",
+            "description": "Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations."
+          },
+          {
+            "name": "agent-context",
+            "description": "Keep long-running agent work coherent with bounded phases, capped outputs, checkpoints, compact handoffs, and loop detection. Use for large repositories, many tool calls, compaction, repeated reads, or delegated work; not for short tasks."
+          },
+          {
+            "name": "agent-evaluation",
+            "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test."
+          },
           {
             "name": "agp-9-upgrade",
             "description": "Upgrades, or migrates, an Android project to use Android Gradle Plugin (AGP) version 9. Do not use this skill for migrating Kotlin Multiplatform (KMP) projects."
@@ -12,6 +24,10 @@
           {
             "name": "architect",
             "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
+          },
+          {
+            "name": "arena",
+            "description": "Run isolated alternative attempts at the same design or artifact, compare them against a declared rubric, and graft only proven improvements. Use for design bakeoffs or when one attempt could lock in the wrong shape."
           },
           {
             "name": "benchmark-checklist",
@@ -130,12 +146,12 @@
             "description": "Post-train LLMs with TRL (Transformers Reinforcement Learning) — SFT, DPO, GRPO, KTO, and reward-model training. Use when writing or debugging training code with the TRL Python API or the trl CLI."
           },
           {
-            "name": "improve-codebase-architecture",
-            "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick."
-          },
-          {
             "name": "in-your-own-words",
             "description": "Restate in your own words what you think the user's goals are and what problem they're trying to solve. Use for /in-your-own-words."
+          },
+          {
+            "name": "interrogate",
+            "description": "Run an adversarial review of a change or design where every surviving finding must be proven by a repro, failing check, or direct artifact evidence. Use for blind-spot and stress-test requests."
           },
           {
             "name": "kaggle-cli",
@@ -158,12 +174,16 @@
             "description": "Bring a project's formal verification back in line with the code after the code changes: find the commits that touched verified code, update the model, harness, or properties to describe the code as it is now, rerun, and say whether each failure is drift in the verification or a bug in the code. Use for /maintain-formal-verification-skill, \"is the model still true to the code\", or after merges and refactors that touched verified code without rechecking it."
           },
           {
+            "name": "multi-agent-workflow",
+            "description": "Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating work; stay direct for short, sequential, or shared-state tasks."
+          },
+          {
             "name": "peft-lora-qlora",
             "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
           },
           {
             "name": "potato-mode",
-            "description": "Use a small, deliberate workflow for non-trivial engineering changes that need clear scope, safe edits, and real verification."
+            "description": "Default workflow for non-trivial cstack work. It selects the smallest relevant skills, sets a checkable outcome, and verifies the real artifact across supported hosts."
           },
           {
             "name": "principle-attack-the-premise",
@@ -180,6 +200,10 @@
           {
             "name": "principle-encode-lessons-in-structure",
             "description": "Apply when you catch yourself writing the same instruction a second time, or notice a recurring correction. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text."
+          },
+          {
+            "name": "principle-exhaust-design-space",
+            "description": "Apply when a novel interaction or architecture decision has no useful precedent. Build two or three competing prototypes and compare them before committing."
           },
           {
             "name": "principle-experience-first",
@@ -202,6 +226,10 @@
             "description": "Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads."
           },
           {
+            "name": "principle-laziness-protocol",
+            "description": "Apply when refactoring, sizing a diff, or feeling tempted to add abstractions, layers, or signal threading. Prefer deletion and the smallest change that solves the problem."
+          },
+          {
             "name": "principle-make-operations-idempotent",
             "description": "Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs."
           },
@@ -216,6 +244,10 @@
           {
             "name": "principle-model-the-domain",
             "description": "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files."
+          },
+          {
+            "name": "principle-never-block-on-human",
+            "description": "Apply when tempted to ask whether to take a reversible action that the task already authorizes."
           },
           {
             "name": "principle-outcome-oriented-execution",
@@ -238,6 +270,10 @@
             "description": "Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer."
           },
           {
+            "name": "principle-subtract-before-add",
+            "description": "Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references before building on the base."
+          },
+          {
             "name": "principle-test-behavior-not-implementation",
             "description": "Apply when you write, change, or keep a test. Assert what the code's users can observe, so that the test fails when that behavior breaks and keeps passing when only the internals change."
           },
@@ -248,6 +284,10 @@
           {
             "name": "prompt-audit",
             "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering."
+          },
+          {
+            "name": "reflect",
+            "description": "Mine a completed or failed agent episode for durable improvements, route each learning to an existing skill or rule, and separate accepted edits from rejected and deferred candidates."
           },
           {
             "name": "repo-audit",
@@ -270,12 +310,20 @@
             "description": "List every `shortcut:` comment as a debt ledger. One-shot report, changes nothing. Use for \"shortcut debt\" or \"list the shortcuts\"."
           },
           {
+            "name": "show-me-your-work",
+            "description": "Keep a compact, reviewable decision trail for long-running, unattended, or multi-phase work. Use when a reviewer needs to trust the path from decision to evidence."
+          },
+          {
             "name": "skills-router",
             "description": "Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains, artifacts, or connected apps."
           },
           {
             "name": "statechart",
             "description": "Check a TLA+ model of a system that moves between states, such as a product flow, a protocol, or a service, and draw it as a Mermaid statechart. The report gives the shortest path to each state that breaks a rule. Use for /statechart, or to show a bug as a path through states."
+          },
+          {
+            "name": "swarm",
+            "description": "Fan out bounded workers across independent coverage slices or identical race attempts, drain them, and return one evidence-backed report. Use for parallel research, audits, or verification."
           },
           {
             "name": "teach",
@@ -288,6 +336,10 @@
           {
             "name": "testing-setup",
             "description": "Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure, create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests."
+          },
+          {
+            "name": "tool-orchestration",
+            "description": "Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow."
           },
           {
             "name": "typescript-best-practices",

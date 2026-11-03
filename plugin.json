@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "cstack",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Portable cstack skills for engineering, academic research, and continual learning.",
   "author": {
     "name": "ImAno177",
@@ -12,6 +12,7 @@
   "keywords": ["skills", "codex", "chatgpt", "grok", "academic-research", "continual-learning"],
   "extensions": {
     "com.openai": {
+      "hooks": "./hooks/hooks.json",
       "interface": {
         "displayName": "cstack",
         "shortDescription": "Portable cstack skills for ChatGPT and Codex",

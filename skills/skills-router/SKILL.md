@@ -36,6 +36,13 @@ Use this router only when selection is ambiguous or the request spans more than 
 - shortcut debt or deferred work → `shortcut-debt`
 - design rationale, regressions, or postmortems → `why`
 - continual learning, agent memory, skill updates, retention, or transfer → `continual-learning`
+- multi-agent or subagent delegation, parallel research, isolated work, or result handoff → `multi-agent-workflow`
+- same-task alternatives or design bakeoff → `arena`; parallel coverage slices or races → `swarm`; adversarial review with proven findings → `interrogate`
+- parallel, async, programmatic, or offline batch tool execution → `tool-orchestration`
+- transcript reflection into durable skill changes → `reflect`; long-run decision trail → `show-me-your-work`
+- verifying whether tool-driven work actually completed, reporting partial work, or proving a side effect → `agent-completion`
+- long-running work, context compaction, repeated reads, large outputs, or context handoff → `agent-context`
+- evaluating models, prompts, hooks, skills, or agent workflows across repeated tasks → `agent-evaluation`
 - stale prompts, outdated model assumptions, skill/rule cruft, or conflicting agent instructions → `prompt-audit`
 - AI-sounding prose cleanup → `unslop`
 - create or update a skill → `skill-creator`; install or discover skills → `skill-installer` or `find-skills`; plugin management → `plugin-management:plugin-management`

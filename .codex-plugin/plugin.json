@@ -1,6 +1,6 @@
 {
   "name": "cstack",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Portable cstack skills for ChatGPT and Codex.",
   "author": {
     "name": "ImAno177",
@@ -9,7 +9,7 @@
   "repository": "https://github.com/ImAno177/cstack",
   "license": "MIT",
   "skills": "./skills/",
-  "hooks": "./hooks/codex-hooks.json",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "cstack",
     "shortDescription": "Portable cstack skills for ChatGPT and Codex",

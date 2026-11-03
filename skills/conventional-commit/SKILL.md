@@ -11,23 +11,16 @@ metadata:
 
 Follow these conventions when creating commits.
 
-## Prerequisites
+## Before committing
 
-Before committing, ensure you're working on a feature branch, not the main branch.
+Inspect the current status, branch, upstream, and intended paths. Follow the repository's `AGENTS.md` for branch and publication policy. Do not stage unrelated work, secrets, generated noise, or temporary files.
 
 ```bash
 # Check current branch
 git branch --show-current
 ```
 
-If you're on `main` or `master`, create a new branch first:
-
-```bash
-# Create and switch to a new branch
-git checkout -b <type>/<short-description>
-```
-
-Branch naming should follow the pattern: `<type>/<short-description>` where type matches the commit type (e.g., `feat/add-user-auth`, `fix/null-pointer-error`, `refactor/extract-validation`).
+If the repository requires a feature branch, use the repository's documented branch prefix and workflow. Do not invent a branch policy in this skill.
 
 ## Format
 
