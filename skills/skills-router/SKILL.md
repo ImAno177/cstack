@@ -36,6 +36,7 @@ Use this router only when selection is ambiguous or the request spans more than 
 - shortcut debt or deferred work → `shortcut-debt`
 - design rationale, regressions, or postmortems → `why`
 - continual learning, agent memory, skill updates, retention, or transfer → `continual-learning`
+- model-driven agent loops, local model adapters, Pi packages, harnesses, or agent runtime evaluation → `agent-harness`
 - multi-agent or subagent delegation, parallel research, isolated work, or result handoff → `multi-agent-workflow`
 - same-task alternatives or design bakeoff → `arena`; parallel coverage slices or races → `swarm`; adversarial review with proven findings → `interrogate`
 - parallel, async, programmatic, or offline batch tool execution → `tool-orchestration`

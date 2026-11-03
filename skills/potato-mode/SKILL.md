@@ -16,6 +16,8 @@ Use this as the default entrypoint for work that is more than a one-file, one-st
 
 ## Route
 
+- Select one matching playbook under [playbooks](playbooks/) before executing a non-trivial workflow. Read only that playbook and the skills it names.
+- `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill.
 - A read-only explanation → `how` or `why`.
 - A defect with a reproducible symptom → `principle-fix-root-causes`, then the narrow implementation skill.
 - A new behavior or structural change → `architect` when a boundary changes, then the implementation skill.
@@ -25,6 +27,7 @@ Use this as the default entrypoint for work that is more than a one-file, one-st
 - An adversarial review → `interrogate`; an ordinary change review → `change-review`.
 - A long or unattended run → `agent-context`, `agent-completion`, and `show-me-your-work` when a reviewer needs the decisions.
 - A skill, rule, hook, or prompt change → `prompt-audit`, then `continual-learning` when the change is meant to persist.
+- An agent loop, local model adapter, Pi package, or harness evaluation → `agent-harness`.
 
 Do not route automatically to `tdd`, review, or audit skills unless the request or the work's risk requires them. Do not use Cursor-only features, model names, or paths on Codex, Grok Build, or Grok Bot.
 

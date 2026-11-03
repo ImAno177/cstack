@@ -18,6 +18,10 @@
             "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test."
           },
           {
+            "name": "agent-harness",
+            "description": "Design, debug, or evaluate the runtime around a model-driven agent: loop, model adapter, tools, context, permissions, orchestration, extensibility, and verification. Use for Codex, Claude Code, DSH, Pi, Prime Agent, local-model integrations, or coding-agent harnesses; not for ordinary application code."
+          },
+          {
             "name": "architect",
             "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
           },
