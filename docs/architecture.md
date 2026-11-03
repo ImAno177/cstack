@@ -33,4 +33,3 @@ For local model and Pi work, keep model adaptation, tool registry, loop control,
 - [Pi](https://github.com/badlogic/pi-mono) and the [LFM3 model card](https://huggingface.co/LiquidAI/LFM3-1.7B) for the harness/resource split and local-model tool-loop constraints.
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) for plugin seams, service ownership, and inspectable session writes; [Prime Agent](https://github.com/PrimeIntellect-ai/prime-agent) for resumable long-running state and evidence-backed refinement.
 - [Harness Engineering](https://arxiv.org/abs/2609.00006) for the seven-subsystem comparison and the recommendation to start with a small linear loop, deterministic code retrieval, deferred loading, explicit policies, and measured delegation.
-- [pstack vs cstack](pstack-vs-cstack.md) records which pstack ideas were adopted and which Cursor-specific pieces remain out of the portable core.
