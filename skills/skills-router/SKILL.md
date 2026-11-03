@@ -30,7 +30,7 @@ Use this router only when selection is ambiguous or the request spans more than 
 - scientific or publication figures → `scientific-visualization`
 - scientific or research slide decks → `scientific-slides`
 - Android AGP migration → `agp-9-upgrade`; native Android testing → `testing-setup`
-- frontend design → `frontend-design`; scroll animation → `gsap-framer-scroll-animation`
+- frontend design → `frontend-design`
 - repository docs → `doc`; conventional commits → `conventional-commit`; pull requests → `create-pr`; architecture boundaries → `architect`; codebase walkthroughs → `how`; Kaggle benchmarks → `write-kaggle-benchmarks`
 - code quality review → `change-review`; whole-repository audit → `repo-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
 - shortcut debt or deferred work → `shortcut-debt`

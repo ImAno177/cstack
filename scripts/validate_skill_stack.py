@@ -53,8 +53,17 @@ def validate_links(catalog_root: Path, path: Path, errors: list[str]) -> None:
         if not target or target.startswith(("http://", "https://", "mailto:", "data:", "/")):
             continue
         resolved = (path.parent / target).resolve()
-        if not resolved.is_file() or catalog_root.resolve() not in resolved.parents:
+        if not resolved.exists() or catalog_root.resolve() not in resolved.parents:
             errors.append(f"broken internal link: {path}: {raw_target}")
+
+
+def link_check_excluded(path: Path, source_root: Path, prefixes: list[str]) -> bool:
+    relative = path.resolve().relative_to(source_root.resolve()).as_posix()
+    return any(
+        relative == prefix.rstrip("/")
+        or relative.startswith(f"{prefix.rstrip('/')}/")
+        for prefix in prefixes
+    )
 
 
 def main() -> int:
@@ -69,6 +78,10 @@ def main() -> int:
     excluded = set(policy.get("exclude", []))
     host_markers = [marker.casefold() for marker in policy.get("host_markers", [])]
     external_routes = set(policy.get("external_routes", []))
+    link_exclude_prefixes = [
+        prefix.replace("\\", "/")
+        for prefix in policy.get("link_exclude_prefixes", [])
+    ]
     max_entry_lines = int(policy.get("max_entry_lines", 160))
     errors: list[str] = []
     upstreams_path = args.upstreams or (args.source_root / ".cstack" / "upstreams.json")
@@ -112,7 +125,10 @@ def main() -> int:
             for marker in host_markers:
                 if marker in text:
                     errors.append(f"host-specific instruction in {artifact}: {marker}")
-        validate_links(args.plugin_root / "skills", entrypoint, errors)
+        for document in skill.rglob("*.md"):
+            if link_check_excluded(document, args.plugin_root, link_exclude_prefixes):
+                continue
+            validate_links(args.plugin_root / "skills", document, errors)
 
     for excluded_name in excluded:
         if (args.plugin_root / "skills" / excluded_name).exists():

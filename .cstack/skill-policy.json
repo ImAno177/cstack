@@ -24,5 +24,6 @@
     "skill-installer",
     "find-skills"
   ],
-  "max_entry_lines": 160
+  "max_entry_lines": 160,
+  "link_exclude_prefixes": ["skills/cloudflare/"]
 }
