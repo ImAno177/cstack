@@ -20,7 +20,8 @@ Use this router only when selection is ambiguous or the request spans more than 
 - ChatGPT Pages or Spaces → the matching `pages:*` skill
 - website creation or management → `sites:sites`; Site remix → `sites:sites-remix`
 - ChatGPT Work pets → the matching `work-pets:*` skill
-- Cloudflare Workers, Wrangler, Durable Objects, Email, Zero Trust, Turnstile, Agents SDK, sandbox, or web performance → the narrowest matching installed Cloudflare skill
+- Cloudflare Workers, Wrangler, Durable Objects, Email, Zero Trust, Turnstile, Agents SDK, or Cloudflare sandbox → the narrowest matching installed Cloudflare skill
+- generic web performance, Core Web Vitals, Lighthouse, or page speed → `web-perf`
 - LoRA or QLoRA fine-tuning → `peft-lora-qlora`
 - bitsandbytes quantization → `bitsandbytes-quantization`
 - TRL training → `trl-training`

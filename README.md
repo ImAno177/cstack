@@ -15,7 +15,7 @@ hooks/                          host-specific hook configs and shared runtime
 .agents/plugins/                Codex marketplace
 ```
 
-Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries, while platform directories remain managed copies of their upstream sources.
+Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries. Platform groups keep their upstream organization; only entries declared in `.cstack/upstreams.json` are automatically synchronized.
 
 Platform groups include `skills/kaggle/`, `skills/colab/`, `skills/huggingface/`, and `skills/cloudflare/`; portable core skills live directly under `skills/`.
 

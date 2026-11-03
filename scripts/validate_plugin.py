@@ -29,13 +29,29 @@ def validate_skill(path: Path) -> None:
         raise ValueError(f"invalid skill description: {path}")
 
 
+def load_json(path: Path) -> object:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        raise ValueError(f"invalid JSON: {path}: {error}") from error
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=Path)
     args = parser.parse_args()
     root = args.root.resolve()
     manifest = root / "plugin.json"
-    package = json.loads(manifest.read_text(encoding="utf-8"))
+    package = load_json(manifest)
+    for relative in (
+        Path(".codex-plugin/plugin.json"),
+        Path(".grok-plugin/plugin.json"),
+        Path(".grok-plugin/marketplace.json"),
+        Path(".agents/plugins/marketplace.json"),
+    ):
+        candidate = root / relative
+        if candidate.is_file():
+            load_json(candidate)
     if not isinstance(package.get("name"), str) or not NAME_PATTERN.fullmatch(package["name"]):
         raise ValueError("plugin.json has an invalid name")
     if not isinstance(package.get("version"), str) or not package["version"]:

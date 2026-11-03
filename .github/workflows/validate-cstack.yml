@@ -7,6 +7,8 @@ on:
       - ".cstack/**"
       - "skills/**"
       - "hooks/**"
+      - ".agents/**"
+      - ".github/workflows/**"
       - ".codex-plugin/**"
       - ".grok-plugin/**"
       - "plugin.json"
@@ -20,6 +22,8 @@ on:
       - ".cstack/**"
       - "skills/**"
       - "hooks/**"
+      - ".agents/**"
+      - ".github/workflows/**"
       - ".codex-plugin/**"
       - ".grok-plugin/**"
       - "plugin.json"
@@ -48,5 +52,4 @@ jobs:
           --source-root .
           --plugin-root .
           --policy .cstack/skill-policy.json
-      - run: python scripts/generate_grok_plugin_index.py
       - run: python scripts/generate_grok_plugin_index.py --check
