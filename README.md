@@ -63,6 +63,10 @@ All examples describe the intended host integration; verify installation and hoo
 
 Use the [32-case routing benchmark](docs/routing-benchmark.md) to compare task success, selected skills, tokens, and latency. No model performance improvements are claimed without real repeated runs.
 
+## Reproduction benchmark
+
+The [micrograd A/B benchmark](benchmarks/reproduction/micrograd/README.md) launches two isolated Codex CLI trials concurrently (baseline without cstack vs. with cstack), then scores nine hidden black-box checks. Requires a locally authenticated Codex CLI; results have not yet been collected.
+
 ## Release and licensing
 
 `.github/workflows/validate-cstack.yml` runs the root validators and checks the generated Grok plugin index. See [changelog](CHANGELOG.md), [release checklist](docs/releasing.md), [MIT license](LICENSE), and [third-party notices](THIRD_PARTY_NOTICES.md). Bundled upstream skill content may have separate licenses.
