@@ -111,7 +111,7 @@
           },
           {
             "name": "default-mode",
-            "description": "Default workflow for non-trivial cstack work. It selects the smallest relevant skills, sets a checkable outcome, and verifies the real artifact across supported hosts."
+            "description": "Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default."
           },
           {
             "name": "doc",
@@ -311,7 +311,7 @@
           },
           {
             "name": "skills-router",
-            "description": "Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains, artifacts, or connected apps."
+            "description": "Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains, artifacts, or connected apps. Do not use when a single skill clearly owns the task."
           },
           {
             "name": "statechart",

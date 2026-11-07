@@ -1,11 +1,11 @@
 ---
 name: default-mode
-description: Default workflow for non-trivial cstack work. It selects the smallest relevant skills, sets a checkable outcome, and verifies the real artifact across supported hosts.
+description: Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default.
 ---
 
 # Default mode
 
-Use this as the default entrypoint for work that is more than a one-file, one-step edit. Execute the work, not only a plan.
+Use when multi-step engineering needs a workflow and no narrower installed skill already owns the outcome. Do not make it mandatory for every multi-file change.
 
 ## Start
 
@@ -18,16 +18,16 @@ Use this as the default entrypoint for work that is more than a one-file, one-st
 
 - Select one matching playbook under [playbooks](playbooks/) before executing a non-trivial workflow. Read only that playbook and the skills it names.
 - `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill.
-- A read-only explanation → `how` or `why`.
-- A defect with a reproducible symptom → `principle-fix-root-causes`, then the narrow implementation skill.
-- A new behavior or structural change → `architect` when a boundary changes, then the implementation skill.
-- A novel design fork → `principle-exhaust-design-space`, then prototype behavior through the available tools.
-- Several independent workers → `multi-agent-workflow`; same-task alternatives → `arena`; coverage slices → `swarm`.
-- Parallel, async, programmatic, or offline batch tool calls → `tool-orchestration`.
-- An adversarial review → `interrogate`; an ordinary change review → `change-review`.
-- A long or unattended run → `agent-context`, `agent-completion`, and `show-me-your-work` when a reviewer needs the decisions.
-- A skill, rule, hook, or prompt change → `prompt-audit`, then `continual-learning` when the change is meant to persist.
-- An agent loop, local model adapter, Pi package, or harness evaluation → `agent-harness`.
+- A read-only explanation -> `how` or `why`.
+- A defect with a reproducible symptom -> `principle-fix-root-causes`, then the narrow implementation skill.
+- A new behavior or structural change -> `architect` when a boundary changes, then the implementation skill.
+- A novel design fork -> `principle-exhaust-design-space`, then prototype behavior through the available tools.
+- Several independent workers -> `multi-agent-workflow`; same-task alternatives -> `arena`; coverage slices -> `swarm`.
+- Parallel, async, programmatic, or offline batch tool calls -> `tool-orchestration`.
+- An adversarial review -> `interrogate`; an ordinary change review -> `change-review`.
+- A long or unattended run -> `agent-context`, `agent-completion`, and `show-me-your-work` when a reviewer needs the decisions.
+- A skill, rule, hook, or prompt change -> `prompt-audit`, then `continual-learning` when the change is meant to persist.
+- An agent loop, local model adapter, Pi package, or harness evaluation -> `agent-harness`.
 
 Do not route automatically to `tdd`, review, or audit skills unless the request or the work's risk requires them. Do not use Cursor-only features, model names, or paths on Codex, Grok Build, or Grok Bot.
 

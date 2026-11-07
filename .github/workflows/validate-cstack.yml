@@ -11,12 +11,17 @@ on:
       - ".github/workflows/**"
       - ".codex-plugin/**"
       - ".grok-plugin/**"
+      - ".claude-plugin/**"
+      - "scripts/**"
+      - "benchmarks/**"
+      - "docs/**"
+      - "tests/**"
       - "plugin.json"
       - "AGENTS.md"
-      - ".grok-plugin/marketplace.json"
-      - "scripts/generate_grok_plugin_index.py"
-      - "scripts/validate_plugin.py"
-      - "scripts/validate_skill_stack.py"
+      - "LICENSE"
+      - "CHANGELOG.md"
+      - "THIRD_PARTY_NOTICES.md"
+      - "README.md"
   pull_request:
     paths:
       - ".cstack/**"
@@ -26,12 +31,17 @@ on:
       - ".github/workflows/**"
       - ".codex-plugin/**"
       - ".grok-plugin/**"
+      - ".claude-plugin/**"
+      - "scripts/**"
+      - "benchmarks/**"
+      - "docs/**"
+      - "tests/**"
       - "plugin.json"
       - "AGENTS.md"
-      - ".grok-plugin/marketplace.json"
-      - "scripts/generate_grok_plugin_index.py"
-      - "scripts/validate_plugin.py"
-      - "scripts/validate_skill_stack.py"
+      - "LICENSE"
+      - "CHANGELOG.md"
+      - "THIRD_PARTY_NOTICES.md"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
@@ -47,6 +57,11 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install pyyaml
       - run: python scripts/validate_plugin.py --root .
+      - name: Verify locked upstream snapshot when present
+        run: |
+          if [ -f .cstack/upstreams.lock.json ]; then
+            python scripts/sync_upstream_skills.py --check
+          fi
       - run: >-
           python scripts/validate_skill_stack.py
           --source-root .

@@ -1,6 +1,6 @@
 # cstack
 
-Portable cstack plugin for ChatGPT, Codex, Grok Build, and Grok Bot.
+Portable cstack plugin for ChatGPT, Codex, Grok Build, Grok Bot, and Claude Code.
 
 ## Layout
 
@@ -11,17 +11,18 @@ skills/                         canonical skills, with platform groups where use
 hooks/                          host-specific hook configs and shared runtime
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
-.cstack/                        routing policy and upstream manifest
+.claude-plugin/                 Claude Code marketplace
+.cstack/                        routing policy, upstream manifest, and generated lock
 .agents/plugins/                Codex marketplace
 ```
 
-Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries. Platform groups keep their upstream organization; only entries declared in `.cstack/upstreams.json` are automatically synchronized.
+Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries. The session-start hook uses a compact router bootstrap; set `CSTACK_ROUTER_MODE=full` for the previous full router injection.
 
-Platform groups include `skills/kaggle/`, `skills/colab/`, `skills/huggingface/`, and `skills/cloudflare/`; portable core skills live directly under `skills/`.
+Platform groups include `skills/kaggle/`, `skills/colab/`, `skills/huggingface/`, and `skills/cloudflare/`; portable core skills live directly under `skills/`. Only entries declared in `.cstack/upstreams.json` are automatically synchronized.
 
 ## Build and validate
 
-```powershell
+```sh
 python scripts/validate_plugin.py --root .
 python scripts/validate_skill_stack.py --source-root . --plugin-root . --policy .cstack/skill-policy.json
 python scripts/generate_grok_plugin_index.py --check
@@ -31,22 +32,37 @@ python scripts/generate_grok_plugin_index.py --check
 
 Codex:
 
-```powershell
+```sh
 codex plugin marketplace add ImAno177/cstack --ref main
 codex plugin add cstack@cstack
 ```
 
 Grok Build:
 
-```powershell
+```sh
 grok plugin marketplace add ImAno177/cstack
 grok plugin install cstack --trust
 ```
 
 Grok Bot uses the same marketplace and skills. Refresh the plugin after a new release.
 
-## CI
+Claude Code:
 
-`.github/workflows/validate-cstack.yml` validates the root plugin and regenerates `.grok-plugin/plugin-index.json`.
+```sh
+claude plugin marketplace add ImAno177/cstack
+claude plugin install cstack@cstack
+```
 
-`.github/workflows/sync-upstream-skills.yml` refreshes managed skills from their original public repositories on schedule or manual dispatch.
+All examples describe the intended host integration; verify installation and hook execution on your specific client before reporting support as tested. Hooks require Node.js in the host environment.
+
+## Upstream synchronization
+
+`.github/workflows/sync-upstream-skills.yml` proposes changes as a pull request rather than pushing directly to `main`. Successful syncs record source commit SHAs and vendored content hashes in `.cstack/upstreams.lock.json`. See [release instructions](docs/releasing.md) for the initial bootstrap, review requirements, and GitHub Actions permissions.
+
+## Routing evaluation
+
+Use the [32-case routing benchmark](docs/routing-benchmark.md) to compare task success, selected skills, tokens, and latency. No model performance improvements are claimed without real repeated runs.
+
+## Release and licensing
+
+`.github/workflows/validate-cstack.yml` runs the root validators and checks the generated Grok plugin index. See [changelog](CHANGELOG.md), [release checklist](docs/releasing.md), [MIT license](LICENSE), and [third-party notices](THIRD_PARTY_NOTICES.md). Bundled upstream skill content may have separate licenses.
