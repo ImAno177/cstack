@@ -23,7 +23,7 @@
    python scripts/generate_grok_plugin_index.py --check
    ```
 
-4. Update `CHANGELOG.md` and release notes. Verify marketplace install instructions on the target host before claiming platform compatibility; declared support alone does not prove installation or hook execution.
+4. Update `CHANGELOG.md` and release notes. Verify marketplace install instructions on the target host before claiming platform compatibility; declared support alone does not prove native skill discovery.
 5. Open a PR with the version and index changes, review CI and the diff, then tag/release only the reviewed commit.
 
 ## Plugin entrypoints
@@ -31,6 +31,5 @@
 - Codex: `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`
 - Grok: `.grok-plugin/plugin.json`, `.grok-plugin/marketplace.json`, generated `.grok-plugin/plugin-index.json`
 - Claude Code: `.claude-plugin/marketplace.json`
-- Shared hooks: `hooks/hooks.json` (requires Node.js on the executing host)
 
-The router normally injects a short session bootstrap; set `CSTACK_ROUTER_MODE=full` to compare with the older behavior. See [routing benchmark](routing-benchmark.md). Host installation and lifecycle behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.
+No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; `skills-router` remains an optional skill for ambiguous requests. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.

@@ -8,7 +8,6 @@ The repository root is the canonical, installable plugin.
 
 ```text
 skills/                         canonical skills, with platform groups where useful
-hooks/                          host-specific hook configs and shared runtime
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
 .claude-plugin/                 Claude Code marketplace
@@ -16,7 +15,7 @@ hooks/                          host-specific hook configs and shared runtime
 .agents/plugins/                Codex marketplace
 ```
 
-Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries. The session-start hook uses a compact router bootstrap; set `CSTACK_ROUTER_MODE=full` for the previous full router injection.
+Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries. Skills are discovered through host-native skill metadata. `skills/skills-router/SKILL.md` is available on demand for ambiguous or cross-domain tasks; no routing hook runs automatically.
 
 Platform groups include `skills/kaggle/`, `skills/colab/`, `skills/huggingface/`, and `skills/cloudflare/`; portable core skills live directly under `skills/`. Only entries declared in `.cstack/upstreams.json` are automatically synchronized.
 
@@ -53,7 +52,7 @@ claude plugin marketplace add ImAno177/cstack
 claude plugin install cstack@cstack
 ```
 
-All examples describe the intended host integration; verify installation and hook execution on your specific client before reporting support as tested. Hooks require Node.js in the host environment.
+All examples describe the intended host integration; verify installation and native skill discovery on your specific client before reporting support as tested. cstack does not install or require any lifecycle hooks.
 
 ## Upstream synchronization
 

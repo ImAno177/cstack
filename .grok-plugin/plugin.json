@@ -8,6 +8,5 @@
   },
   "repository": "https://github.com/ImAno177/cstack",
   "license": "MIT",
-  "skills": "./skills/",
-  "hooks": "./hooks/hooks.json"
+  "skills": "./skills/"
 }

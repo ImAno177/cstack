@@ -18,6 +18,6 @@ python scripts/evaluate_skill_routing.py --baseline baseline.jsonl --candidate c
 
 The scorer checks matching (case, run) pairs and reports primary-routing accuracy, supporting-skill precision, outcome success, mean tokens, mean latency, and top confusion pairs. Inspect failures individually. Do not promote a context-saving change that decreases outcome success on protected tasks. Do not call a shorter startup prompt a quality improvement until measured real-task results support it.
 
-## Startup-context experiment
+## Native skill discovery
 
-`hooks/cstack-session-start.js` now injects a brief bootstrap by default. To recover the previous full router injection for a controlled baseline, set `CSTACK_ROUTER_MODE=full` in the hook's environment. Compare both modes with the same benchmark. The full routing map remains in `skills/skills-router/SKILL.md` for on-demand reading.
+cstack no longer registers a startup hook or injects routing prompts. Hosts should discover skills from their frontmatter metadata. The optional `skills/skills-router/SKILL.md` remains available for ambiguous or cross-domain routing. Compare skill-enabled and no-cstack baselines using actual, independently verified outcomes; do not assume that installing skills means an agent invoked them.

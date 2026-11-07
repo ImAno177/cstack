@@ -7,19 +7,19 @@ The repository root is the installable plugin. A skill is a portable capability;
 - A `default-mode` front door routes work through a small set of playbooks instead of making every workflow a top-level skill.
 - Conditional detail lives beside the entrypoint in `playbooks/` or `references/`, so normal work does not load every mode.
 - Documentation separates setup, routing, design, verification, and customization concerns.
-- Runtime behavior belongs to hooks or extensions; prose skills do not pretend to enforce lifecycle events.
+- Runtime behavior, if needed later, belongs to explicit host integrations; prose skills do not pretend to enforce lifecycle events.
 
 ## What stays out of cstack
 
 - `assets/logo.png` in pstack is branding, not instruction or runtime input, so cstack does not carry it.
-- pstack `agents/`, Cursor automations, Bugbot helpers, and Claude harness adapters are host-specific. cstack keeps portable delegation and completion behavior in skills and hooks.
+- pstack `agents/`, Cursor automations, Bugbot helpers, and Claude harness adapters are host-specific. cstack keeps portable delegation and completion guidance in skills without startup hooks.
 - pstack's PR watcher and statechart fixture corpus are executable tooling or test data, not portable skill content. They are not copied without a cstack-owned host adapter.
 
 ## Source ownership
 
 - Core skills under `skills/` are maintained in this repository.
 - Platform skills under `skills/kaggle/`, `skills/colab/`, `skills/huggingface/`, and `skills/cloudflare/` retain their upstream organization. Managed entries are declared in `.cstack/upstreams.json` and refreshed by `scripts/sync_upstream_skills.py`.
-- `hooks/`, `scripts/`, manifests, and generated indexes are packaging or runtime surfaces. Changes to them require the repository validators and an artifact check.
+- `scripts/`, manifests, and generated indexes are packaging or runtime surfaces. Changes to them require the repository validators and an artifact check.
 
 ## Harness rule
 

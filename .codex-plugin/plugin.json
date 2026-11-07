@@ -9,7 +9,6 @@
   "repository": "https://github.com/ImAno177/cstack",
   "license": "MIT",
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "cstack",
     "shortDescription": "Portable cstack skills for ChatGPT and Codex",

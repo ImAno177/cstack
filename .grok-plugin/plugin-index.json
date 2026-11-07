@@ -349,12 +349,6 @@
             "name": "why",
             "description": "Explain why code or a design has its current shape using repository history and directly observable evidence."
           }
-        ],
-        "hooks": [
-          {
-            "name": "SessionStart",
-            "description": "startup|resume|clear|compact|fork"
-          }
         ]
       }
     }
