@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "audit-repo",
+      "prompt": "Audit my whole repository for bugs, data loss, and simplifications.",
+      "primary": "repo-audit",
+      "allowed_support": []
+    },
+    {
+      "id": "review-pr",
+      "prompt": "Review the changes in my latest pull request.",
+      "primary": "change-review",
+      "allowed_support": []
+    },
+    {
+      "id": "blast-radius",
+      "prompt": "What will break if I change this public function signature?",
+      "primary": "blast-radius",
+      "allowed_support": []
+    },
+    {
+      "id": "adversarial-design",
+      "prompt": "Interrogate my proposed architecture and attack its assumptions.",
+      "primary": "interrogate",
+      "allowed_support": []
+    },
+    {
+      "id": "architecture-why",
+      "prompt": "Why did we choose this storage architecture?",
+      "primary": "why",
+      "allowed_support": []
+    },
+    {
+      "id": "walkthrough",
+      "prompt": "Explain how the authentication middleware works in this codebase.",
+      "primary": "how",
+      "allowed_support": []
+    },
+    {
+      "id": "broad-workflow",
+      "prompt": "Implement a multi-module feature with no narrower specialized skill.",
+      "primary": "default-mode",
+      "allowed_support": []
+    },
+    {
+      "id": "multi-phase-plan",
+      "prompt": "Plan a four-phase migration with independent verification gates.",
+      "primary": "figure-it-out",
+      "allowed_support": []
+    },
+    {
+      "id": "prevent-regressions",
+      "prompt": "We keep repeating the same deployment mistake. Prevent it structurally.",
+      "primary": "correct",
+      "allowed_support": []
+    },
+    {
+      "id": "repo-docs",
+      "prompt": "Document the public interfaces in this repository.",
+      "primary": "doc",
+      "allowed_support": []
+    },
+    {
+      "id": "reflect-episode",
+      "prompt": "Reflect on the completed debugging episode and extract candidate lessons.",
+      "primary": "reflect",
+      "allowed_support": []
+    },
+    {
+      "id": "learn-transfer",
+      "prompt": "Promote a recurring learning only if it survives replay and retention tests.",
+      "primary": "continual-learning",
+      "allowed_support": []
+    },
+    {
+      "id": "stale-prompts",
+      "prompt": "Audit agent instructions for stale model-specific workarounds.",
+      "primary": "prompt-audit",
+      "allowed_support": []
+    },
+    {
+      "id": "harness-design",
+      "prompt": "Design a bounded agent model-tool loop with explicit stop states.",
+      "primary": "agent-harness",
+      "allowed_support": []
+    },
+    {
+      "id": "agent-evaluation",
+      "prompt": "Compare a coding agent across repeated tasks with outcome and token metrics.",
+      "primary": "agent-evaluation",
+      "allowed_support": []
+    },
+    {
+      "id": "verify-side-effects",
+      "prompt": "Did the agent actually create the file it claims to have saved?",
+      "primary": "agent-completion",
+      "allowed_support": []
+    },
+    {
+      "id": "context-handoff",
+      "prompt": "Compress context for a long-running agent and preserve resumption state.",
+      "primary": "agent-context",
+      "allowed_support": []
+    },
+    {
+      "id": "delegate-slices",
+      "prompt": "Delegate independent implementation slices to subagents with isolated scopes.",
+      "primary": "multi-agent-workflow",
+      "allowed_support": []
+    },
+    {
+      "id": "design-bakeoff",
+      "prompt": "Compare three independent solutions for the same task.",
+      "primary": "arena",
+      "allowed_support": []
+    },
+    {
+      "id": "parallel-coverage",
+      "prompt": "Split a broad repository search into independent coverage slices.",
+      "primary": "swarm",
+      "allowed_support": []
+    },
+    {
+      "id": "cf-general",
+      "prompt": "Choose Cloudflare storage and networking products for a new platform architecture.",
+      "primary": "cloudflare",
+      "allowed_support": []
+    },
+    {
+      "id": "cf-workers",
+      "prompt": "Review Cloudflare Worker code for runtime performance anti-patterns.",
+      "primary": "workers-best-practices",
+      "allowed_support": []
+    },
+    {
+      "id": "cf-wrangler",
+      "prompt": "Configure and troubleshoot wrangler CLI deployment.",
+      "primary": "wrangler",
+      "allowed_support": []
+    },
+    {
+      "id": "cf-durable",
+      "prompt": "Build a counter service using Cloudflare Durable Objects.",
+      "primary": "durable-objects",
+      "allowed_support": []
+    },
+    {
+      "id": "cf-agents",
+      "prompt": "Build a stateful chat agent with Cloudflare Agents SDK.",
+      "primary": "agents-sdk",
+      "allowed_support": []
+    },
+    {
+      "id": "cf-zero-trust",
+      "prompt": "Configure Cloudflare Zero Trust access policies.",
+      "primary": "cloudflare-one",
+      "allowed_support": []
+    },
+    {
+      "id": "hf-cli",
+      "prompt": "Upload a model to Hugging Face Hub with the hf CLI.",
+      "primary": "hf-cli",
+      "allowed_support": []
+    },
+    {
+      "id": "colab-cli",
+      "prompt": "Manage a Google Colab runtime using its command line interface.",
+      "primary": "colab-operator",
+      "allowed_support": []
+    },
+    {
+      "id": "kaggle-cli",
+      "prompt": "Download a Kaggle dataset with the kaggle CLI.",
+      "primary": "kaggle-cli",
+      "allowed_support": []
+    },
+    {
+      "id": "quantization",
+      "prompt": "Quantize LLM weights using bitsandbytes NF4.",
+      "primary": "bitsandbytes-quantization",
+      "allowed_support": []
+    },
+    {
+      "id": "qlora",
+      "prompt": "Fine-tune a small model with QLoRA adapters.",
+      "primary": "peft-lora-qlora",
+      "allowed_support": []
+    },
+    {
+      "id": "scientific-figure",
+      "prompt": "Create a publication-quality scientific figure.",
+      "primary": "scientific-visualization",
+      "allowed_support": []
+    }
+  ]
+}

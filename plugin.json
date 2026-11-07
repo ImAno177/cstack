@@ -12,7 +12,6 @@
   "keywords": ["skills", "codex", "chatgpt", "grok", "academic-research", "continual-learning"],
   "extensions": {
     "com.openai": {
-      "hooks": "./hooks/hooks.json",
       "interface": {
         "displayName": "cstack",
         "shortDescription": "Portable cstack skills for ChatGPT and Codex",

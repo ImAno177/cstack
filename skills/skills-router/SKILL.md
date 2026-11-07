@@ -1,61 +1,50 @@
 ---
 name: skills-router
-description: Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains,
-  artifacts, or connected apps.
+description: Choose the smallest set of installed skills when a request plausibly matches multiple capabilities or spans domains, artifacts, or connected apps. Do not use when a single skill clearly owns the task.
 license: MIT
 ---
 
 # Skills router
 
-Use this router only when selection is ambiguous or the request spans more than one capability. If the user explicitly names a skill, use it. If one skill clearly owns the task, use that skill directly.
+Invoke only when selection is ambiguous or the request spans capabilities. If one skill clearly owns the outcome, use it directly. Never invent an unavailable route.
 
 ## Routes
 
-- image generation or raster image editing → `imagegen`
-- DOCX or Word layout, redlining, or comments → `documents:documents`
-- PDF work or visual PDF verification → `pdf:pdf`
-- PowerPoint or presentation work → `presentations:Presentations`
-- spreadsheet files → `spreadsheets:Spreadsheets`; live Excel → `spreadsheets:excel-live-control`
-- connected Google Drive, Docs, Sheets, or Slides → the matching `google-drive:*` skill
-- ChatGPT Pages or Spaces → the matching `pages:*` skill
-- website creation or management → `sites:sites`; Site remix → `sites:sites-remix`
-- ChatGPT Work pets → the matching `work-pets:*` skill
-- Cloudflare Workers, Wrangler, Durable Objects, Email, Zero Trust, Turnstile, Agents SDK, or Cloudflare sandbox → the narrowest matching installed Cloudflare skill
-- generic web performance, Core Web Vitals, Lighthouse, or page speed → `web-perf`
-- LoRA or QLoRA fine-tuning → `peft-lora-qlora`
-- bitsandbytes quantization → `bitsandbytes-quantization`
-- TRL training → `trl-training`
-- Kaggle CLI work → `kaggle-cli`
-- Google Colab sessions, runtimes, or `colab` CLI → `colab-operator`
-- Hugging Face Hub, `hf` CLI, or Hugging Face ecosystem work → `hf-cli`
-- scientific or publication figures → `scientific-visualization`
-- scientific or research slide decks → `scientific-slides`
-- native Android testing → `testing-setup`
-- frontend design → `frontend-design`
-- repository docs → `doc`; conventional commits → `conventional-commit`; pull requests → `create-pr`; architecture boundaries → `architect`; codebase walkthroughs → `how`; Kaggle benchmarks → `write-kaggle-benchmarks`
-- code quality review → `change-review`; whole-repository audit → `repo-audit`; blast-radius analysis → `blast-radius`; recurring mistake prevention → `correct`
-- shortcut debt or deferred work → `shortcut-debt`
-- design rationale, regressions, or postmortems → `why`
-- continual learning, agent memory, skill updates, retention, or transfer → `continual-learning`
-- model-driven agent loops, local model adapters, Pi packages, harnesses, or agent runtime evaluation → `agent-harness`
-- multi-agent or subagent delegation, parallel research, isolated work, or result handoff → `multi-agent-workflow`
-- same-task alternatives or design bakeoff → `arena`; parallel coverage slices or races → `swarm`; adversarial review with proven findings → `interrogate`
-- parallel, async, programmatic, or offline batch tool execution → `tool-orchestration`
-- transcript reflection into durable skill changes → `reflect`; long-run decision trail → `show-me-your-work`
-- verifying whether tool-driven work actually completed, reporting partial work, or proving a side effect → `agent-completion`
-- long-running work, context compaction, repeated reads, large outputs, or context handoff → `agent-context`
-- evaluating models, prompts, hooks, skills, or agent workflows across repeated tasks → `agent-evaluation`
-- stale prompts, outdated model assumptions, skill/rule cruft, or conflicting agent instructions → `prompt-audit`
-- AI-sounding prose cleanup → `unslop`
-- create or update a skill → `skill-creator`; install or discover skills → `skill-installer` or `find-skills`; plugin management → `plugin-management:plugin-management`
-- Codex or OpenAI product behavior and configuration → `openai-docs`
-- non-trivial engineering workflow → `default-mode`; broad multi-part work with no narrower owner → `figure-it-out`
+- image generation or raster image editing -> `imagegen`
+- DOCX or Word layout, redlining, or comments -> `documents:documents`
+- PDF work or visual PDF verification -> `pdf:pdf`
+- PowerPoint or presentation work -> `presentations:Presentations`
+- spreadsheet files -> `spreadsheets:Spreadsheets`; live Excel -> `spreadsheets:excel-live-control`
+- connected Google Drive, Docs, Sheets, or Slides -> the matching `google-drive:*` skill
+- ChatGPT Pages or Spaces -> the matching `pages:*` skill
+- website creation or management -> `sites:sites`; site remix -> `sites:sites-remix`
+- ChatGPT Work pets -> the matching `work-pets:*` skill
+- Cloudflare Workers, Wrangler, Durable Objects, Email, Zero Trust, Turnstile, Agents SDK, or sandbox -> the narrowest installed Cloudflare skill; use `cloudflare` only when none is narrower
+- generic web performance, Core Web Vitals, Lighthouse -> `web-perf`
+- LoRA or QLoRA fine-tuning -> `peft-lora-qlora`
+- bitsandbytes quantization -> `bitsandbytes-quantization`
+- TRL training -> `trl-training`
+- Kaggle CLI -> `kaggle-cli`; Google Colab runtime or CLI -> `colab-operator`; Hugging Face Hub or CLI -> `hf-cli`
+- scientific or publication figures -> `scientific-visualization`; research slides -> `scientific-slides`
+- native Android testing -> `testing-setup`; frontend design -> `frontend-design`
+- repository docs -> `doc`; conventional commits -> `conventional-commit`; pull requests -> `create-pr`; architecture boundaries -> `architect`; code walkthroughs -> `how`; Kaggle benchmarks -> `write-kaggle-benchmarks`
+- review a change, commit, or PR -> `change-review`; audit the whole repository -> `repo-audit`; assess affected consumers -> `blast-radius`; recurring mistake prevention -> `correct`
+- shortcut debt or deferred work -> `shortcut-debt`; architecture rationale or postmortems -> `why`
+- extract learning from one episode -> `reflect`; promote learning across episodes and evaluate retention -> `continual-learning`
+- agent loops, Pi, model adapters, or harnesses -> `agent-harness`; compare agent outcomes across tasks -> `agent-evaluation`
+- parallel delegation with independent ownership -> `multi-agent-workflow`; same-task alternatives -> `arena`; parallel coverage slices -> `swarm`; adversarial review -> `interrogate`
+- async or batch tool execution -> `tool-orchestration`; long-run decision trail -> `show-me-your-work`
+- verify an agent's actual side effects -> `agent-completion`; context compaction or long-run handoff -> `agent-context`
+- stale prompts, conflicting rules, or cruft -> `prompt-audit`; AI-sounding prose -> `unslop`
+- create or update a skill -> `skill-creator`; discover skills -> `skill-installer` or `find-skills`; plugin settings -> `plugin-management:plugin-management`
+- Codex or OpenAI configuration -> `openai-docs`
+- non-trivial engineering with no narrower owner -> `default-mode`; broad multi-phase migration needing an explicit plan -> `figure-it-out`
 
 ## Selection rules
 
-1. Choose one primary skill that owns the requested outcome.
-2. Add a supporting skill only for a concrete required output.
-3. For combined work, order skills as domain or artifact, implementation, then validation or review.
-4. Read the selected `SKILL.md` before acting and follow its required tools, references, and validation.
-5. Use only skills present in the active catalog and allowed by policy. Never invent a missing route or load a host-specific skill.
-6. Treat review skills as alternatives unless the user asks for independent review passes.
+1. Pick the most specific skill for the user-visible outcome, not the one with the broadest description.
+2. For review, route by **scope**: changed diff -> `change-review`, entire repo -> `repo-audit`, hostile-design challenge -> `interrogate`.
+3. For learning, route by **stage**: one episode -> `reflect`, measured reusable change -> `continual-learning`, stale instructions -> `prompt-audit`.
+4. For Cloudflare, prefer a narrow named product skill over the umbrella `cloudflare` skill.
+5. Add a supporting skill only for a second required output. Read each selected `SKILL.md` before acting; obey the host's installed catalog and policy.
+6. Do not auto-add a general workflow, review, or audit skill when the primary skill already owns the task.
