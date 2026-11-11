@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "colab-operator",
+      "repository": "googlecolab/google-colab-cli",
+      "ref": "main",
+      "path": "skills/colab-operator",
+      "destination": "skills/colab/colab-operator",
+      "commit": "6045e34cd9b50319ab92e38e200ceaf411d8b96c",
+      "sha256": "e75e0291f514093ac4a5de4ff7647e4619f566da06378248541b9adc5b5a8b2f"
+    },
+    {
+      "name": "hf-cli",
+      "repository": "huggingface/skills",
+      "ref": "main",
+      "path": "skills/hf-cli",
+      "destination": "skills/huggingface/hf-cli",
+      "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
+      "sha256": "da8c1baf30fdab022b67c94345588e0431b28548cd904d6fd939b65b7675da15"
+    },
+    {
+      "name": "kaggle-cli",
+      "repository": "Kaggle/kaggle-cli",
+      "ref": "main",
+      "path": "skills",
+      "destination": "skills/kaggle/kaggle-cli",
+      "commit": "fdc788faffe3f29ae317480325c44080a00a5434",
+      "sha256": "92ec2fcc3d0b9a5ad6456eac92b03be9ff5cfaf5f33c7f03418ec382695eb219"
+    },
+    {
+      "name": "trl-training",
+      "repository": "huggingface/skills",
+      "ref": "main",
+      "path": "skills/trl-training",
+      "destination": "skills/huggingface/trl-training",
+      "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
+      "sha256": "d95cbc780d1d23263fd0fb4f6b365af2add5ff179e77ac3bb02a1ed4c5d8094b"
+    }
+  ]
+}
