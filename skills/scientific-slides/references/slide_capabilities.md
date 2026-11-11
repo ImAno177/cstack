@@ -166,11 +166,11 @@ Generate conceptual slides as images when an image-only PDF meets the brief. Emb
 
 ```bash
 # Generate slides
-python scripts/generate_slide_image.py "Title: Introduction..." -o slides/01.png
-python scripts/generate_slide_image.py "Title: Methods..." -o slides/02.png
+python <skill-dir>/scripts/generate_slide_image.py "Title: Introduction..." -o slides/01.png
+python <skill-dir>/scripts/generate_slide_image.py "Title: Methods..." -o slides/02.png
 
 # Combine to PDF
-python scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
+python <skill-dir>/scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
 ```
 
 **Advantages**:
@@ -251,7 +251,7 @@ Implement iterative improvement through visual inspection. For complete workflow
 **Step 2: Convert to Images**
 ```bash
 # Using the pdf_to_images script
-python scripts/pdf_to_images.py presentation.pdf review/slide --dpi 150
+python <skill-dir>/scripts/pdf_to_images.py presentation.pdf review/slide --dpi 150
 ```
 
 **Step 3: Systematic Inspection**
@@ -331,7 +331,7 @@ For 15-minute talk:
 **Automated Validation**:
 ```bash
 # Validate slide count, timing, file size
-python scripts/validate_presentation.py presentation.pdf --duration 15
+python <skill-dir>/scripts/validate_presentation.py presentation.pdf --duration 15
 
 # Generates report on:
 # - Slide count vs. recommended range
