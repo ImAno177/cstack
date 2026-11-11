@@ -1,9 +1,9 @@
 # Routing benchmark
 
-The 37 cases in `benchmarks/skill-routing/cases.json` distinguish similar skills by outcome, scope, stage, and platform. This is an **evaluation dataset**, not a claim that the router passed.
+The 37 cases in `benchmarks/skill-routing/cases.json` distinguish similar skills by outcome, scope, stage, and platform. It measures how well hosts pick skills from their descriptions. This is an **evaluation dataset**, not a claim that routing passed.
 
 1. Print the cases: `python scripts/evaluate_skill_routing.py`.
-2. Run each task at least 3 times on the **same host, model, tool catalog and permissions** before and after a router change; use 5+ when measuring small gains.
+2. Run each task at least 3 times on the **same host, model, tool catalog and permissions** before and after a description or catalog change; use 5+ when measuring small gains.
 3. Store one JSONL line for each real attempt (no fabricated traces):
 
 ```json
@@ -20,4 +20,4 @@ The scorer checks matching (case, run) pairs and reports primary-routing accurac
 
 ## Native skill discovery
 
-cstack no longer registers a startup hook or injects routing prompts. Hosts should discover skills from their frontmatter metadata. The optional `skills/skills-router/SKILL.md` remains available for ambiguous or cross-domain routing. Compare skill-enabled and no-cstack baselines using actual, independently verified outcomes; do not assume that installing skills means an agent invoked them.
+cstack no longer registers a startup hook or injects routing prompts. Hosts should discover skills from their frontmatter metadata. There is no router skill: when two skills overlap, each description names the other and says when to use it. Compare skill-enabled and no-cstack baselines using actual, independently verified outcomes; do not assume that installing skills means an agent invoked them.

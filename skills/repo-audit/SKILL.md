@@ -1,8 +1,6 @@
 ---
 name: repo-audit
-description: 'Quality audit of a whole repo: bugs, security holes, what breaks under real load, risky code without tests,
-  slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes
-  nothing. Use for "audit this codebase", "review the whole repo", "find bloat", or "what can I delete".'
+description: "Quality audit of a whole repo: bugs, security holes, what breaks under real load, risky code without tests, slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes nothing. Use for \"audit this codebase\", \"review the whole repo\", \"find bloat\", or \"what can I delete\". For a dedicated threat model and secrets review use security-audit; for a single diff or PR use change-review."
 ---
 
 Audit the whole repo like the senior developer who just inherited it and

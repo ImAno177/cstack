@@ -1,6 +1,6 @@
 {
   "name": "cstack",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Portable cstack skills for engineering, academic research, and continual learning.",
   "author": {
     "name": "ImAno177",
@@ -9,12 +9,10 @@
   "homepage": "https://github.com/ImAno177/cstack",
   "repository": "https://github.com/ImAno177/cstack",
   "license": "MIT",
-  "keywords": ["skills", "claude-code", "academic-research", "continual-learning"],
-  "skills": [
-    "./skills/cloudflare/",
-    "./skills/colab/",
-    "./skills/frontend/",
-    "./skills/huggingface/",
-    "./skills/kaggle/"
+  "keywords": [
+    "skills",
+    "claude-code",
+    "academic-research",
+    "continual-learning"
   ]
 }

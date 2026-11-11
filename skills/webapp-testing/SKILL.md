@@ -1,6 +1,6 @@
 ---
 name: webapp-testing
-description: Test a web application end to end in a real browser with Playwright - start the app, drive user flows, check the result, and capture screenshots, console errors, and network failures as evidence. Use for QA of a web UI, reproducing a browser bug, writing or fixing Playwright tests, or verifying a frontend change actually works.
+description: "Test a web application end to end in a real browser with Playwright - start the app, drive user flows, check the result, and capture screenshots, console errors, and network failures as evidence. Use for QA of a web UI, reproducing a browser bug, writing or fixing Playwright tests, or verifying a frontend change actually works. To leave the project a reusable verification harness use create-verification-skill."
 license: MIT
 ---
 

@@ -27,7 +27,7 @@ The repository root is the installable plugin. A skill is a portable capability;
 ## Source ownership
 
 - Core skills under `skills/` are maintained in this repository.
-- Platform skills under `skills/kaggle/`, `skills/colab/`, `skills/huggingface/`, and `skills/cloudflare/` retain their upstream organization. Managed entries are declared in `.cstack/upstreams.json` and refreshed by `scripts/sync_upstream_skills.py`.
+- Third-party skills (Cloudflare, Kaggle, Colab, Hugging Face) live at `skills/<name>/` like every other skill and are copied verbatim from upstream by `.cstack/upstreams.json` and `scripts/sync_upstream_skills.py`. A one-level layout is the only one every host scans, so there are no group folders.
 - `scripts/`, manifests, and generated indexes are packaging or runtime surfaces. Changes to them require the repository validators and an artifact check.
 
 ## Harness rule

@@ -2,20 +2,83 @@
   "version": 1,
   "skills": [
     {
+      "name": "agents-sdk",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/agents-sdk",
+      "destination": "skills/agents-sdk",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "10d5d29e330afaebcb5da7aac6b6f62ae55ceee5878a312e94ac494ffdaf07a4"
+    },
+    {
+      "name": "cf-cli",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/cf-cli",
+      "destination": "skills/cf-cli",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "9875a38b76d2cf2843cd2b8985c94af92aeea6dfdfb4c49581689e7fea51d63a"
+    },
+    {
+      "name": "cloudflare",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/cloudflare",
+      "destination": "skills/cloudflare",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "c995b94c81237626f459c425a1a8a588f30c97c5d7358e1d2a27f98242f259cb"
+    },
+    {
+      "name": "cloudflare-email-service",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/cloudflare-email-service",
+      "destination": "skills/cloudflare-email-service",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "a43fcfa2f05dc3acc85ecdc82b8cdea48660721e798b6652f22510fb44283f7c"
+    },
+    {
+      "name": "cloudflare-one",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/cloudflare-one",
+      "destination": "skills/cloudflare-one",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "356ee65b9dc79463f946bef1316d2bb75576d6083f1bd45d0bc7f16fdb126456"
+    },
+    {
+      "name": "cloudflare-one-migrations",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/cloudflare-one-migrations",
+      "destination": "skills/cloudflare-one-migrations",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "8ab07fb5bf14f8dfa830fe509f89c697376154f03d44a6d206cfcce12c4c153e"
+    },
+    {
       "name": "colab-operator",
       "repository": "googlecolab/google-colab-cli",
       "ref": "main",
       "path": "skills/colab-operator",
-      "destination": "skills/colab/colab-operator",
+      "destination": "skills/colab-operator",
       "commit": "6045e34cd9b50319ab92e38e200ceaf411d8b96c",
       "sha256": "e75e0291f514093ac4a5de4ff7647e4619f566da06378248541b9adc5b5a8b2f"
+    },
+    {
+      "name": "durable-objects",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/durable-objects",
+      "destination": "skills/durable-objects",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "a55a8556dc5721ed1b9185d6b0b3837f0817ab8e0a5b4c38376fefa14acb08d3"
     },
     {
       "name": "hf-cli",
       "repository": "huggingface/skills",
       "ref": "main",
       "path": "skills/hf-cli",
-      "destination": "skills/huggingface/hf-cli",
+      "destination": "skills/hf-cli",
       "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
       "sha256": "da8c1baf30fdab022b67c94345588e0431b28548cd904d6fd939b65b7675da15"
     },
@@ -24,18 +87,81 @@
       "repository": "Kaggle/kaggle-cli",
       "ref": "main",
       "path": "skills",
-      "destination": "skills/kaggle/kaggle-cli",
+      "destination": "skills/kaggle-cli",
       "commit": "fdc788faffe3f29ae317480325c44080a00a5434",
       "sha256": "92ec2fcc3d0b9a5ad6456eac92b03be9ff5cfaf5f33c7f03418ec382695eb219"
+    },
+    {
+      "name": "sandbox-migrate-to-next",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/sandbox-migrate-to-next",
+      "destination": "skills/sandbox-migrate-to-next",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "308dc2485f63575ba77470261448e89f68e52fdf85fd3aafa60f258e8cc0af4b"
+    },
+    {
+      "name": "sandbox-next",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/sandbox-next",
+      "destination": "skills/sandbox-next",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "a7201067368337899a63b9f67407ad610e70bb06ca9450de896d7fbb21f77f21"
+    },
+    {
+      "name": "sandbox-stable",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/sandbox-stable",
+      "destination": "skills/sandbox-stable",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "fdf749340069c56a652f94ff9dea5e3391034c1a73cec347cf2be4c860fdfea7"
     },
     {
       "name": "trl-training",
       "repository": "huggingface/skills",
       "ref": "main",
       "path": "skills/trl-training",
-      "destination": "skills/huggingface/trl-training",
+      "destination": "skills/trl-training",
       "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
       "sha256": "d95cbc780d1d23263fd0fb4f6b365af2add5ff179e77ac3bb02a1ed4c5d8094b"
+    },
+    {
+      "name": "turnstile-spin",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/turnstile-spin",
+      "destination": "skills/turnstile-spin",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "175c038a584d79b8dc1e8ed8ab1e5b587063b0ae09c20867dc5f6d41a3a4dc30"
+    },
+    {
+      "name": "web-perf",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/web-perf",
+      "destination": "skills/web-perf",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "4f433b86bb612ea54208bbd6e768b2a718f2cde86438ad7d0ac19d678bde066d"
+    },
+    {
+      "name": "workers-best-practices",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/workers-best-practices",
+      "destination": "skills/workers-best-practices",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "b2ee8da7b9522611bccd477a86cc88bdf90cbd85a90c6654cc0d4506f348a9b8"
+    },
+    {
+      "name": "wrangler",
+      "repository": "cloudflare/skills",
+      "ref": "main",
+      "path": "skills/wrangler",
+      "destination": "skills/wrangler",
+      "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+      "sha256": "f61531daf83e6bf19746af7769c9abdab972987057dc08029e72173625436424"
     }
   ]
 }

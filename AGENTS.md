@@ -10,7 +10,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 ## Context and routing
 
 - Read applicable instructions and task-relevant sources, consumers, configuration, and artifacts. Inspect status before editing; preserve unrelated and unrecognized work.
-- Use explicitly requested skills; report missing ones. Otherwise load a skill only when it clearly owns the task, a router when selection is unclear, and supporting skills for concrete needs. Load additional workflows only when the task or an applicable policy requires them.
+- Use explicitly requested skills; report missing ones. Otherwise load a skill only when it clearly owns the task, and supporting skills for concrete needs. Load additional workflows only when the task or an applicable policy requires them.
 
 ## Research
 

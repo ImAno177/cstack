@@ -60,15 +60,29 @@ SOFTWARE.
 
 ## Upstream-synced skills
 
-Managed sources from `.cstack/upstreams.json`:
+Managed sources from `.cstack/upstreams.json`, copied verbatim by `scripts/sync_upstream_skills.py`:
 
-| Local entry | Upstream repository | Upstream path |
-| --- | --- | --- |
-| `skills/kaggle/kaggle-cli` | [Kaggle/kaggle-cli](https://github.com/Kaggle/kaggle-cli) | `skills` |
-| `skills/colab/colab-operator` | [googlecolab/google-colab-cli](https://github.com/googlecolab/google-colab-cli) | `skills/colab-operator` |
-| `skills/huggingface/hf-cli` | [huggingface/skills](https://github.com/huggingface/skills) | `skills/hf-cli` |
-| `skills/huggingface/trl-training` | [huggingface/skills](https://github.com/huggingface/skills) | `skills/trl-training` |
+| Local entry | Upstream repository | Upstream path | License |
+| --- | --- | --- | --- |
+| `skills/kaggle-cli` | [Kaggle/kaggle-cli](https://github.com/Kaggle/kaggle-cli) | `skills` | Apache-2.0 |
+| `skills/colab-operator` | [googlecolab/google-colab-cli](https://github.com/googlecolab/google-colab-cli) | `skills/colab-operator` | Apache-2.0 |
+| `skills/hf-cli` | [huggingface/skills](https://github.com/huggingface/skills) | `skills/hf-cli` | Apache-2.0 |
+| `skills/trl-training` | [huggingface/skills](https://github.com/huggingface/skills) | `skills/trl-training` | Apache-2.0 |
+| `skills/agents-sdk` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/agents-sdk` | Apache-2.0 |
+| `skills/cf-cli` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/cf-cli` | Apache-2.0 |
+| `skills/cloudflare` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/cloudflare` | Apache-2.0 |
+| `skills/cloudflare-email-service` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/cloudflare-email-service` | Apache-2.0 |
+| `skills/cloudflare-one` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/cloudflare-one` | Apache-2.0 |
+| `skills/cloudflare-one-migrations` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/cloudflare-one-migrations` | Apache-2.0 |
+| `skills/durable-objects` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/durable-objects` | Apache-2.0 |
+| `skills/sandbox-migrate-to-next` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/sandbox-migrate-to-next` | Apache-2.0 |
+| `skills/sandbox-next` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/sandbox-next` | Apache-2.0 |
+| `skills/sandbox-stable` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/sandbox-stable` | Apache-2.0 |
+| `skills/turnstile-spin` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/turnstile-spin` | Apache-2.0 |
+| `skills/web-perf` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/web-perf` | Apache-2.0 |
+| `skills/workers-best-practices` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/workers-best-practices` | Apache-2.0 |
+| `skills/wrangler` | [cloudflare/skills](https://github.com/cloudflare/skills) | `skills/wrangler` | Apache-2.0 |
 
-Additional manually maintained or imported platform skill files (including the Cloudflare group) require their own provenance/license review. This inventory is not a blanket license clearance.
+Each upstream repository is licensed under the Apache License 2.0; a copy is in [`licenses/Apache-2.0.txt`](licenses/Apache-2.0.txt). The synced files are unmodified, so their own notices apply. This inventory is not a blanket license clearance.
 
 `.cstack/upstreams.lock.json` records each managed snapshot's source commit and local content hash. Inspect those changes and retained notices in the automated PR before merging.
