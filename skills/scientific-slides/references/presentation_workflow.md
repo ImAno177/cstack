@@ -130,7 +130,7 @@ and discussion (slides 13-14) BEFORE creating slides.
 soffice --headless --convert-to pdf presentation.pptx
 
 # Convert PDF to images
-python scripts/pdf_to_images.py presentation.pdf review/slides
+python <skill-dir>/scripts/pdf_to_images.py presentation.pdf review/slides
 ```
 
 **Systematic Review**:

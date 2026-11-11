@@ -11,7 +11,7 @@ python-pptx 1.0.2 and pypdf 6.19.0. Install packages in a dedicated environment;
 for a single command, for example:
 
 ```bash
-uv run --isolated --with pymupdf==1.28.2 python scripts/pdf_to_images.py presentation.pdf review/slide --format png
+uv run --isolated --with pymupdf==1.28.2 python <skill-dir>/scripts/pdf_to_images.py presentation.pdf review/slide --format png
 ```
 
 Generation needs `requests` and `OPENROUTER_API_KEY`; it sends prompts and attached
@@ -52,14 +52,14 @@ Generate presentation slides or visuals using Nano Banana 2 AI.
 
 ```bash
 # Full slide (default) - generates complete slide as image
-python scripts/generate_slide_image.py "slide description" -o output.png
+python <skill-dir>/scripts/generate_slide_image.py "slide description" -o output.png
 
 # Visual only - generates just the image/figure for embedding in PPT
-python scripts/generate_slide_image.py "visual description" -o output.png --visual-only
+python <skill-dir>/scripts/generate_slide_image.py "visual description" -o output.png --visual-only
 
 # With reference images attached (Nano Banana 2 will see these)
-python scripts/generate_slide_image.py "Create a conceptual overview matching this style" -o slide.png --attach style_reference.png
-python scripts/generate_slide_image.py "Draft a conceptual comparison of these designs" -o compare.png --attach concept_a.png --attach concept_b.png
+python <skill-dir>/scripts/generate_slide_image.py "Create a conceptual overview matching this style" -o slide.png --attach style_reference.png
+python <skill-dir>/scripts/generate_slide_image.py "Draft a conceptual comparison of these designs" -o compare.png --attach concept_a.png --attach concept_b.png
 ```
 
 **Options:**
@@ -90,13 +90,13 @@ Combine multiple slide images into a single PDF.
 
 ```bash
 # Combine PNG files
-python scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
+python <skill-dir>/scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
 
 # Combine specific files in order
-python scripts/slides_to_pdf.py title.png intro.png methods.png -o talk.pdf
+python <skill-dir>/scripts/slides_to_pdf.py title.png intro.png methods.png -o talk.pdf
 
 # From directory (sorted by filename)
-python scripts/slides_to_pdf.py slides/ -o presentation.pdf
+python <skill-dir>/scripts/slides_to_pdf.py slides/ -o presentation.pdf
 ```
 
 **Options:**
@@ -117,10 +117,10 @@ python scripts/slides_to_pdf.py slides/ -o presentation.pdf
 **generate_slide_image.py** - Generate slides or visuals with AI:
 ```bash
 # Full slide (for PDF workflow)
-python scripts/generate_slide_image.py "Title: Introduction\nContent: Key points" -o slide.png
+python <skill-dir>/scripts/generate_slide_image.py "Title: Introduction\nContent: Key points" -o slide.png
 
 # Visual only (for PPT workflow)
-python scripts/generate_slide_image.py "Diagram description" -o figure.png --visual-only
+python <skill-dir>/scripts/generate_slide_image.py "Diagram description" -o figure.png --visual-only
 
 # Options:
 # -o, --output       Output PNG path with `.png` suffix (required)
@@ -132,10 +132,10 @@ python scripts/generate_slide_image.py "Diagram description" -o figure.png --vis
 **slides_to_pdf.py** - Combine slide images into PDF:
 ```bash
 # From glob pattern
-python scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
+python <skill-dir>/scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
 
 # From directory (sorted by filename)
-python scripts/slides_to_pdf.py slides/ -o presentation.pdf
+python <skill-dir>/scripts/slides_to_pdf.py slides/ -o presentation.pdf
 
 # Options:
 # -o, --output    Output PDF path (required)
@@ -147,7 +147,7 @@ python scripts/slides_to_pdf.py slides/ -o presentation.pdf
 
 **validate_presentation.py**:
 ```bash
-python scripts/validate_presentation.py presentation.pdf --duration 15
+python <skill-dir>/scripts/validate_presentation.py presentation.pdf --duration 15
 
 # Checks:
 # - Slide count vs. recommended range
@@ -159,7 +159,7 @@ python scripts/validate_presentation.py presentation.pdf --duration 15
 
 **pdf_to_images.py**:
 ```bash
-python scripts/pdf_to_images.py presentation.pdf output/slide --dpi 150
+python <skill-dir>/scripts/pdf_to_images.py presentation.pdf output/slide --dpi 150
 
 # Converts PDF to images for visual inspection
 # Supports: JPG, PNG
