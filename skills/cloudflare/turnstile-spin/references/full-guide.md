@@ -25,7 +25,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
 2. **CLI check.** Spin's helper scripts use `curl` against `api.cloudflare.com` and `npx wrangler whoami` for account enumeration. Widget creation in Step 8 prefers `wrangler turnstile widget create` when the subcommand is available (Wrangler 4.109+), falling back to the bundled curl script otherwise. No persistent CLI install is required.
 
-3. **Auth + scope probe (FIRST irreversible action).** Run `scripts/auth-probe.sh`. Branch on `status`:
+3. **Auth + scope probe (FIRST irreversible action).** Run `<skill-dir>/scripts/auth-probe.sh`. Branch on `status`:
    - `ok`: continue to Step 4. The script already picked the account (single-account token, or one matching `$CLOUDFLARE_ACCOUNT_ID`).
    - `missing_token` or `missing_scope`: ask the user to create a token at https://dash.cloudflare.com/profile/api-tokens → Custom token → permission `Account.Turnstile:Edit` → include the target account in Account Resources. **Do NOT direct them to `wrangler login`** unless wrangler's OAuth scope includes `Account.Turnstile:Edit` (varies by wrangler version). Offer three ways to hand the token over, cleanest first:
      1. **Export + relaunch** (token never enters chat): `export CLOUDFLARE_API_TOKEN=<token>` then restart the agent from that terminal.
@@ -53,7 +53,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
      --domain <d1> --domain <d2> ... --mode managed --json
    ```
 
-   Parse `sitekey` and `secret` from stdout JSON. If wrangler is missing, older than the turnstile subcommand (`unknown command`), or otherwise fails, fall back to `scripts/widget-create.sh --account-id <id> --name <name> --domains <list> --mode managed`, which uses `curl` against the Cloudflare API directly. Report the sitekey. Capture the secret into a shell variable `WIDGET_SECRET`; never write it to disk except into the user's own env / secret store in Step 9.
+   Parse `sitekey` and `secret` from stdout JSON. If wrangler is missing, older than the turnstile subcommand (`unknown command`), or otherwise fails, fall back to `<skill-dir>/scripts/widget-create.sh --account-id <id> --name <name> --domains <list> --mode managed`, which uses `curl` against the Cloudflare API directly. Report the sitekey. Capture the secret into a shell variable `WIDGET_SECRET`; never write it to disk except into the user's own env / secret store in Step 9.
 
 9. **Wire the integration.** State the contract: "I'll embed the widget on each chosen form and add a canonical siteverify call inside your existing submit handler, gated on `success === true`. The handler logic stays the same. The secret lives in your env as `TURNSTILE_SECRET`." Ask "yes" / "show". **[wait for user]** If "show", print unified diffs and ask again. Do NOT propose alternate behavior (mail delivery, custom backends).
 
@@ -78,9 +78,9 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
    Write the secret into the user's secret store (`.env` for Node/Rails/Python, `wrangler secret put TURNSTILE_SECRET` for Workers, the platform's secret manager for Vercel / Fly / Render / etc.). Never inline.
 
-10. **Validation.** Run `scripts/validate.sh`. Report each check as it passes. If any fails, surface the error and stop. **[wait for user if anything fails]**
+10. **Validation.** Run `<skill-dir>/scripts/validate.sh`. Report each check as it passes. If any fails, surface the error and stop. **[wait for user if anything fails]**
 
-11. **Persist skill.** Ask: "Save the Spin skill to `.claude/skills/turnstile-spin/SKILL.md` so I can reuse it on follow-up tasks?" Default yes. **[wait for user]** Then run `scripts/persist-skill.sh --path <agent-specific-path>`.
+11. **Persist skill.** Ask: "Save the Spin skill to `.claude/skills/turnstile-spin/SKILL.md` so I can reuse it on follow-up tasks?" Default yes. **[wait for user]** Then run `<skill-dir>/scripts/persist-skill.sh --path <agent-specific-path>`.
 
 12. **Final report.** Print the structured summary: what was created, what was validated, what to do next.
 
@@ -112,7 +112,7 @@ When the user has Cloudflare dashboard access, the in-dashboard **Fix with Spin*
 If the user tells you they already have a Turnstile widget set up and want to wire siteverify to it without rotating the sitekey (e.g. "I have a sitekey but siteverify never worked", "set up Spin against my existing widget `<sitekey>`"):
 
 1. Skip Step 8 (widget creation). The sitekey already exists; get it from the user.
-2. Fetch the widget metadata via `scripts/fetch-secret.sh --account-id <id> --sitekey <key>`. Branch on `status`:
+2. Fetch the widget metadata via `<skill-dir>/scripts/fetch-secret.sh --account-id <id> --sitekey <key>`. Branch on `status`:
    - `ok`: read `secret`, `clearance_level`, and `domains` from the response. Confirm `domains` includes the user's production hostname; if not, surface the gap before proceeding.
    - `missing_read_scope`: tell the user to add `Account.Turnstile:Read` to the token, or fall back to asking them to paste the secret. In the paste path, you do not have `clearance_level` or `domains`; ask the user to confirm both.
 3. Check `clearance_level` from the response (or the user's answer):
@@ -163,11 +163,11 @@ Edge cases to surface to the user:
 | Situation                                      | Action                                                                                                                                                                                                                                |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npx wrangler whoami` fails                    | The auth probe needs wrangler to enumerate accounts. Install path: `npm install --save-dev wrangler` (Node project) or `npm install -g wrangler` (other). If install is blocked, fall back to `curl https://api.cloudflare.com/client/v4/accounts -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"` and pass the chosen ID via `$CLOUDFLARE_ACCOUNT_ID`. |
-| Multiple Cloudflare accounts                   | `scripts/auth-probe.sh` returns all accounts; ask the user to choose, export `CLOUDFLARE_ACCOUNT_ID`                                                                                                                                  |
+| Multiple Cloudflare accounts                   | `<skill-dir>/scripts/auth-probe.sh` returns all accounts; ask the user to choose, export `CLOUDFLARE_ACCOUNT_ID`                                                                                                                                  |
 | Cloudflare Pages project                       | Wire siteverify inside a Pages Function (or the equivalent for your framework). The Pages Plugin at [developers.cloudflare.com/pages/functions/plugins/turnstile](https://developers.cloudflare.com/pages/functions/plugins/turnstile/) is a shortcut. |
 | Cloudflare Workers backend                     | Use the canonical fetch idiom from Step 9 inside the Worker's request handler. `fetch` to `challenges.cloudflare.com` works the same way it does in Node.                                                                             |
 | `EXPECTED_HOSTNAME` mismatch                   | Update widget domains via PUT, not PATCH (PATCH returns `10405 Method not allowed`): `curl -X PUT .../widgets/$SITEKEY -d '{"name":"...","mode":"managed","domains":[...]}'`                                                          |
-| Token expired mid-flow                         | Stop, re-run `scripts/auth-probe.sh`, prompt for fresh credentials                                                                                                                                                                    |
+| Token expired mid-flow                         | Stop, re-run `<skill-dir>/scripts/auth-probe.sh`, prompt for fresh credentials                                                                                                                                                                    |
 | Validation returns `invalid-input-secret`      | The secret didn't reach the backend. Re-check `TURNSTILE_SECRET` in the customer's env / secret manager. If it's a Workers backend, run `wrangler secret list` to confirm the secret is bound to the right script.                    |
 | Validation returns `invalid-input-response`    | Expected for a dummy probe token; that means the secret IS valid. validate.sh treats this as success.                                                                                                                                 |
 

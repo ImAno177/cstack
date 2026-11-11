@@ -249,7 +249,7 @@ Then inspect:
 ```bash
 uv run --isolated --no-project --python 3.13 \
   --with "pillow==12.3.0" \
-  python scripts/image_metadata.py outputs/microscopy_panel.tiff \
+  python <skill-dir>/scripts/image_metadata.py outputs/microscopy_panel.tiff \
   --format tiff --mode RGB --min-dpi 300 --target-width-mm 85 \
   --alpha-policy forbid
 ```
@@ -348,7 +348,7 @@ Matplotlib 3.11.2 defaults PDF/PS to Type 3 and SVG text to paths. The bundled p
 ```bash
 uv run --isolated --no-project --python 3.13 \
   --with "pypdf==6.19.0" \
-  python scripts/image_metadata.py outputs/figure1.pdf
+  python <skill-dir>/scripts/image_metadata.py outputs/figure1.pdf
 ```
 
 SVG text is not an embedded font; its appearance depends on the renderer’s installed fonts. If portability matters more than editable/searchable text, use paths and retain an editable source separately.

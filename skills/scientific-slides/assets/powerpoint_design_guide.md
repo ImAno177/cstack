@@ -490,7 +490,7 @@ slide.addChart(pptx.ChartType.bar, [
 ### Render Slides to Images
 
 After creating the presentation, export it to PDF with LibreOffice and render each page
-with the bundled script (run from the repository root):
+with the bundled script (from any working directory):
 
 ```bash
 soffice --headless --convert-to pdf --outdir review presentation.pptx
