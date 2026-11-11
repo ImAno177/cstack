@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.1.5",
+      "version": "0.1.6",
       "components": {
         "skills": [
           {
@@ -114,6 +114,10 @@
             "description": "Create Pull Requests following best conventions. Use when opening PRs, writing PR descriptions, or preparing changes for review."
           },
           {
+            "name": "create-verification-skill",
+            "description": "Generate a project-local verification skill that drives your app the way a user does — any language, framework, or platform. Use for /create-verification-skill, \"make a control skill for this repo\", or when a project has no scripted way to prove UI/CLI/service behavior."
+          },
+          {
             "name": "default-mode",
             "description": "Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default."
           },
@@ -174,8 +178,16 @@
             "description": "Catch the user up like /ketchup, with a short subtitled video of slides for what happened and the waiting calls as text under it. Use for /ketchup-video."
           },
           {
+            "name": "literature-review",
+            "description": "Find, read, and synthesize primary research papers for a technical or scientific question, verify every citation, and record each claim with its evaluation conditions. Use for literature reviews, related work, \"what does the research say\", choosing a method from papers, or checking a cited claim."
+          },
+          {
             "name": "maintain-formal-verification-skill",
             "description": "Bring a project's formal verification back in line with the code after the code changes: find the commits that touched verified code, update the model, harness, or properties to describe the code as it is now, rerun, and say whether each failure is drift in the verification or a bug in the code. Use for /maintain-formal-verification-skill, \"is the model still true to the code\", or after merges and refactors that touched verified code without rechecking it."
+          },
+          {
+            "name": "maintain-verification-skill",
+            "description": "Periodic pass that keeps a project's verification skill and feature map honest: parallel source readers per feature, one live session driving every feature, at most one PR of proven corrections. Use for /maintain-verification-skill or \"audit the verify skill\"."
           },
           {
             "name": "multi-agent-workflow",
@@ -302,6 +314,10 @@
             "description": "Creates and audits truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use it for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
           },
           {
+            "name": "security-audit",
+            "description": "Security review of a repository or change - threat model, secrets, dependencies, authentication and authorization, injection, and unsafe data handling - where every finding comes with proof and a fix. Use for \"security audit\", \"is this safe\", threat modeling, pre-release security checks, or reviewing auth, input handling, or secrets."
+          },
+          {
             "name": "sharpen",
             "description": "Make a task deeper, not bigger, then rewrite the prompt. Use for /sharpen."
           },
@@ -326,6 +342,10 @@
             "description": "Fan out bounded workers across independent coverage slices or identical race attempts, drain them, and return one evidence-backed report. Use for parallel research, audits, or verification."
           },
           {
+            "name": "tdd",
+            "description": "Use only when the user explicitly asks for TDD, a failing test, or a regression test, OR when the bug has an obvious cheap local test target. Skip when the test path is unclear, expensive, integration-heavy, or not requested."
+          },
+          {
             "name": "teach",
             "description": "Explain a body of work plainly so a person actually understands it. Runs the `how` and `why` skills and weaves what they find into one clear explanation. Use for 'teach me this', 'help me really understand X', 'explain this change or subsystem to me'."
           },
@@ -344,6 +364,10 @@
           {
             "name": "unslop",
             "description": "Cut AI tells from any writing."
+          },
+          {
+            "name": "webapp-testing",
+            "description": "Test a web application end to end in a real browser with Playwright - start the app, drive user flows, check the result, and capture screenshots, console errors, and network failures as evidence. Use for QA of a web UI, reproducing a browser bug, writing or fixing Playwright tests, or verifying a frontend change actually works."
           },
           {
             "name": "why",

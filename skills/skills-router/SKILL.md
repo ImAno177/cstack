@@ -26,7 +26,11 @@ Invoke only when selection is ambiguous or the request spans capabilities. If on
 - TRL training -> `trl-training`
 - Kaggle CLI -> `kaggle-cli`; Google Colab runtime or CLI -> `colab-operator`; Hugging Face Hub or CLI -> `hf-cli`
 - scientific or publication figures -> `scientific-visualization`; research slides -> `scientific-slides`
-- native Android testing -> `android-testing-setup`; frontend design -> `frontend-design`
+- native Android testing -> `android-testing-setup`; browser end-to-end testing of a web app -> `webapp-testing`; frontend design -> `frontend-design`
+- a repeatable project verification harness -> `create-verification-skill`; keep it current -> `maintain-verification-skill`
+- test-first bug fix or regression test -> `tdd`; security review, threat model, or secrets -> `security-audit`
+- research papers, related work, or citation checks -> `literature-review`
+- building an MCP server -> `example-skills:mcp-builder` when installed
 - repository docs -> `doc`; conventional commits -> `conventional-commit`; pull requests -> `create-pr`; architecture boundaries -> `architect`; code walkthroughs -> `how`; Kaggle benchmarks -> `write-kaggle-benchmarks`
 - review a change, commit, or PR -> `change-review`; audit the whole repository -> `repo-audit`; assess affected consumers -> `blast-radius`; recurring mistake prevention -> `correct`
 - shortcut debt or deferred work -> `shortcut-debt`; architecture rationale or postmortems -> `why`

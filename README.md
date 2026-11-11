@@ -63,7 +63,7 @@ All examples describe the intended host integration; verify installation and nat
 
 ## Routing evaluation
 
-Use the [32-case routing benchmark](docs/routing-benchmark.md) to compare task success, selected skills, tokens, and latency. No model performance improvements are claimed without real repeated runs.
+Use the [37-case routing benchmark](docs/routing-benchmark.md) to compare task success, selected skills, tokens, and latency. No model performance improvements are claimed without real repeated runs.
 
 ## Reproduction benchmark
 
