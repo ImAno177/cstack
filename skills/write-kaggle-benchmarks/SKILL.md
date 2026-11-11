@@ -12,7 +12,7 @@ Read [the full guide](references/full-guide.md) before the first command; it hol
 
 ## Readiness check
 
-Run `kaggle b init -y` (refreshes `.env` with `MODEL_PROXY_*`; the key is short-lived), then `python task.py` and `ls -1 *.run.json` before any push. Requires Python 3.11+, `kaggle`, and `kaggle-benchmarks` (`pip install kaggle kaggle-benchmarks`).
+Check `kaggle --version` and `python --version`. `kaggle b init -y` writes `.env` (with a short-lived `MODEL_PROXY_*` key) and files into the folder: run it only after the user approves that step, then `python task.py` and `ls -1 *.run.json` before any push. Requires Python 3.11+, `kaggle`, and `kaggle-benchmarks` (`pip install kaggle kaggle-benchmarks`).
 
 ## Order
 
@@ -21,7 +21,7 @@ Run `kaggle b init -y` (refreshes `.env` with `MODEL_PROXY_*`; the key is short-
 3. `kaggle b t push <slug> -f task.py --wait`, then `kaggle b t run <slug> -m <model> --wait`, then `kaggle b t status <slug>`.
 4. `kaggle b t download <slug> -o ./results`; use `kaggle b t log <slug> -m <model>` for errored runs.
 
-Run one step at a time and show output before the next, as the guide's Pacing section requires. Publish with `kaggle b t publish <slug>` only on the user's request.
+Run one step at a time: show its output and wait for the user's go-ahead before the next step, including `init`, as the guide's Pacing section requires. Publish with `kaggle b t publish <slug>` only on the user's request.
 
 ## Not for
 

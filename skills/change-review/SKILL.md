@@ -81,7 +81,8 @@ on what you checked.
 
 ## Done when
 
-- The report starts `What this change does:`, ends `Verdict:`, and every
+- The report starts `What this change does:` and has a `Verdict:` line after
+  the findings (or, with nothing found, `Looks good. Ship.`); every
   finding is numbered with four parts, a real `path:Lstart-end` and a case
   you re-read in the code.
 - `Lean:` appears exactly when a lean finding exists; `git status` shows no edit.

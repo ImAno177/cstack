@@ -51,7 +51,7 @@ Name a missing tool (`gitleaks`, `npm audit`, no network) under what you could n
 **Threat model.** Assets: customer emails, payment tokens. Entry points: `POST /orders`, `GET /invoices/<id>`. Boundary: any logged-in customer reaches both.
 
 **Findings**
-1. **High - any user can read any invoice.** `api/invoices.py:L22` loads by id and never compares `invoice.user_id` to the session user. Path: `GET /invoices/<id>` -> `get_invoice()` -> `Invoice.get(id)`. Proof: on a local instance user B got 200 and user A's invoice (`tests/test_idor.py` fails). Impact: every customer's billing data leaks. Fix: `Invoice.get(id, user_id=session.user_id)`, return 404 on a miss.
+1. **High - any user can read any invoice.** `api/invoices.py:L22` loads by id and never compares `invoice.user_id` to the session user. Path: `GET /invoices/<id>` -> `get_invoice()` -> `Invoice.get(id)`. Proof: on a local instance user B got 200 and user A's invoice (reproduced with `/tmp/idor.sh`, outside the repo). Impact: every customer's billing data leaks. Fix: `Invoice.get(id, user_id=session.user_id)`, return 404 on a miss.
 2. **High - API key committed.** `config/prod.env:L3` holds a payment-provider key (value not shown), added in `<commit>`. It reached the remote: rotate it, then read it from the environment.
 
 **Unconfirmed.** `api/export.py:L14` builds a path from `?name=`. Confirm with `name=../../etc/hosts` on a local instance.

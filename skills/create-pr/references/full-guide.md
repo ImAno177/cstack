@@ -47,14 +47,14 @@ Rules:
 
 ### Step 4: Push and create
 
-Write the body to a file first (for example `$TMPDIR/pr-body.md`) so quoting cannot mangle it. Open the PR ready for review; do not pass `--draft`.
+Write the body to a file first (`BODY=$(mktemp)`, then write to `"$BODY"`) so quoting cannot mangle it. Open the PR ready for review; do not pass `--draft`.
 
 ```bash
 git push -u origin HEAD
-gh pr create --title "<type>(<scope>): <subject>" --body-file "$TMPDIR/pr-body.md"
+gh pr create --title "<type>(<scope>): <subject>" --body-file "$BODY"
 ```
 
-Title: Conventional Commits `type(scope): subject`, imperative, lowercase first letter, no trailing period, at most 70 characters. Types: `feat`, `fix`, `refactor`, `docs`, `test`, `perf`, `build`, `ci`, `chore`.
+Title: Conventional Commits `type(scope): subject`, imperative, lowercase first letter, no trailing period, at most 70 characters. Use the types in the `conventional-commit` skill's table.
 
 Keep one concern per PR and keep it reviewable; split unrelated changes into separate PRs.
 
@@ -68,10 +68,10 @@ Check `gh --version` first.
 
 ```bash
 # gh 2.82.1 or newer
-gh pr edit <number> --title "<new title>" --body-file "$TMPDIR/pr-body.md"
+gh pr edit <number> --title "<new title>" --body-file "$BODY"
 
 # gh older than 2.82.1, or when gh pr edit fails with "Projects (classic) is being deprecated"
-gh api -X PATCH repos/{owner}/{repo}/pulls/<number> -f title='<new title>' -F body=@"$TMPDIR/pr-body.md"
+gh api -X PATCH repos/{owner}/{repo}/pulls/<number> -f title='<new title>' -F body=@"$BODY"
 ```
 
 ## If it fails

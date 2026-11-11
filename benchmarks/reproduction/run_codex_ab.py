@@ -58,11 +58,43 @@ def codex_tokens(log_path: Path) -> int | None:
 
 
 SKILL_READ = re.compile(r"\.agents/skills/([a-z0-9][a-z0-9-]*)/SKILL\.md")
+READ_COMMAND = re.compile(r"(?:^|[\s;&|('\"])(?:cat|head|tail|sed|less|more|nl|bat|awk)\s")
+
+
+def commands(value):
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key == "command" and isinstance(item, str):
+                yield item
+            elif key == "command" and isinstance(item, list):
+                yield " ".join(str(part) for part in item)
+            else:
+                yield from commands(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from commands(item)
 
 
 def skills_opened(log_path: Path) -> list[str]:
-    text = log_path.read_text(encoding="utf-8", errors="replace")
-    return sorted(set(SKILL_READ.findall(text)))
+    opened = set()
+    for line in log_path.read_text(encoding="utf-8", errors="replace").splitlines():
+        try:
+            event = json.loads(line)
+        except ValueError:
+            continue
+        for command in commands(event):
+            if READ_COMMAND.search(command):
+                opened.update(SKILL_READ.findall(command))
+    return sorted(opened)
+
+
+def paired_deltas(rows: list[dict], runs: int) -> list[int]:
+    deltas = []
+    for run in range(1, runs + 1):
+        pair = {x["variant"]: x for x in rows if x["run"] == run}
+        if all(v in pair and pair[v]["status"] == "finished" for v in ("baseline", "skills")):
+            deltas.append(pair["skills"]["grade"]["passed"] - pair["baseline"]["grade"]["passed"])
+    return deltas
 
 
 async def run_trial(
@@ -187,11 +219,7 @@ async def main_async(args: argparse.Namespace) -> int:
             json.dumps(rows, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
         )
 
-    deltas = []
-    for run in range(1, args.runs + 1):
-        pair = {x["variant"]: x for x in rows if x["run"] == run}
-        if all(pair[v]["status"] == "finished" for v in ("baseline", "skills")):
-            deltas.append(pair["skills"]["grade"]["passed"] - pair["baseline"]["grade"]["passed"])
+    deltas = paired_deltas(rows, args.runs)
     opened = sum(1 for x in rows if x["variant"] == "skills" and x["skills_opened"])
     print(f"paired delta (skills - baseline, finished pairs only): {deltas}", flush=True)
     print(f"skills runs that opened at least one SKILL.md: {opened}/{args.runs}", flush=True)

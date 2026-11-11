@@ -19,10 +19,10 @@ The routing benchmark (`docs/routing-benchmark.md`) checks which skill a descrip
 
 ## Runner
 
-`benchmarks/reproduction/run_codex_ab.py` implements the paired arms on Codex for the micrograd fixture:
+`benchmarks/reproduction/run_codex_ab.py` runs paired, repeated arms on Codex for the micrograd fixture. Its arms are no skills versus the whole pack, so it measures the pack, not one change; to test one change, stage two cstack checkouts that differ only in that change and compare their results the same way:
 
 ```
 python benchmarks/reproduction/run_codex_ab.py --model <model> --runs 3 --output /tmp/cstack-ab-<date>
 ```
 
-It writes `results.json` with each run's grade, tokens, and `skills_opened`, and prints the per-pair deltas. Add a fixture under `benchmarks/reproduction/<task>/` with `TASK.md` and a grader that reads the workspace only after the agent exits.
+It writes `results.json` with each run's grade, tokens, and `skills_opened` (skills whose `SKILL.md` a shell command read by explicit path; listings and globs do not count), and prints the per-pair deltas. Add a fixture under `benchmarks/reproduction/<task>/` with `TASK.md` and a grader that reads the workspace only after the agent exits.

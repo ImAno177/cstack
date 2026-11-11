@@ -42,7 +42,7 @@ Keep a table in the agent instruction file that pairs each rule with what enforc
 
 ## If it fails
 
-A check that cannot fail on the past mistake is wrong: change its pattern or move up a level before committing. After two attempts at one level, go to the next level up. Do not add a docs-only rule to close a class.
+A check that cannot fail on the past mistake is wrong: change its pattern or move up a level before committing. After two attempts at one level, move down one level (architecture, then types or lint, then a test). Use docs or agent rules only for judgment calls, never for a class a check could enforce.
 
 **Reply:** each class with its evidence, the level you picked, and why a higher level didn't work.
 

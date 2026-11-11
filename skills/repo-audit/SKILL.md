@@ -87,7 +87,8 @@ one line on what you checked.
 ## Done when
 
 - The report starts `What this repo does:` with the assumed load, has at most
-  20 numbered findings, and ends with `Verdict:` and `Not checked:`.
+  20 numbered findings, and ends with `Verdict:` and `Not checked:` (or, with
+  nothing found, `Healthy. Nothing to fix.` and what you checked).
 - Every finding has four parts, a real `path:Lstart-end` and a re-read case;
   `git status` shows no edit.
 
