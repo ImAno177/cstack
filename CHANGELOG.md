@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a root `CLAUDE.md` that imports `AGENTS.md`, and list `.claude-plugin/plugin.json` in the release checklist.
 - Add a Claude Code `plugin.json` that exposes all nested skill groups, validate that every skill is discoverable by Claude Code, and give the router Claude equivalents for document skills.
 - Propose upstream updates through reviewed pull requests instead of direct pushes to `main`.
 - Preserve installed skills on failed upstream replacements and record source revisions in an upstream lockfile.

@@ -13,7 +13,7 @@
 
 ## Release checklist
 
-1. Update the version consistently in `plugin.json`, `.codex-plugin/plugin.json`, `.grok-plugin/plugin.json`, and `.claude-plugin/marketplace.json`.
+1. Update the version consistently in `plugin.json`, `.codex-plugin/plugin.json`, `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json`. Claude Code pins users to the `.claude-plugin/plugin.json` version, so installed users only receive skill changes after a bump.
 2. Check `LICENSE`, [third-party notices](../THIRD_PARTY_NOTICES.md), and changes to all upstream-vendored files. The root MIT license does not override upstream licenses.
 3. Run:
 
@@ -30,6 +30,6 @@
 
 - Codex: `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`
 - Grok: `.grok-plugin/plugin.json`, `.grok-plugin/marketplace.json`, generated `.grok-plugin/plugin-index.json`
-- Claude Code: `.claude-plugin/marketplace.json`
+- Claude Code: `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 
 No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; `skills-router` remains an optional skill for ambiguous requests. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.

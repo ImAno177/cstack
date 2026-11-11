@@ -52,7 +52,7 @@ claude plugin marketplace add ImAno177/cstack
 claude plugin install cstack@cstack
 ```
 
-Claude Code only scans `skills/<name>/SKILL.md`, so `.claude-plugin/plugin.json` lists each platform group (`skills/kaggle/`, `skills/cloudflare/`, ...) under `skills`; `validate_plugin.py` fails if a skill is unreachable. Skills load as `/cstack:<skill>`. Claude Code reads `CLAUDE.md`, not `AGENTS.md`; to use the global instructions, add `@/path/to/cstack/AGENTS.md` to `~/.claude/CLAUDE.md`.
+Claude Code only scans `skills/<name>/SKILL.md`, so `.claude-plugin/plugin.json` lists each platform group (`skills/kaggle/`, `skills/cloudflare/`, ...) under `skills`; `validate_plugin.py` fails if a skill is unreachable. Skills load as `/cstack:<skill>`. Claude Code reads `CLAUDE.md`, not `AGENTS.md`: the root `CLAUDE.md` imports `AGENTS.md` for sessions in this repository; to use the instructions everywhere, add `@/path/to/cstack/AGENTS.md` to `~/.claude/CLAUDE.md`.
 
 All examples describe the intended host integration; verify installation and native skill discovery on your specific client before reporting support as tested. cstack does not install or require any lifecycle hooks.
 
