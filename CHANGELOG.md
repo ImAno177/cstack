@@ -2,8 +2,15 @@
 
 ## Unreleased
 
+## 0.1.7
+
+- Replace `doc`, which carried another project's instructions (AgentOps, an `ocppoc` cluster, missing Council and explorer skills), with `md-docs`, adapted from iliaal/ai-skills, for README.md, AGENTS.md, CLAUDE.md, CONTRIBUTING.md, and DOCS.md.
+- Add a principles index (`default-mode/references/principles.md`) with when to apply each of the 24 principles and how to resolve tensions between them; name principles by their skill names.
+- Safety: `find-skills` installs only after the user reviews the skill and never passes `-y`; `scientific-slides` no longer reads `.env` from parent directories and asks before sending private decks to OpenRouter.
+- Fixes: `create-pr` uses repository PR templates and plain skill references; `swarm` follows `multi-agent-workflow`'s concurrency cap; `ketchup` no longer names a nonexistent `/visualize` command; PEFT and bitsandbytes guides use `dtype` and the current bitsandbytes build.
 - Restore pstack depth in `architect`, `arena`, `swarm`, `interrogate`, `how`, `why`, `reflect`, `show-me-your-work`, and `figure-it-out` (phases, rubrics, reviewer prompts, `log.sh`), with host-neutral delegation in `default-mode/references/subagents.md`.
 - Hide AI attribution in commits and PRs for Claude Code sessions in this repository with `.claude/settings.json` (`attribution` off).
+
 ## 0.1.6
 
 - Add `literature-review`, `security-audit`, and `webapp-testing`; port `tdd`, `create-verification-skill`, and `maintain-verification-skill` from pstack; add the `opening-a-pr`, `babysit`, and `shipping` playbooks to `default-mode`; route them all from `skills-router` and add five routing benchmark cases.

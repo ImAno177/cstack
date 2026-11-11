@@ -6,14 +6,14 @@ Create pull requests following the best engineering practices.
 
 ## Prerequisites
 
-Before creating a PR, ensure all changes are committed. If there are uncommitted changes, run the commit skill `skill({ name: "conventional-commit" })` first to commit them properly.
+Before creating a PR, ensure all changes are committed. If there are uncommitted changes, run the `conventional-commit` skill first to commit them properly.
 
 ```bash
 # Check for uncommitted changes
 git status --porcelain
 ```
 
-If the output shows any uncommitted changes (modified, added, or untracked files that should be included), invoke the commit skill `skill({ name: "conventional-commit" })` before proceeding.
+If the output shows any uncommitted changes (modified, added, or untracked files that should be included), run the `conventional-commit` skill before proceeding.
 
 ## Process
 
@@ -49,7 +49,7 @@ Understand the scope and purpose of all changes before writing the description.
 
 ### Step 3: Write the PR Description
 
-Use this structure for PR descriptions (ignoring any repository PR templates):
+If the repository has a PR template (`.github/pull_request_template.md`, `.github/PULL_REQUEST_TEMPLATE/`, or `docs/pull_request_template.md`), fill it in. Otherwise use this structure:
 
 ```markdown
 <brief description of what the PR does>

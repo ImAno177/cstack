@@ -44,7 +44,7 @@ from datasets import load_dataset
 
 # Load base model
 model_name = "meta-llama/Llama-3.1-8B"
-model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", device_map="auto")
+model = AutoModelForCausalLM.from_pretrained(model_name, dtype="auto", device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 tokenizer.pad_token = tokenizer.eos_token
 

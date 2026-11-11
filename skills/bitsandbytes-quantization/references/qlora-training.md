@@ -36,7 +36,7 @@ model = AutoModelForCausalLM.from_pretrained(
     "meta-llama/Llama-2-70b-hf",
     quantization_config=bnb_config,
     device_map="auto",
-    torch_dtype=torch.bfloat16
+    dtype=torch.bfloat16
 )
 
 # Step 2: Prepare for k-bit training
@@ -231,7 +231,7 @@ accelerate launch --config_file fsdp_config.yaml train_qlora.py
 model = AutoModelForCausalLM.from_pretrained(
     "meta-llama/Llama-2-70b-hf",
     quantization_config=bnb_config,
-    torch_dtype=torch.bfloat16
+    dtype=torch.bfloat16
 )
 
 # Rest same as single-GPU workflow

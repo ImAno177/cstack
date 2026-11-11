@@ -126,9 +126,9 @@ def _parse_verdict(text: str) -> Optional[str]:
 def _resolve_api_key(explicit: Optional[str] = None) -> Optional[str]:
     """Resolve the OpenRouter key from --api-key, the environment, then any .env file.
 
-    The .env scan walks up from the working directory and finally checks the
-    script's own directory, so running from anywhere inside a project picks up
-    the key at its root. Only the standard library is used: python-dotenv is a
+    The .env scan checks only the working directory and then the script's own
+    directory, never parent directories, so a key from an unrelated project
+    above the working directory is never read. Only the standard library is used: python-dotenv is a
     common omission, and a missing optional dependency should not read as a
     missing credential.
     """
@@ -140,7 +140,7 @@ def _resolve_api_key(explicit: Optional[str] = None) -> Optional[str]:
         return from_env
 
     cwd = Path.cwd()
-    for directory in [cwd, *cwd.parents, Path(__file__).resolve().parent]:
+    for directory in [cwd, Path(__file__).resolve().parent]:
         env_file = directory / ".env"
         if not env_file.is_file():
             continue

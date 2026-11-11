@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.1.6",
+      "version": "0.1.7",
       "components": {
         "skills": [
           {
@@ -122,10 +122,6 @@
             "description": "Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default."
           },
           {
-            "name": "doc",
-            "description": "Generate, refresh, and validate repository documentation (code maps, READMEs, and OSS doc packs such as CONTRIBUTING, CHANGELOG, and AGENTS.md) traced to the code. Use when writing or auditing repo docs; for prose style alone use technical-writing."
-          },
-          {
             "name": "figure-it-out",
             "description": "Design an auditable playbook when no narrower one fits - a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions. Use for \"figure it out\" or work too large for a single default-mode playbook."
           },
@@ -188,6 +184,10 @@
           {
             "name": "maintain-verification-skill",
             "description": "Periodic pass that keeps a project's verification skill and feature map honest: parallel source readers per feature, one live session driving every feature, at most one PR of proven corrections. Use for /maintain-verification-skill or \"audit the verify skill\"."
+          },
+          {
+            "name": "md-docs",
+            "description": "Manages project documentation: CLAUDE.md, AGENTS.md, README.md, CONTRIBUTING.md, DOCS.md. Use when asked to update, create, or init these context files. Not for general markdown editing."
           },
           {
             "name": "multi-agent-workflow",

@@ -299,13 +299,13 @@ fsdp_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16,
     bnb_4bit_quant_type="nf4",
     bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_storage=torch.bfloat16  # Must match torch_dtype!
+    bnb_4bit_quant_storage=torch.bfloat16  # Must match dtype!
 )
 
 model = AutoModelForCausalLM.from_pretrained(
     "meta-llama/Llama-2-70b-hf",
     quantization_config=fsdp_config,
-    torch_dtype=torch.bfloat16  # Must match quant_storage!
+    dtype=torch.bfloat16  # Must match quant_storage!
 )
 ```
 
@@ -433,10 +433,10 @@ bnb_4bit_compute_dtype=torch.bfloat16
 
 ### FSDP Errors
 
-Ensure quant_storage matches torch_dtype:
+Ensure quant_storage matches dtype:
 ```python
 bnb_4bit_quant_storage=torch.bfloat16
-torch_dtype=torch.bfloat16  # Must match!
+dtype=torch.bfloat16  # Must match!
 ```
 
 ## References

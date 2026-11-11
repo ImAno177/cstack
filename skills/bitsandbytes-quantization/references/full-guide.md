@@ -109,7 +109,7 @@ model = AutoModelForCausalLM.from_pretrained(
     "meta-llama/Llama-2-13b-hf",
     quantization_config=config,
     device_map="auto",  # Automatic device placement
-    torch_dtype=torch.float16
+    dtype=torch.float16
 )
 
 tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-13b-hf")

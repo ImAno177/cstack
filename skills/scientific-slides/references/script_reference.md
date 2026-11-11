@@ -15,8 +15,11 @@ uv run --isolated --with pymupdf==1.28.2 python <skill-dir>/scripts/pdf_to_image
 ```
 
 Generation needs `requests` and `OPENROUTER_API_KEY`; it sends prompts and attached
-images to OpenRouter and the selected model provider. Prefer the environment or
-`.env` over putting a credential in shell history with `--api-key`.
+images to OpenRouter and the selected model provider, so confirm with the user
+before the first generation call when the deck holds unpublished or private
+material. Prefer the environment or a `.env` in the working directory over putting
+a credential in shell history with `--api-key`; the scripts never read `.env`
+files from parent directories.
 
 - `POST https://openrouter.ai/api/v1/images`: Bearer authentication, JSON
   `model`, `prompt`, `n: 1`, `aspect_ratio: "16:9"`, optional `input_references`
