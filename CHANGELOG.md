@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.4.0
+
+Changes from paired Haiku runs of 0.2.0 against 0.3.0 (14 runs, three tasks): agents skipped the owning skill in a third of review runs, three of four built services exposed sequential ids and dropped the connection on a non-ASCII URL, and one baseline agent ran a recursive delete outside its workspace.
+
+- AGENTS.md names the skill that owns each phase (review, bug fix, build, commit, PR, done) and tells agents to open it before acting and to follow its output format exactly.
+- AGENTS.md and `principle-boundary-discipline` add safe defaults: unguessable public identifiers, one error format for every request, deliberate handling of each input class, absolute paths for destructive commands.
+- `principle-prove-it-works` and the feature playbook add hostile-input probes through the real interface (empty, oversized, non-ASCII, duplicate, concurrent, unsupported, restart).
+- `change-review` leads its description with the trigger and requires `What this change does:` as the first line.
+
 ## 0.3.0
 
 Changes grounded in 2026 skill-utility research (arXiv 2610.25064, 2610.11647, 2611.04367, 2610.08875, 2610.04832, 2610.14216):

@@ -1,6 +1,6 @@
 ---
 name: change-review
-description: "Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
+description: "Review a diff, commit, branch, or pull request before merge. Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
 ---
 
 Review a change like the senior developer who will be paged when it breaks.
@@ -54,7 +54,7 @@ Lean still matters: every extra line must be read, tested and fixed later.
 Very simple English: short sentences, everyday words. Explain a technical
 term the first time you use it. The reader may never have seen this code.
 
-Start with `What this change does:` in two or three sentences.
+Make `What this change does:` the first line of the report, with no title or heading before it, followed by two or three sentences.
 
 Then the findings in three groups, skip empty groups:
 - **Must fix:** bug, security, data loss, breaks at the expected load.
