@@ -3,7 +3,7 @@
 ## Unreleased
 
 - Restore pstack depth in `architect`, `arena`, `swarm`, `interrogate`, `how`, `why`, `reflect`, `show-me-your-work`, and `figure-it-out` (phases, rubrics, reviewer prompts, `log.sh`), with host-neutral delegation in `default-mode/references/subagents.md`.
-- Hide AI attribution in commits and PRs: `.claude/settings.json` sets `attribution` off for Claude Code, and `AGENTS.md` forbids attribution trailers and tool-generated branch prefixes such as `claude/`.
+- Hide AI attribution in commits and PRs for Claude Code sessions in this repository with `.claude/settings.json` (`attribution` off).
 ## 0.1.6
 
 - Add `literature-review`, `security-audit`, and `webapp-testing`; port `tdd`, `create-verification-skill`, and `maintain-verification-skill` from pstack; add the `opening-a-pr`, `babysit`, and `shipping` playbooks to `default-mode`; route them all from `skills-router` and add five routing benchmark cases.
