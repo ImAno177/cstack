@@ -15,4 +15,6 @@ metadata:
 
 # scientific-visualization
 
+`<skill-dir>` is the directory containing this `SKILL.md` (on Claude Code, `${CLAUDE_SKILL_DIR}`); its scripts run from any working directory.
+
 Read [the full guide](references/full-guide.md) when this skill applies.

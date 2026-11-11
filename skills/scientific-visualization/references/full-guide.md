@@ -192,7 +192,7 @@ Bundled CLIs make no network calls and apply input byte/pixel limits; these are 
 ```bash
 uv run --isolated --no-project --python 3.13 \
   --with "pillow==12.3.0" \
-  python scripts/image_metadata.py figure.tiff \
+  python <skill-dir>/scripts/image_metadata.py figure.tiff \
   --format tiff --mode RGB --min-dpi 300 --target-width-mm 85 \
   --alpha-policy forbid
 ```
@@ -203,7 +203,7 @@ Supports raster images (Pillow), SVG, PDF (pypdf), and EPS/PS. Reports dimension
 
 ```bash
 uv run --isolated --no-project --python 3.13 \
-  python scripts/palette_audit.py \
+  python <skill-dir>/scripts/palette_audit.py \
   --palette okabe_ito_on_white \
   --background FFFFFF \
   --role graphical
@@ -215,7 +215,7 @@ Reports exact WCAG sRGB contrast plus pairwise CIE L* grayscale screening. The g
 
 ```bash
 uv run --isolated --no-project --python 3.13 \
-  python scripts/export_plan.py \
+  python <skill-dir>/scripts/export_plan.py \
   --publisher nature \
   --figure-type combination \
   --width single \
@@ -229,7 +229,7 @@ Add `--input figure.pdf` to screen machine-readable properties. Profiles record 
 ```bash
 uv run --isolated --no-project --python 3.13 \
   --with "matplotlib==3.11.2" \
-  python scripts/style_preview.py \
+  python <skill-dir>/scripts/style_preview.py \
   --output outputs/style-preview \
   --style default \
   --palette okabe_ito_on_white \
@@ -240,12 +240,12 @@ uv run --isolated --no-project --python 3.13 \
 
 ```bash
 uv run --isolated --no-project --python 3.13 \
-  python scripts/style_presets.py --list
+  python <skill-dir>/scripts/style_presets.py --list
 uv run --isolated --no-project --python 3.13 \
-  python scripts/style_presets.py --show nature
+  python <skill-dir>/scripts/style_presets.py --show nature
 uv run --isolated --no-project --python 3.13 \
   --with "matplotlib==3.11.2" \
-  python scripts/figure_export.py --demo outputs/export-smoke --manifest
+  python <skill-dir>/scripts/figure_export.py --demo outputs/export-smoke --manifest
 ```
 
 ## Assets

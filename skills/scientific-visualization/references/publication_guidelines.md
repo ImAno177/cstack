@@ -113,7 +113,7 @@ Color is not a sufficient encoding:
 - inspect grayscale, but do not treat grayscale conversion as a complete color-vision simulation;
 - keep legends ordered like the data or direct-label series.
 
-See `color_palettes.md` and run `scripts/palette_audit.py`.
+See `color_palettes.md` and run `<skill-dir>/scripts/palette_audit.py`.
 
 ## Accessibility
 
