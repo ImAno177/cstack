@@ -9,15 +9,20 @@ description: Generate a project-local skill that formally verifies the code wher
 
 A test checks the cases that someone thought to write. Formal verification checks every case in a stated scope: every order of steps in a model, every input up to a bound, or every input. This skill finds the part of the repo where that matters most, verifies one property of it, and leaves a project-local skill that lets the next agent check a change against that property. Write that skill for an agent who reads it cold, mid-change, and has never seen your work. The user must be able to trust the result and act on it without learning the verification language.
 
+## Not for
+
+- Bringing an existing verification back in step with changed code; use `maintain-formal-verification-skill`.
+- A project that wants a test-based verification skill; use `create-verification-skill`.
+
 ## Choose the target from the code
 
-Answer from the codebase, and ask the user only what you cannot observe. If the user named an area or a bug, start there.
+Answer from the codebase, and ask the user only what you cannot observe. Start at the area or bug the user named.
 
 A good target is a promise the code makes, where a break harms users and tests rarely reach the case that breaks it. Choose the strongest such target in the repo, not the one that is easiest to verify.
 
 ## Let the question choose the tool
 
-Pick the tool that answers the question at the lowest cost: a model checker, a proof assistant, an SMT-backed verifier, or another tool. Whether events can happen in a bad order usually suits a model checker over a small model of the design, and TLA+ is the default for that in any language. Whether the code itself behaves for every input, as with memory safety, overflow, or a data-structure invariant, usually suits a verifier that runs on the code. If no verifier runs on this language, say so, and test the real code with generated inputs, not a hand model of the function. A property that must hold at every size, where a bound is not enough, can need a proof. Prefer a tool that the repo's developers can install and run, and tell the user why you chose it.
+Pick the tool that answers the question at the lowest cost: a model checker, a proof assistant, an SMT-backed verifier, or another tool. Whether events can happen in a bad order usually suits a model checker over a small model of the design, and TLA+ is the default for that in any language. Whether the code itself behaves for every input, as with memory safety, overflow, or a data-structure invariant, usually suits a verifier that runs on the code. Say so when no verifier runs on this language, and test the real code with generated inputs, not a hand model of the function. Use a proof for a property that must hold at every size, where a bound is not enough. Prefer a tool that the repo's developers can install and run, and tell the user why you chose it.
 
 ## What makes it good
 
@@ -27,17 +32,28 @@ Pick the tool that answers the question at the lowest cost: a model checker, a p
 - **Honest about scope.** Say what is verified, under which bounds and assumptions, and what is left out. A pass covers the model or the bound, not the whole system.
 - **Readable without the tool.** State the property and the harm in one plain sentence each. Tell a counterexample as a short sequence of steps in the code's words.
 - **Cheap to rerun.** One command, a reproducible tool version, and a run short enough that the next agent will use it on every relevant change.
-- **Kept in step with the code.** Record which files and functions each check covers, and the commit at which you last confirmed that the verification describes them. When the covered code changes after that commit, the next agent can see that the verification needs another look.
+- **Kept in step with the code.** Record which files and functions each check covers, and the commit at which you last confirmed that the verification describes them. A change to the covered code after that commit tells the next agent to recheck the verification.
 
 ## Generate the verify skill
 
 Write a project-local skill with frontmatter that names the area and says when to use it. Without frontmatter, the skill never registers. From the skill alone, the next agent must be able to tell whether a change touches the verified code, run the check, tell a real bug from a modeling error, and update the verification when a change is intended. Put the coverage record and the sync commit in the skill, and tell the next agent to move the sync commit forward only after it confirms that the verification describes the code at the new commit. Use this repo's real commands, paths, and nouns, and leave no placeholders.
 
-If the check is a TLA+ model, tell the next agent to read every result with the general [`/statechart`](../statechart/SKILL.md) skill. It shows each invariant violation the checker finds as its shortest path in plain words. When the check passes, `/statechart` draws a chart of how the system moves between states. Refer to `/statechart` by name. Its commands, options, and file paths change between releases and machines, so copy none of them into the generated skill or its scripts.
+For a TLA+ model, tell the next agent to read every result with the general [`/statechart`](../statechart/SKILL.md) skill. It shows each invariant violation the checker finds as its shortest path in plain words. When the check passes, `/statechart` draws a chart of how the system moves between states. Refer to `/statechart` by name. Its commands, options, and file paths change between releases and machines, so copy none of them into the generated skill or its scripts.
 
 ## Prove it before you hand off
 
 Follow the generated skill once, as the next agent would, on a scratch change that breaks the property in the real code. It must catch the break. Then drop the scratch change and confirm that the check is back where it started: passing, or failing only on the findings you will report. A verify skill that was never run is a draft. If the skill misses the break or a step does not run, fix the skill or the verification, not the scratch change.
+
+## Done when
+
+- The generated skill has frontmatter, one run command, a coverage record, and a sync commit.
+- Each property failed on a broken variant, and the generated skill caught a scratch break in the real code. The tree is clean afterward.
+
+## If it fails
+
+- The check passes on the scratch break: the model is not true to the code. Fix the model or property, then repeat the scratch run. Do not weaken the break.
+- The tool does not run or is too slow: shrink the bounds once, then switch to a cheaper tool and say why. Do not drop the property.
+- The current code breaks the property: report the counterexample and stop; do not edit product code unless the user asks.
 
 ## Hand off
 

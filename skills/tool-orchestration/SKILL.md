@@ -1,6 +1,6 @@
 ---
 name: tool-orchestration
-description: Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow.
+description: Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow; not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`).
 ---
 
 # Tool orchestration
@@ -26,13 +26,29 @@ Choose an execution mode from the task graph, not from a generic speed rule.
 
 ## Host-specific contracts
 
-- On the OpenAI Responses API, use strict schemas for parallel function calls when supported. Set `parallel_tool_calls` to `false` when ordering, shared state, or a single-call invariant matters. Do not assume hosted built-in tools can join a parallel function-call batch.
-- For async function or custom tools, bind a unique task handle to the original call ID and return the result on that original call. Do not use async for hosted built-in or programmatic tools, and do not combine async tools with parallel tool calls in multi-agent mode unless the host explicitly supports that combination.
-- For an offline Batch API, give every request a unique identifier, reconcile each result independently, and treat the job as delayed work. Do not use it for interactive decisions or side effects that need immediate authorization.
-- On other hosts, detect the supported capability and result contract before using these modes. Never infer OpenAI-specific flags or lifecycle semantics from a generic tool name.
+- On the OpenAI Responses API, use strict schemas for parallel function calls where supported. Set `parallel_tool_calls` to `false` for ordering, shared state, or a single-call invariant. Keep hosted built-in tools out of a parallel function-call batch unless the host documents support.
+- For async function or custom tools, bind a unique task handle to the original call ID and return the result on that original call. Keep async off hosted built-in and programmatic tools, and keep async tools out of parallel tool calls in multi-agent mode unless the host explicitly supports that combination.
+- For an offline Batch API, give every request a unique identifier, reconcile each result independently, and treat the job as delayed work. Keep interactive decisions and side effects that need immediate authorization out of it.
+- On other hosts, detect the supported capability and result contract before using a mode. Take OpenAI-specific flags and lifecycle semantics only from OpenAI hosts, never from a generic tool name.
 
 ## Measure the choice
 
-Compare sequential direct calls with the selected mode on representative whole-repository tasks. Freeze the model, prompt, tools, rate limits, retry policy, and task set. Measure correctness, evidence coverage, turns, calls, critical-path latency, queue and tool wait, tokens, cost, retries, partial failures, and cleanup. Keep the faster mode only if the quality bar holds within budget.
+Run the protocol in `agent-evaluation`: compare sequential direct calls with the selected mode on representative whole-repository tasks, with model, prompt, tools, rate limits, retry policy, and task set frozen. Measure correctness, evidence coverage, turns, calls, critical-path latency, queue and tool wait, tokens, cost, retries, partial failures, and cleanup. Keep the faster mode only when the quality bar holds within budget.
 
-Do not assume the host supports every mode. Keep semantic judgment, approval, and final validation visible to the main agent.
+Keep semantic judgment, approval, and final validation visible to the main agent.
+
+## Not for
+
+- A single dependent call chain, where direct calls are already the answer.
+
+## Done when
+
+- The dependency graph is written, each node has a mode, and every serial barrier is named.
+- Every call has a recorded status (ok, failed, timed out, cancelled, partial) and no missing result is filled by a guess.
+- Changing the graph, concurrency, or tool set invalidates earlier measurements; remeasure.
+
+## If it fails
+
+- Find the failed node, its resource overlap or rate limit, and the host capability it assumed.
+- Cut concurrency or move the node to a serial barrier before retrying; keep the quality bar fixed.
+- Fall back to direct sequential calls when two adjustments still fail.

@@ -9,6 +9,11 @@ description: Check a TLA+ model of a system that moves between states, such as a
 
 The chart shows how a system moves between states, in the words of the person who reads it. That person, the reader, decides whether the behavior is right.
 
+## Not for
+
+- Reviewing code with no state model: use `change-review` or `repo-audit`.
+- Proving a property of code with a prover: use `maintain-formal-verification-skill` for that upkeep.
+
 ## Run
 
 Work in a scratch folder outside the repo. Write a TLA+ spec and its config. Then run:
@@ -17,9 +22,9 @@ Work in a scratch folder outside the repo. Write a TLA+ spec and its config. The
 <skill dir>/scripts/statechart SPEC.tla [--config FILE] [--view FILE] [--out DIR]
 ```
 
-`scripts/statechart.ts` is TypeScript, so run it with a runtime that can execute TypeScript.
+The wrapper runs `scripts/statechart.ts` with Node 22.18+ (or 23.6+), Bun 1.1.5+, or Deno 2+; it exits 127 when none is installed. The first run installs TLC and Java with mise and needs the network. `--out` must name a new or empty folder.
 
-The first run installs TLC and Java with mise and needs the network.
+Exit 0 means every rule holds, 1 means a rule breaks (the report and chart are written), and 2 means TLC or the command failed (nothing is written).
 
 ## Write the spec
 
@@ -41,7 +46,7 @@ Label each state with what the reader can see or cares about, such as "Paying" o
 
 The view can also export `step(action, from, to)`. It gets the TLC action name and the values before and after the step, and it returns the label of the arrow. Write each step label as the user sees it happen, such as "you press play" or "the connect fails". Do not name the code or the TLA+ action. Two actions that end the same in the chart get the same label, so that they share one arrow.
 
-When a step can occur only in some conditions, end its label with the condition in brackets, in the reader's words, such as `you press play [while the file loads]`. In a regions chart, the command writes the condition on the other regions on the arrow, in the words of their labels, such as `[when Offline]`. Your brackets replace it, and two arrows from one state can then look the same. So in a regions chart, do not write brackets for a condition on another region. When a value that no label shows decides where a step goes, name the result in the label, such as "the roster read fails".
+End a step label with its condition in brackets, in the reader's words, when the step can occur only in some conditions, such as `you press play [while the file loads]`. In a regions chart, the command writes the condition on the other regions on the arrow, in the words of their labels, such as `[when Offline]`. Your brackets replace it, and two arrows from one state can then look the same. So in a regions chart, do not write brackets for a condition on another region. Name the result in the label, such as "the roster read fails", when a value that no label shows decides where a step goes.
 
 The view can also export these:
 
@@ -53,7 +58,7 @@ The command calls `state()` and `group()` at most once for each model state, and
 
 The chart does not draw a step that stays in one label. Split a label when the reader must see such a step.
 
-Aim for about 20 arrows or fewer, because a busier chart is hard to read. First return coarser labels from `state()`. Give one label to values that act the same, and leave out a detail that the reader does not need, such as a call in flight whose return changes nothing. Keep each state of a bug path, and keep each mark. When a merge changes a `breaks` state to `mayBreak`, it hides where a rule breaks. Do not merge two states that break different rules, because the reader then cannot see which rule breaks where. If the chart is still too busy, return `null` from `step()` for the steps that the reader does not need, such as a reset that every state has, or a step whose arrow repeats what other arrows show. Obey these rules when you hide steps:
+Aim for about 20 arrows or fewer, because a busier chart is hard to read. First return coarser labels from `state()`. Give one label to values that act the same, and leave out a detail that the reader does not need, such as a call in flight whose return changes nothing. Keep each state of a bug path, and keep each mark. When a merge changes a `breaks` state to `mayBreak`, it hides where a rule breaks. Do not merge two states that break different rules, because the reader then cannot see which rule breaks where. Return `null` from `step()` for the steps that the reader does not need when the chart is still too busy, such as a reset that every state has, or a step whose arrow repeats what other arrows show. Obey these rules when you hide steps:
 
 - Keep each chart state reachable by arrows from a start state.
 - Keep at least one arrow out of each chart state that has a step out in the model.
@@ -74,10 +79,29 @@ Aim for about 20 arrows or fewer, because a busier chart is hard to read. First 
 
 Show `chart.mmd` to the user as a `mermaid` code block. The chart has a budget of 500 states, counted by TLC on the config as written. Above that, the chart draws only the paths to the rules that break, and when no rule breaks, the command writes no `chart.mmd`. It still checks each rule, and the report gives the state count and each bug path. To see the whole graph, make the model smaller.
 
-Render charts with Pele. When the user asks for an image, or a chart is too large to read as text, follow `references/render.md`. Do not use a different renderer unless the user asks for it.
+Render charts with Pele. Read `references/render.md` before rendering an image or a chart too large to read as text. Use a different renderer only when the user asks for it.
 
 ## Hand off
 
 Give each chart and its Mermaid text to the person who must decide. Add one line for each bug: the rule, the reader's sentence for that rule, and the path as the report numbers it. Say what the model leaves out. Give the command that makes the files again, with a new `--out` folder.
 
-When the model describes code, replay each bug path against the real code, as a test or a live repro, one step for each action. If a bug does not occur, think that the model is wrong until you show that it is not.
+Replay each bug path against the real code, as a test or a live repro with one step for each action, whenever the model describes code. Treat the model as wrong until you show it is not when a bug does not occur.
+
+## Done when
+
+- The command exited 0 or 1, and `chart.mmd` exists (or the report says why it does not).
+- Every INVARIANT and PROPERTY is in the model unweakened, and the report's "Rules not checked" is empty or explained.
+- The hand-off lists each bug, the steps the chart hides, and the rerun command.
+
+## If it fails
+
+Read the error on exit 2. Change the spec, config (smaller constants or a CONSTRAINT), or view before rerunning with a new `--out`. Stop and report the exact error after two reruns with no new evidence. Never weaken a rule to get exit 0.
+
+## Example hand-off
+
+```
+(The chart's Mermaid text is shown above in a `mermaid` block.)
+Rule `NoOverdraft`: you never spend more than you hold. It breaks at "Paying" (path 1: you open the app, you press pay twice).
+The chart hides the reset step. The model leaves out refunds.
+Rerun: <skill dir>/scripts/statechart pay.tla --view pay-view.ts --out pay-chart-2
+```

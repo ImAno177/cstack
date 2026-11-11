@@ -2,7 +2,7 @@
 name: technical-writing
 description: 'Layered technical-writing standard: Diátaxis structure, Google developer style sentences, STE instruction rules,
   Global English syntax. Use for /technical-writing or when writing or reviewing docs, RFCs, readmes, PR descriptions, or
-  commit messages.'
+  commit messages. Not for choosing or maintaining project context files; use md-docs.'
 ---
 
 # Technical writing
@@ -13,11 +13,18 @@ Three rules sit above the layers:
 
 - **Cut every word that does no work.** If the sentence survives without a word, the word goes. "In order to" is "to". "It is important to note that" is nothing.
 - **Use the short, everyday word.** "Use", not "utilize". "Help", not "facilitate". "Do", not "perform". A long word has to buy its length with precision.
-- **When a rule makes a sentence worse, fix the sentence another way or leave it alone.** A sentence that follows every rule and sounds like a machine wrote it has failed.
+- **Fix the sentence another way, or leave it alone, when a rule makes it worse.** A sentence that follows every rule and sounds like a machine wrote it has failed.
 
 The codebase is the word list. Write the real symbol, file, flag, or command name, not a synonym or a description of it.
 
 Don't invent jargon. Use the words a developer would say out loud: "move", "delete", "a budget that only decreases", not "evacuate", "ratchet", or "endgame". A named pattern is fine when the doc says what it means the first time. Propose a new offender and its replacement as an addition to `unslop`'s abstract-metaphor rule in your reply, with the diff. Don't edit that skill.
+
+## Not for
+
+- Deciding which context file holds a fact, verifying commands and paths against the repo, backups, or migrating CLAUDE.md. That is `md-docs`, which owns what goes in README.md, AGENTS.md, CLAUDE.md, CONTRIBUTING.md, and DOCS.md and how to update them.
+- Product UI strings.
+
+Load both for a documentation task: `md-docs` decides what to write and checks the facts, and this skill sets how each sentence reads.
 
 ## Vary the rhythm
 
@@ -98,10 +105,20 @@ Don't mix modes: no reference tables inside a tutorial, no tutorial hand-holding
 
 ## Worked example
 
-Before:
+Before (breaks the rules; do not copy):
 
 > Configuration of the proto import ratchet budget script parameters is performed via budget.json. Note that it's important to remember that running with --write, which updates the committed budget to reflect the current count, should only be done when lowering it. If exceeded, CI fails.
 
-After:
+After (illustrative file names):
 
 > `budget.mjs` reads the committed budget from `budget.json` and counts the files that import protos. If the count exceeds the budget, CI fails. Run `budget.mjs --write` only to lower the budget.
+
+## Done when
+
+- The text has one Diátaxis mode, and each command, flag, and path in it exists.
+- Running `grep -nE '—| etc\.|click here|\(s\)' <file>` on the text finds none of those.
+- No sentence runs past about 25 words, or 20 for an instruction.
+
+## If it fails
+
+Rewrite the sentence a check flags. Do not loosen the check. When two rules conflict on one sentence, split it into two sentences. After a mode change, rerun every check above.

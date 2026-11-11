@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.3.0
+
+Changes grounded in 2026 skill-utility research (arXiv 2610.25064, 2610.11647, 2611.04367, 2610.08875, 2610.04832, 2610.14216):
+
+- AGENTS.md policies are direct imperatives instead of condition-first sentences, and agents name the skill that shaped the work.
+- The 51 cstack-owned skills other than `frontend-design` and the principles gain `Not for`, `Done when`, and `If it fails` sections where they apply, imperative-first rules, concrete commands, and, for fixed output formats, exactly one worked example that follows every rule of the skill. `conventional-commit` keeps one example instead of six; `create-pr` agrees with `conventional-commit` and `opening-a-pr`.
+- `validate_skill_stack.py` enforces `overlap_groups` in `.cstack/skill-policy.json`: overlapping skills must name each other in their descriptions.
+- The authoring playbook carries the evidence-based checklist, and `docs/skill-effect-benchmark.md` documents paired, repeated, exposure-aware measurement; the Codex A/B runner records which skills each run opened and per-pair deltas.
+
 ## 0.2.0
 
 - Breaking: every skill now lives at `skills/<name>/`, the one-level layout Claude Code, Codex, Cursor, Grok, and the `skills` CLI all scan. The `cloudflare/`, `kaggle/`, `colab/`, `huggingface/`, and `frontend/` group folders are gone, and `.claude-plugin/plugin.json` no longer lists extra skill roots.

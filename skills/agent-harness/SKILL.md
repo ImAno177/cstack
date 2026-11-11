@@ -5,11 +5,16 @@ description: "Design, debug, or evaluate the runtime around a model-driven agent
 
 # Agent harness
 
-Use this skill to turn a model into a bounded, inspectable agent. Read [the harness matrix](references/harness-matrix.md) first when choosing an architecture, and read [the LFM3/Pi notes](references/lfm3-pi.md) for that integration. Read [the incident guards](references/incident-guards.md) when a new hook, evaluator, batch path, or delegation policy is proposed.
+Turn a model into a bounded, inspectable agent. Read [the harness matrix](references/harness-matrix.md) before choosing an architecture, [the LFM3/Pi notes](references/lfm3-pi.md) for that integration, and [the incident guards](references/incident-guards.md) before proposing a new hook, evaluator, batch path, or delegation policy.
+
+## Not for
+
+- Ordinary application code with no model-driven loop.
+- Measuring agents across tasks; use `agent-evaluation`. Choosing parallel or async tool calls; use `tool-orchestration`.
 
 ## Define the boundary
 
-Write the smallest user-visible outcome and the actual artifact or side effect that proves it. Decide whether the task needs a deterministic workflow or a model-directed loop. Start with one agent; add delegation only when independent context isolation beats serial work.
+Write the smallest user-visible outcome and the actual artifact or side effect that proves it. Decide whether the task needs a deterministic workflow or a model-directed loop. Start with one agent; delegate only for independent context isolation that beats serial work.
 
 Before coding, record one decision for each subsystem in the matrix:
 
@@ -33,20 +38,20 @@ Use this lifecycle:
 6. Append the assistant call, tool result, policy decision, and artifact receipt to the session trail.
 7. Continue, recover, interrupt, compact, or stop from explicit state. Do not infer completion from text alone.
 
-Start serial. Permit a batch only when every call is read-only or has disjoint declared resources and the result order is defined. Make steering interrupt the current run and follow-up wait until the current tool work is complete.
+Start serial. Batch only calls that are all read-only or have disjoint declared resources, with a defined result order. Make steering interrupt the current run and make follow-up wait until current tool work completes.
 
 ## Context and memory
 
 Discover hierarchical instruction files and neighboring conventions from the current path. Load metadata eagerly and large skills, tools, and references just in time. Use deterministic code search before adding vector retrieval. Compact before the effective context limit, preserve the system contract and recent task tail, merge prior summaries, and keep a replayable boundary or checkpoint.
 
-Treat durable memory as a reviewed artifact. A refinement process may propose a patch, skill, or memory entry, but it must record source episode, scope, evidence, privacy class, rollback, and expiry. It must not silently rewrite the base prompt or shared skills.
+Treat durable memory as a reviewed artifact. Let a refinement process propose a patch, skill, or memory entry, and record source episode, scope, evidence, privacy class, rollback, and expiry. Never let it silently rewrite the base prompt or shared skills.
 
 ## Tools, hooks, and extensions
 
 - Keep tool schemas small, typed, discoverable, and honest about side effects. Use exact unique matching for edits; never make line numbers the write contract.
 - Use a skill for procedures, a hook for deterministic lifecycle behavior, an extension for runtime events/tools/UI, a plugin for a replaceable service, and MCP or another adapter for an external process.
-- Hooks must declare whether they observe, warn, block, or inject a continuation. Keep stdout/protocol output machine-readable and diagnostics separate. Fail open only when the host policy explicitly allows it.
-- In a Node/Pi project, use ESM `.mjs` or TypeScript with package scripts. Do not add a one-off `.ps1` helper unless the repository owns a Windows-only boundary. Keep comments out of code unless they preserve a non-obvious contract, generated section, license fact, public API, or tool requirement.
+- Hooks must declare whether they observe, warn, block, or inject a continuation. Keep stdout/protocol output machine-readable and diagnostics separate. Fail open only where host policy explicitly allows it.
+- In a Node/Pi project, use ESM `.mjs` or TypeScript with package scripts; add a `.ps1` helper only where the repository owns a Windows-only boundary. Keep comments to non-obvious contracts, generated sections, license facts, public APIs, or tool requirements.
 
 ## Multi-agent and long-running work
 
@@ -58,12 +63,20 @@ Run production-shaped trials in clean environments. Include no-tool answers, val
 
 ## Operational guardrails
 
-- Tie every new hook, evaluator, or automation to a reproduced incident, a measurable success predicate, a cost budget, and a retirement condition.
+- Tie each new hook, evaluator, or automation to a reproduced incident, a measurable success predicate, a cost budget, and a retirement condition.
 - Make verifiers non-vacuous: record the expected subject count and matched-evidence count; zero matches are `unknown`, never a passing result.
 - Bound delegated work by model, depth, concurrency, time, tokens, and cleanup receipt. A worker report is not evidence that its side effects happened.
 - Write a durable handoff before compaction or a phase boundary. Keep the system contract and tool catalog stable inside a phase; discover new tools at the next boundary.
 - Measure activation and outcome before adding another skill or reference. Retire additions that add load without improving a representative task.
 
-## Finish
+## Done when
 
-Verify the real artifact or side effect, inspect the event trail, replay the relevant failure, remove temporary output, and report attempted, executed, verified, skipped, partial, and blocked work separately.
+- The real artifact or side effect is inspected, and the event trail shows the expected stop reason.
+- The relevant failure is replayed and passes, with a control case; any later edit to loop, tools, or policy invalidates earlier replays.
+- Temporary output is removed, and the report lists attempted, executed, verified, skipped, partial, and blocked work separately (see `agent-completion`).
+
+## If it fails
+
+- Classify the failure as model, harness, tool, environment, or evaluator from the trail before editing.
+- Change the guard or contract at the boundary where it first became observable, then rerun the failing and control cases. Keep the success predicate fixed.
+- Stop and report blocked when two distinct fixes fail to reproduce a pass.

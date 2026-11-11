@@ -55,6 +55,21 @@ def link_check_excluded(path: Path, source_root: Path, prefixes: list[str]) -> b
     )
 
 
+def validate_overlap_groups(groups: list, descriptions: dict[str, str], errors: list[str]) -> None:
+    for group in groups:
+        if not isinstance(group, list) or len(group) < 2:
+            errors.append(f"invalid overlap group: {group}")
+            continue
+        for name in group:
+            description = descriptions.get(name)
+            if description is None:
+                errors.append(f"overlap group names unknown skill: {name}")
+                continue
+            for sibling in group:
+                if sibling != name and not re.search(rf"(?<![a-z0-9-]){re.escape(sibling)}(?![a-z0-9-])", description):
+                    errors.append(f"description of {name} does not name overlapping skill {sibling}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-root", required=True, type=Path)
@@ -84,6 +99,7 @@ def main() -> int:
 
     plugin_skills = skill_dirs(args.plugin_root / "skills", excluded)
     catalog: set[str] = set()
+    descriptions: dict[str, str] = {}
     for skill in plugin_skills:
         entrypoint = skill / "SKILL.md"
         try:
@@ -101,6 +117,8 @@ def main() -> int:
             if name in catalog:
                 errors.append(f"duplicate skill name: {name}")
             catalog.add(name)
+            if isinstance(description, str):
+                descriptions[name] = description
         if entrypoint.resolve() not in managed_entrypoints and len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
             errors.append(f"entrypoint exceeds {max_entry_lines} lines: {entrypoint}")
         for artifact in skill.rglob("*"):
@@ -117,6 +135,8 @@ def main() -> int:
             if link_check_excluded(document, args.plugin_root, link_exclude_prefixes):
                 continue
             validate_links(args.plugin_root / "skills", document, errors)
+
+    validate_overlap_groups(policy.get("overlap_groups", []), descriptions, errors)
 
     for excluded_name in excluded:
         if (args.plugin_root / "skills" / excluded_name).exists():

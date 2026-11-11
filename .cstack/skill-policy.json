@@ -22,5 +22,33 @@
     "skills/web-perf/",
     "skills/workers-best-practices/",
     "skills/wrangler/"
+  ],
+  "overlap_groups": [
+    [
+      "change-review",
+      "repo-audit",
+      "security-audit",
+      "blast-radius"
+    ],
+    [
+      "reflect",
+      "continual-learning"
+    ],
+    [
+      "arena",
+      "swarm"
+    ],
+    [
+      "technical-writing",
+      "md-docs"
+    ],
+    [
+      "how",
+      "why"
+    ],
+    [
+      "create-verification-skill",
+      "webapp-testing"
+    ]
   ]
 }

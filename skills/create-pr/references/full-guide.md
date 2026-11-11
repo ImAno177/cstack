@@ -1,180 +1,106 @@
 # Create Pull Request
 
-Create pull requests following the best engineering practices.
+Open pull requests that a reviewer can judge in one minute.
 
-**Requires**: GitHub CLI (`gh`) authenticated and available.
-
-## Prerequisites
-
-Before creating a PR, ensure all changes are committed. If there are uncommitted changes, run the `conventional-commit` skill first to commit them properly.
-
-```bash
-# Check for uncommitted changes
-git status --porcelain
-```
-
-If the output shows any uncommitted changes (modified, added, or untracked files that should be included), run the `conventional-commit` skill before proceeding.
+**Requires**: GitHub CLI (`gh`) authenticated (`gh auth status` exits 0).
 
 ## Process
 
-### Step 1: Verify Branch State
+Order matters: commit, verify the branch, read the diff, write the body to a file, push, create.
+
+### Step 1: Commit and verify the branch
+
+Run `git status --porcelain`. Commit every change that belongs in the PR with the `conventional-commit` skill first; leave unrelated work out.
 
 ```bash
-# Detect the default branch
 BASE=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')
-
-# Check current branch and status
 git status
 git log $BASE..HEAD --oneline
 ```
 
-Ensure:
-- All changes are committed
-- Branch is up to date with remote
-- Changes are rebased on the base branch if needed
+The result must show a task branch (not `$BASE`) with only this task's commits. When the branch is behind `$BASE`, merge `$BASE` into it; never force-push.
 
-### Step 2: Analyze Changes
-
-Review what will be included in the PR:
+### Step 2: Read what the PR contains
 
 ```bash
-# See all commits that will be in the PR
 git log $BASE..HEAD
-
-# See the full diff
 git diff $BASE...HEAD
 ```
 
 Understand the scope and purpose of all changes before writing the description.
 
-### Step 3: Write the PR Description
+### Step 3: Write the body
 
-If the repository has a PR template (`.github/pull_request_template.md`, `.github/PULL_REQUEST_TEMPLATE/`, or `docs/pull_request_template.md`), fill it in. Otherwise use this structure:
+Fill in the repository's template when one exists (`.github/pull_request_template.md`, `.github/PULL_REQUEST_TEMPLATE/`, or `docs/pull_request_template.md`). Otherwise use these paragraphs, in this order:
 
-```markdown
-<brief description of what the PR does>
+1. What changed and why, in one short paragraph. Add alternatives you rejected only when they matter.
+2. `Scope:` what the PR leaves out.
+3. `Blast radius:` what else could be affected, with `file:line` evidence.
+4. `Verification:` the real commands you ran and their outcomes.
 
-<why these changes are being made - the motivation>
+Rules:
+- Link issues or tickets only when one exists.
+- Name areas that need careful review.
+- Write no `Test plan` heading, no checkbox lists, and no summary that repeats the diff.
+- Run the `unslop` skill on the prose, and keep long evidence in a linked artifact.
+- End with the attribution line the host or user requires, if any.
 
-<alternative approaches considered, if any>
+### Step 4: Push and create
 
-<any additional context reviewers need>
-```
-
-**Do NOT include:**
-- "Test plan" sections
-- Checkbox lists of testing steps
-- Redundant summaries of the diff
-
-**Do include:**
-- Clear explanation of what and why
-- Links to relevant issues or tickets (only if available)
-- Context that isn't obvious from the code
-- Notes on specific areas that need careful review
-
-### Step 4: Create the PR
+Write the body to a file first (`BODY=$(mktemp)`, then write to `"$BODY"`) so quoting cannot mangle it. Open the PR ready for review; do not pass `--draft`.
 
 ```bash
-gh pr create --title "<type>(<scope>): <description>" --body "
-<description body here>
-"
+git push -u origin HEAD
+gh pr create --title "<type>(<scope>): <subject>" --body-file "$BODY"
 ```
 
-**Title format** follows commit conventions:
-- `feat(scope): Add new feature`
-- `fix(scope): Fix the bug`
-- `refactor(scope): Refactor something`
+Title: Conventional Commits `type(scope): subject`, imperative, lowercase first letter, no trailing period, at most 70 characters. Use the types in the `conventional-commit` skill's table.
 
-## PR Description Examples
+Keep one concern per PR and keep it reviewable; split unrelated changes into separate PRs.
 
-### Feature PR
+### Step 5: Check the result
 
-```markdown
-Add Slack thread replies for alert notifications
+Run `gh pr view --json url,title,body,isDraft`. The URL exists, `isDraft` is `false`, and the title and body match what you wrote. Post the URL. Opening a PR does not authorize a merge.
 
-When an alert is updated or resolved, we now post a reply to the original
-Slack thread instead of creating a new message. This keeps related
-notifications grouped and reduces channel noise.
+## Editing an existing PR
 
-Previously considered posting edits to the original message, but threading
-better preserves the timeline of events and works when the original message
-is older than Slack's edit window.
-```
-
-### Bug Fix PR
-
-```markdown
-Handle null response in user API endpoint
-
-The user endpoint could return null for soft-deleted accounts, causing
-dashboard crashes when accessing user properties. This adds a null check
-and returns a proper 404 response.
-
-```
-
-### Refactor PR
-
-```markdown
-Extract validation logic to shared module
-
-Moves duplicate validation code from the alerts, issues, and projects
-endpoints into a shared validator class. No behavior change.
-
-This prepares for adding new validation rules without
-duplicating logic across endpoints.
-```
-
-## Guidelines
-
-- **One PR per feature/fix** - Don't bundle unrelated changes
-- **Keep PRs reviewable** - Smaller PRs get faster, better reviews
-- **Explain the why** - Code shows what; description explains why
-
-## Editing Existing PRs
-
-When updating a PR after creation, the skill automatically selects the best approach based on your GitHub CLI version:
-
-- **gh 2.82.1+**: Uses native `gh pr edit` (clean, full-featured)
-- **gh < 2.82.1**: Falls back to `gh api` (avoids Projects classic deprecation bug)
-
-### Check Your Version
+Check `gh --version` first.
 
 ```bash
-# Check GitHub CLI version
-gh --version
+# gh 2.82.1 or newer
+gh pr edit <number> --title "<new title>" --body-file "$BODY"
+
+# gh older than 2.82.1, or when gh pr edit fails with "Projects (classic) is being deprecated"
+gh api -X PATCH repos/{owner}/{repo}/pulls/<number> -f title='<new title>' -F body=@"$BODY"
 ```
 
-### Modern Approach (gh 2.82.1+)
+## If it fails
 
-```bash
-# Update PR description
-gh pr edit PR_NUMBER --body "Updated description here"
+- `gh pr create` reports no upstream or unpushed commits: run `git push -u origin HEAD`, then retry.
+- The PR already exists: use `gh pr edit`, not a second `gh pr create`.
+- Auth errors: run `gh auth status` and fix the login; do not paste tokens into commands.
+- Stop and report after two failed attempts with the exact `gh` error. Never drop a format rule to make the command succeed.
 
-# Update PR title
-gh pr edit PR_NUMBER --title "New Title here"
+## Example
 
-# Update both
-gh pr edit PR_NUMBER --title "new: Title" --body "New description"
+Title:
+
+```
+fix(billing): bill late orders on the shop's local day
 ```
 
-### Legacy Fallback (gh < 2.82.1)
+Body:
 
-If `gh pr edit` fails with a "Projects (classic) is being deprecated" error, use the API directly:
+```markdown
+Orders placed after local midnight were billed on the previous day, because the nightly job read "today" from the UTC server clock. The job now computes the day in the shop's time zone, so accounting no longer corrects those orders by hand. Fixes #<issue>.
 
-```bash
-# Update PR description
-gh api -X PATCH repos/{owner}/{repo}/pulls/PR_NUMBER -f body="
-Updated description here
-"
+Scope: only `billing/close_day.py` and its test. The invoice template and CSV export are untouched.
 
-# Update PR title
-gh api -X PATCH repos/{owner}/{repo}/pulls/PR_NUMBER -f title='New Title here'
+Blast radius: `close_day()` has one caller (`billing/jobs.py:L18`). Reports read stored dates, so they do not change.
 
-# Update both
-gh api -X PATCH repos/{owner}/{repo}/pulls/PR_NUMBER \
-  -f title='new: Title' \
-  -f body='New description'
+Review closely: the time zone comes from `SHOP_TZ` in `billing/config.py:L5`.
+
+Verification: `pytest tests/billing/test_close_day.py` failed before the fix and passes after (4 passed). `ruff check billing` reports no issues.
+
+<attribution line required by the host, if any>
 ```
-
-**Note**: The Projects (classic) bug was fixed in gh 2.82.1 (October 2025).
-Upgrade with your package manager if you're on an older version.

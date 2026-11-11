@@ -1,6 +1,6 @@
 ---
 name: figure-it-out
-description: Design an auditable playbook when no narrower one fits - a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions. Use for "figure it out" or work too large for a single default-mode playbook.
+description: Design an auditable playbook when no narrower one fits - a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions. Use for "figure it out" or work too large for a single default-mode playbook. Not for work one existing playbook covers; use `default-mode`.
 ---
 
 # Figure it out
@@ -13,20 +13,20 @@ Keep a task list whose first item is to read the [principles index](../default-m
 
 ## Phase A: Frame
 
-Ground first, then commit. Do not start the run until you can state:
+Ground first, then commit. Start the run only once you can state:
 
 - the definition of done as a falsifiable predicate checked on the real artifact (`principle-prove-it-works`);
 - the scope, quantified: rough units and effort, and the blockers grounding surfaced;
 - the rigor level, biased high. One-way doors and high blast radius get more; reversible low-stakes steps get less. Rigor is gates and artifacts, not "try harder".
 
-Present the framing and tradeoffs before a long run. Reversible work proceeds without waiting (`principle-never-block-on-human`), but a multi-hour run earns one checkpoint.
+Present the framing and tradeoffs before a long run. Proceed on reversible work without waiting (`principle-never-block-on-human`), and post one checkpoint for a multi-hour run.
 
 ## Phase B: Design the workflow
 
 Split the work into atomic, independently landable units, riskiest unknown first. Scaffold and verification come before features (`principle-foundational-thinking`).
 
 - Build the verification harness before the work, with the baseline captured from the pre-change state, so each check reads "old value vs new value".
-- For one-way-door design decisions, run `architect` (which runs `arena`). Skip it for mechanical work whose shape is already settled; a second arena over a settled design is over-engineering (`principle-laziness-protocol`).
+- Run `architect` (which runs `arena`) for one-way-door design decisions. Skip it for mechanical work whose shape is already settled (`principle-laziness-protocol`).
 - Decide what fans out. Parallelize only across seams and give each worker its own worktree or branch (`principle-separate-before-serializing-shared-state`, [subagents](../default-mode/references/subagents.md)). Do not over-fan.
 - Write the phase list down. That list is what the human reviews.
 
@@ -37,8 +37,8 @@ Then add the design's steps to the task list between the Phase C and Phase D ent
 Each unit is an experiment: state the hypothesis, make the smallest change, measure against the predicate on the real artifact, keep it if it advanced and revert it if it did not. Verify each unit before starting the next (`principle-sequence-verifiable-units`).
 
 - Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.
-- Pair delegated work with a judge. If a worker games the gate, reset and harden the contract. If the gate itself is wrong, fix it in its own change rather than routing around it.
-- A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Do not hide a negative.
+- Pair delegated work with a judge. Reset and harden the contract when a worker games the gate. Fix a wrong gate in its own change rather than routing around it.
+- A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Report every negative.
 
 ## Phase D: Keep the audit trail
 
@@ -49,3 +49,13 @@ Log the run with `show-me-your-work`. This work is usually ambitious enough to c
 Check the whole against the Phase A predicate on the real product, not only the harness. Encode any recurring correction as a gate, lint rule, check, or script (`principle-encode-lessons-in-structure`).
 
 **Reply:** the playbook you designed, the rigor level and why, the decision-trail path, what is verified against the predicate, and what is still open.
+
+## Done when
+
+- The Phase A predicate was run against the real artifact and its output is quoted in the reply.
+- The decision trail exists at the path the reply names, with one row per step.
+- Every unit has a VERIFIED, NOT VERIFIED, or INCONCLUSIVE verdict; none is blank.
+
+## If it fails
+
+Name the failing unit and whether the hypothesis, the gate, or the environment was wrong. Change one of those before retrying. After two failed retries of a unit, revert it, log it, and take a different method or report the blocker. Keep the predicate fixed; do not weaken it to pass.

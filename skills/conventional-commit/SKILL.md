@@ -1,7 +1,7 @@
 ---
 name: conventional-commit
 description: Create conventional commit messages following best conventions. Use when committing code changes, writing commit
-  messages, or formatting git history. Follows conventional commits specification.
+  messages, or formatting git history. Follows conventional commits specification. Not for branch, push, or PR policy; follow the repository's AGENTS.md for those.
 license: MIT
 metadata:
   version: 1.0.1
@@ -16,11 +16,12 @@ Follow these conventions when creating commits.
 Inspect the current status, branch, upstream, and intended paths. Follow the repository's `AGENTS.md` (or `CLAUDE.md` on Claude Code) for branch and publication policy. Do not stage unrelated work, secrets, generated noise, or temporary files.
 
 ```bash
-# Check current branch
+git status --short
 git branch --show-current
+git diff --staged --stat
 ```
 
-If the repository requires a feature branch, use the repository's documented branch prefix and workflow. Do not invent a branch policy in this skill.
+Use the repository's documented branch prefix and workflow when it requires a feature branch. Do not invent a branch policy in this skill.
 
 ## Format
 
@@ -32,7 +33,7 @@ If the repository requires a feature branch, use the repository's documented bra
 <footer>
 ```
 
-The header is required. Scope is optional. All lines must stay under 100 characters.
+The header is required. Scope is optional. Keep every line under 100 characters.
 
 ## Commit Types
 
@@ -43,8 +44,8 @@ The header is required. Scope is optional. All lines must stay under 100 charact
 | `ci` | Continuous integration configuration |
 | `deps` | Dependency updates |
 | `docs` | Documentation changes |
-| `feat` | New feature |
-| `fix` | Bug fix |
+| `feat` | New feature (MINOR in SemVer) |
+| `fix` | Bug fix (PATCH in SemVer) |
 | `perf` | Performance improvement |
 | `refactor` | Code refactoring (no behavior change) |
 | `revert` | Revert a previous commit |
@@ -54,83 +55,42 @@ The header is required. Scope is optional. All lines must stay under 100 charact
 ## Subject Line Rules
 
 - Use imperative, present tense: "add feature" not "added feature"
-- Do not capitalize the first letter
-- No period at the end
-- Maximum 70 characters
+- Start with a lowercase letter
+- End without a period
+- Keep the subject at most 70 characters
 
 ## Body Guidelines
 
 - Explain **what** and **why**, not how
-- Use imperative mood and present tense
-- Include motivation for the change
-- Contrast with previous behavior when relevant
+- Write the change itself in imperative mood and present tense
+- State the motivation and the previous behavior as plain facts
+- Wrap lines under 100 characters
 
-## Conventional Commits
-The commit contains the following structural elements, to communicate intent to the consumers of your library:
+## Breaking changes and footers
 
-- fix: a commit of the type fix patches a bug in your codebase (this correlates with PATCH in Semantic Versioning).
-- feat: a commit of the type feat introduces a new feature to the codebase (this correlates with MINOR in Semantic Versioning).
-- BREAKING CHANGE: a commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change (correlating with MAJOR in Semantic Versioning). A BREAKING CHANGE can be part of commits of any type.
-- types other than fix: and feat: are allowed, for example @commitlint/config-conventional (based on the Angular convention) recommends build:, chore:, ci:, docs:, style:, refactor:, perf:, test:, and others.
-- footers other than BREAKING CHANGE: <description> may be provided and follow a convention similar to git trailer format.
+- Mark a breaking change with `!` after the type or scope, and add a `BREAKING CHANGE: <description>` footer (MAJOR in SemVer). Any type can break.
+- Write other footers as git trailers, such as `Refs: #<ticket>`.
+- For `revert`, use the reverted commit's header as the subject, then `This reverts commit <sha>.` and the reason in the body.
 
+## Done when
 
-## Examples
+- `git log -1 --format=%B` shows the message, and `git log -1 --format=%B | awk 'length > 99'` prints nothing.
+- The type is from the table, the subject is lowercase with no period and at most 70 characters, and the staged diff holds only this change.
 
-### Simple fix
+## If it fails
 
-```
-fix(api): handle null response in user endpoint
+Amend an unpushed commit with `git commit --amend`; never rewrite a pushed commit. Keep every rule above while fixing it.
 
-The user API could return null for deleted accounts, causing a crash
-in the dashboard. Add null check before accessing user properties.
-```
-
-### Feature with scope
+## Example
 
 ```
-feat(alerts): add Slack thread replies for alert updates
+fix(api): return 404 for deleted user accounts
 
-When an alert is updated or resolved, post a reply to the original
-Slack thread instead of creating a new message. This keeps related
-notifications grouped together.
+The user endpoint dereferences a null record for deleted accounts and
+the dashboard fails to load. Return 404 for them instead.
+
+Refs: #<ticket>
 ```
-
-### Refactor
-
-```
-refactor: extract common validation logic to shared module
-
-Move duplicate validation code from three endpoints into a shared
-validator class. No behavior change.
-```
-
-### Breaking change
-
-```
-feat(api)!: remove deprecated v1 endpoints
-
-Remove all v1 API endpoints that were deprecated in version 23.1.
-Clients should migrate to v2 endpoints.
-
-BREAKING CHANGE: v1 endpoints no longer available
-```
-
-## Revert Format
-
-```
-revert: feat(api): add new endpoint
-
-This reverts commit abc123def456.
-
-Reason: Caused performance regression in production.
-```
-
-## Principles
-
-- Each commit should be a single, stable change
-- Commits should be independently reviewable
-- The repository should be in a working state after each commit
 
 ## References
 
