@@ -16,7 +16,7 @@ Keep a task list with one entry per phase: Frame, Fan out, Aggregate, Report. Re
 
 ## Phase B: Fan out
 
-Start all N workers together, each in its own worktree or sandbox when it writes. Every brief stands alone: the goal, scope, exact slice or race arm, how to verify, and what to report. Results use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect lists every issue it can prove, not only the first. If a worker drops out, go on with N-1 and note it. No nested fan-out.
+Start up to three workers at a time (the `multi-agent-workflow` cap) and queue the rest, unless the user asks for more or an earlier measured run justified a higher cap. Run each in its own worktree or sandbox when it writes. Every brief stands alone: the goal, scope, exact slice or race arm, how to verify, and what to report. Results use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect lists every issue it can prove, not only the first. If a worker drops out, go on with N-1 and note it. No nested fan-out.
 
 ## Phase C: Aggregate
 

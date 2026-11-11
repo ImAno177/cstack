@@ -16,9 +16,10 @@ pip uninstall bitsandbytes
 pip install bitsandbytes --no-cache-dir
 
 # Or compile from source for specific CUDA
-git clone https://github.com/TimDettmers/bitsandbytes.git
+git clone https://github.com/bitsandbytes-foundation/bitsandbytes.git
 cd bitsandbytes
-CUDA_VERSION=118 make cuda11x  # Adjust for your CUDA
+cmake -DCOMPUTE_BACKEND=cuda -S .
+make
 pip install .
 ```
 
@@ -319,7 +320,7 @@ bnb_config = BitsAndBytesConfig(
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config=bnb_config,
-    torch_dtype=torch.bfloat16
+    dtype=torch.bfloat16
 )
 ```
 
@@ -356,7 +357,7 @@ from peft import PeftModel
 # Load in higher precision for merging
 base_model = AutoModelForCausalLM.from_pretrained(
     base_model_name,
-    torch_dtype=torch.float16,  # Not quantized
+    dtype=torch.float16,  # Not quantized
     device_map="auto"
 )
 
@@ -397,7 +398,7 @@ model = model.to(torch.bfloat16)
 model = PeftModel.from_pretrained(
     base_model,
     "./adapter",
-    torch_dtype=torch.bfloat16
+    dtype=torch.bfloat16
 )
 ```
 

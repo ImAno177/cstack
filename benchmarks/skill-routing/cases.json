@@ -57,8 +57,8 @@
     },
     {
       "id": "repo-docs",
-      "prompt": "Document the public interfaces in this repository.",
-      "primary": "doc",
+      "prompt": "Create an AGENTS.md for this repo and bring the README in line with the current code.",
+      "primary": "md-docs",
       "allowed_support": []
     },
     {

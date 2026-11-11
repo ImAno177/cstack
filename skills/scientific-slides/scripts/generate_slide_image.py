@@ -46,9 +46,9 @@ FORWARDED_ENV_VARS = (
 def resolve_api_key(explicit=None):
     """Resolve the OpenRouter key from --api-key, the environment, then any .env file.
 
-    The .env scan walks up from the working directory and finally checks the
-    script's own directory, so running from anywhere inside a project picks up
-    the key at its root. The child process is handed the resolved value through
+    The .env scan checks only the working directory and then the script's own
+    directory, never parent directories, so a key from an unrelated project
+    above the working directory is never read. The child process is handed the resolved value through
     build_subprocess_env, so it never has to repeat this search.
     """
     if explicit:
@@ -59,7 +59,7 @@ def resolve_api_key(explicit=None):
         return from_env
 
     cwd = Path.cwd()
-    for directory in [cwd, *cwd.parents, Path(__file__).resolve().parent]:
+    for directory in [cwd, Path(__file__).resolve().parent]:
         env_file = directory / ".env"
         if not env_file.is_file():
             continue

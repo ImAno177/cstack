@@ -33,6 +33,10 @@ Use when multi-step engineering needs a workflow and no narrower installed skill
 
 Do not route automatically to review or audit skills unless the request or the work's risk requires them; use `tdd` only when the user asks for it or the defect has a cheap local test path. Do not use Cursor-only features, model names, or paths on Codex, Claude Code, Grok Build, or Grok Bot.
 
+## Principles
+
+The principle skills behind these playbooks are indexed, with when to apply each and how to resolve tensions between them, in [references/principles.md](references/principles.md). Read the index before a non-trivial run, then read each principle you apply.
+
 ## Execute
 
 - Name the data shape and ownership before code crosses a module or function boundary.

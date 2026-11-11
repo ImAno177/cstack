@@ -47,8 +47,8 @@ When a user asks for help with something, identify:
 Before running a CLI search, check the [skills.sh leaderboard](https://skills.sh/) to see if a well-known skill already exists for the domain. The leaderboard ranks skills by total installs, surfacing the most popular and battle-tested options.
 
 For example, top skills for web development include:
-- `vercel-labs/agent-skills` — React, Next.js, web design (100K+ installs each)
-- `anthropics/skills` — Frontend design, document processing (100K+ installs)
+- `vercel-labs/agent-skills` — React, Next.js, web design
+- `anthropics/skills` — Frontend design, document processing
 
 ### Step 3: Search for Skills
 
@@ -86,7 +86,6 @@ Example response:
 ```
 I found a skill that might help! The "react-best-practices" skill provides
 React and Next.js performance optimization guidelines from Vercel Engineering.
-(185K installs)
 
 To install it:
 npx skills add vercel-labs/agent-skills@react-best-practices
@@ -96,13 +95,13 @@ Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 
 ### Step 6: Offer to Install
 
-If the user wants to proceed, you can install the skill for them:
+A skill is third-party code and instructions that future sessions will follow. Before installing, show the user the source repository, what the skill contains (its SKILL.md and any scripts), and whether it installs for this project or globally, and install only after they confirm:
 
 ```bash
-npx skills add <owner/repo@skill> -g -y
+npx skills add <owner/repo@skill>
 ```
 
-The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
+Add `-g` only when the user asks for a user-level (global) install. Do not pass `-y`; let the CLI's own confirmation run.
 
 ## Common Skill Categories
 

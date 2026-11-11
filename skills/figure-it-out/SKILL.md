@@ -9,7 +9,7 @@ When the task matches no playbook, design one. The deliverable before any code i
 
 ## Start
 
-Keep a task list whose first item is to read the principles `default-mode` routes to that apply here (at least `principle-prove-it-works` and `principle-sequence-verifiable-units`). Then add the phases below.
+Keep a task list whose first item is to read the [principles index](../default-mode/references/principles.md) and the principles it lists for this work (at least `principle-prove-it-works` and `principle-sequence-verifiable-units`). Then add the phases below.
 
 ## Phase A: Frame
 

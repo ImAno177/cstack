@@ -315,7 +315,7 @@ from transformers import AutoModelForCausalLM
 model = AutoModelForCausalLM.from_pretrained(
     "meta-llama/Llama-3.1-8B",
     attn_implementation="flash_attention_2",
-    torch_dtype=torch.bfloat16
+    dtype=torch.bfloat16
 )
 
 # Apply LoRA
