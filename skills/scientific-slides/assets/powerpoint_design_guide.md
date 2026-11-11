@@ -490,11 +490,11 @@ slide.addChart(pptx.ChartType.bar, [
 ### Render Slides to Images
 
 After creating the presentation, export it to PDF with LibreOffice and render each page
-with the bundled script (run from the repository root):
+with the bundled script (from any working directory):
 
 ```bash
 soffice --headless --convert-to pdf --outdir review presentation.pptx
-python skills/scientific-slides/scripts/pdf_to_images.py review/presentation.pdf review/slide --dpi 100
+python <skill-dir>/scripts/pdf_to_images.py review/presentation.pdf review/slide --dpi 100
 ```
 
 LibreOffice substitutes fonts that are not installed, so line breaks can differ from
@@ -541,7 +541,7 @@ markitdown template.pptx > inventory.md
 2. **Render the template** to see its layouts:
 ```bash
 soffice --headless --convert-to pdf --outdir template_review template.pptx
-python skills/scientific-slides/scripts/pdf_to_images.py template_review/template.pdf template_review/slide
+python <skill-dir>/scripts/pdf_to_images.py template_review/template.pdf template_review/slide
 ```
 
 3. **Analyze layouts** and document which slides to use
@@ -551,7 +551,7 @@ python skills/scientific-slides/scripts/pdf_to_images.py template_review/templat
 
 5. **Replace content** in the placeholders, save, and check the result:
 ```bash
-python skills/scientific-slides/scripts/validate_presentation.py output.pptx --duration 15
+python <skill-dir>/scripts/validate_presentation.py output.pptx --duration 15
 ```
 
 ## Best Practices Summary

@@ -163,8 +163,8 @@ Do not present these as cross-publisher laws:
 
 1. Identify exact journal, article type, figure type, and current stage.
 2. Save the live official page URL and access date.
-3. Create a plan with `scripts/export_plan.py`.
+3. Create a plan with `<skill-dir>/scripts/export_plan.py`.
 4. Export with explicit dimensions and settings.
-5. Inspect the delivered file with `scripts/image_metadata.py`.
+5. Inspect the delivered file with `<skill-dir>/scripts/image_metadata.py`.
 6. Review fonts, embedded rasters, image integrity, accessibility, caption, and source data manually.
 7. Re-check official instructions immediately before upload.

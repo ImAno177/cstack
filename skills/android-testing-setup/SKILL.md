@@ -1,5 +1,5 @@
 ---
-name: testing-setup
+name: android-testing-setup
 description: Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure,
   create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests.
 license: Complete terms in LICENSE.txt

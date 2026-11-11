@@ -12,16 +12,12 @@ Your knowledge of web performance metrics, thresholds, and tooling APIs may be o
 
 ## FIRST: Verify MCP Tools Available
 
-**Run this before starting.** Try calling `navigate_page` or `performance_start_trace`. If unavailable, STOP—the chrome-devtools MCP server isn't configured.
+**Run this before starting.** Try calling `navigate_page` or `performance_start_trace`. If they are unavailable, the chrome-devtools MCP server isn't configured. Ask the user to add it, then restart the session:
 
-Ask the user to add this to their MCP config:
+- Claude Code: `claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest`
+- Other hosts: add a server named `chrome-devtools` that runs `npx -y chrome-devtools-mcp@latest` in the host's MCP config.
 
-```json
-"chrome-devtools": {
-  "type": "local",
-  "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
-}
-```
+If the user cannot add it, do not stop. Measure lab metrics with `npx -y lighthouse <url> --output=json --output-path=./lighthouse.json --chrome-flags="--headless"`, report from that JSON, and say that trace-level findings (dependency chains, layout-shift culprits, INP attribution) were not available.
 
 ## Key Guidelines
 

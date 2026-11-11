@@ -17,7 +17,7 @@
 
 No standalone validator script ships with this skill. Run the checks below
 manually — for doc-file presence coverage use the shipped
-`skills/doc/scripts/audit-oss-docs.sh`; for link/orphan/path checks write a
+`<skill-dir>/scripts/audit-oss-docs.sh`; for link/orphan/path checks write a
 short throwaway Python script in the target repo (not bash: bash loops are
 O(n*m) and time out on large repos, while Python processes 350+ files in
 seconds with cleaner regex extraction).
@@ -50,7 +50,7 @@ SUMMARY: 96 issues (81 critical, 13 medium, 2 low)
 
 ### Required Sections (16)
 
-From `code-map-standard` skill:
+Code-map standard:
 
 1. Current Status (one-liner with date)
 2. Overview (2-3 sentences)

@@ -150,7 +150,7 @@ this reference into `ARCHITECTURE.md`, then fill it from manual exploration
 
 ## Scripts
 
-Shipped with the doc skill (`skills/doc/scripts/`):
+Shipped with the doc skill (`<skill-dir>/scripts/`):
 
 | Script | Purpose |
 |--------|---------|

@@ -109,20 +109,20 @@ To ensure unified formatting across all slides in a presentation:
 
 ```bash
 # Title slide (first slide - establishes the style)
-python scripts/generate_slide_image.py "Title slide for presentation: 'Machine Learning: From Theory to Practice'. Subtitle: '[Conference name and date]'. Speaker: '[Supplied presenter name]'. FORMATTING GOAL: Dark blue background (#1a237e), white text, gold accents (#ffc107), minimal design, sans-serif fonts, generous margins, no decorative elements." -o slides/01_title.png
+python <skill-dir>/scripts/generate_slide_image.py "Title slide for presentation: 'Machine Learning: From Theory to Practice'. Subtitle: '[Conference name and date]'. Speaker: '[Supplied presenter name]'. FORMATTING GOAL: Dark blue background (#1a237e), white text, gold accents (#ffc107), minimal design, sans-serif fonts, generous margins, no decorative elements." -o slides/01_title.png
 
 # Content slide with citations (attach previous slide for consistency)
-python scripts/generate_slide_image.py "Presentation slide titled 'Why Machine Learning Matters'. Three key points with simple icons: 1) Industry adoption, 2) Breakthrough applications, 3) Future potential. CITATIONS: Include at bottom in small text: (LeCun et al., 2015; Goodfellow et al., 2016). FORMATTING GOAL: Match attached slide style - dark blue background, white text, gold accents, minimal professional design, no visual clutter." -o slides/02_intro.png --attach slides/01_title.png
+python <skill-dir>/scripts/generate_slide_image.py "Presentation slide titled 'Why Machine Learning Matters'. Three key points with simple icons: 1) Industry adoption, 2) Breakthrough applications, 3) Future potential. CITATIONS: Include at bottom in small text: (LeCun et al., 2015; Goodfellow et al., 2016). FORMATTING GOAL: Match attached slide style - dark blue background, white text, gold accents, minimal professional design, no visual clutter." -o slides/02_intro.png --attach slides/01_title.png
 
 # Background slide with multiple citations
-python scripts/generate_slide_image.py "Presentation slide titled 'Deep Learning Revolution'. Key milestones: ImageNet breakthrough (2012), transformer architecture (2017), GPT models (2018-present). CITATIONS: Show references at bottom: (Krizhevsky et al., 2012; Vaswani et al., 2017; Brown et al., 2020). FORMATTING GOAL: Match attached slide style exactly - same colors, fonts, minimal design." -o slides/03_background.png --attach slides/02_intro.png
+python <skill-dir>/scripts/generate_slide_image.py "Presentation slide titled 'Deep Learning Revolution'. Key milestones: ImageNet breakthrough (2012), transformer architecture (2017), GPT models (2018-present). CITATIONS: Show references at bottom: (Krizhevsky et al., 2012; Vaswani et al., 2017; Brown et al., 2020). FORMATTING GOAL: Match attached slide style exactly - same colors, fonts, minimal design." -o slides/03_background.png --attach slides/02_intro.png
 
 # Results slides: insert figures/accuracy_chart.png as an original asset in
 # PowerPoint or Beamer, then add verified findings and citations as text.
 # The PowerPoint design guide below shows the explicit aspect-preserving geometry for this purpose.
 
 # Conceptual methodology draft; provide the diagram file before running
-python scripts/generate_slide_image.py "Presentation slide titled 'System Architecture'. Present the attached architecture diagram with brief explanatory bullet points: 1) Input processing, 2) Model inference, 3) Output generation. FORMATTING GOAL: Match attached slide style exactly." -o slides/04_architecture.png --attach slides/03_background.png --attach diagrams/system_architecture.png
+python <skill-dir>/scripts/generate_slide_image.py "Presentation slide titled 'System Architecture'. Present the attached architecture diagram with brief explanatory bullet points: 1) Input processing, 2) Model inference, 3) Output generation. FORMATTING GOAL: Match attached slide style exactly." -o slides/04_architecture.png --attach slides/03_background.png --attach diagrams/system_architecture.png
 ```
 
 **Before creating results slides:** find the original figure and source analysis, check labels,
@@ -144,7 +144,7 @@ FORMATTING GOAL: [Background color], [text color], [accent color], minimal profe
 
 ```bash
 # Combine all slides into a PDF presentation
-python scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
+python <skill-dir>/scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
 ```
 
 ### PPT Workflow: PowerPoint with Generated Visuals
@@ -160,13 +160,13 @@ When creating PowerPoint presentations, use Nano Banana 2 to generate images and
 
 ```bash
 # Generate a figure for the introduction slide
-python scripts/generate_slide_image.py "Professional illustration showing machine learning applications: healthcare diagnosis, financial analysis, autonomous vehicles, and robotics. Modern flat design, colorful icons on white background." -o figures/ml_applications.png --visual-only
+python <skill-dir>/scripts/generate_slide_image.py "Professional illustration showing machine learning applications: healthcare diagnosis, financial analysis, autonomous vehicles, and robotics. Modern flat design, colorful icons on white background." -o figures/ml_applications.png --visual-only
 
 # Generate a diagram for the methods slide
-python scripts/generate_slide_image.py "Neural network architecture diagram showing input layer, three hidden layers, and output layer. Clean, technical style with node connections. Blue and gray color scheme." -o figures/neural_network.png --visual-only
+python <skill-dir>/scripts/generate_slide_image.py "Neural network architecture diagram showing input layer, three hidden layers, and output layer. Clean, technical style with node connections. Blue and gray color scheme." -o figures/neural_network.png --visual-only
 
 # Generate a conceptual graphic for results
-python scripts/generate_slide_image.py "Before and after comparison showing improvement: left side shows cluttered data, right side shows organized insights. Arrow connecting them. Professional business style." -o figures/results_visual.png --visual-only
+python <skill-dir>/scripts/generate_slide_image.py "Before and after comparison showing improvement: left side shows cluttered data, right side shows organized insights. Arrow connecting them. Professional business style." -o figures/results_visual.png --visual-only
 ```
 
 **Step 2: Build PowerPoint with PptxGenJS**
@@ -191,7 +191,7 @@ In addition to slide generation, use the **scientific-schematics** skill for tec
 
 **How to generate schematics:**
 ```bash
-python scripts/generate_schematic.py "your diagram description" -o figures/output.png --doc-type presentation
+python <skill-dir>/scripts/generate_schematic.py "your diagram description" -o figures/output.png --doc-type presentation
 ```
 
 For detailed guidance on creating schematics, refer to the scientific-schematics skill documentation.
@@ -291,16 +291,16 @@ Comprehensive guides for specific aspects:
    
    ```bash
    # Title slide (establishes style - substitute the supplied presenter)
-   python scripts/generate_slide_image.py "Title slide: 'Your Research Title'. Conference name, supplied presenter name. FORMATTING GOAL: [your color scheme], minimal professional design, no decorative elements, clean and corporate." -o slides/01_title.png
+   python <skill-dir>/scripts/generate_slide_image.py "Title slide: 'Your Research Title'. Conference name, supplied presenter name. FORMATTING GOAL: [your color scheme], minimal professional design, no decorative elements, clean and corporate." -o slides/01_title.png
    
    # Introduction slide with citations (attach previous for consistency)
-   python scripts/generate_slide_image.py "Slide titled 'Why This Matters'. Three key points with simple icons. CITATIONS: Include at bottom: (Smith et al., 2023; Jones et al., 2024). FORMATTING GOAL: Match attached slide style exactly." -o slides/02_intro.png --attach slides/01_title.png
+   python <skill-dir>/scripts/generate_slide_image.py "Slide titled 'Why This Matters'. Three key points with simple icons. CITATIONS: Include at bottom: (Smith et al., 2023; Jones et al., 2024). FORMATTING GOAL: Match attached slide style exactly." -o slides/02_intro.png --attach slides/01_title.png
    
    # Continue for each slide (always attach previous, include citations where relevant)
-   python scripts/generate_slide_image.py "Slide titled 'Methods'. Key methodology points. CITATIONS: (Based on Chen et al., 2022). FORMATTING GOAL: Match attached slide style exactly." -o slides/03_methods.png --attach slides/02_intro.png
+   python <skill-dir>/scripts/generate_slide_image.py "Slide titled 'Methods'. Key methodology points. CITATIONS: (Based on Chen et al., 2022). FORMATTING GOAL: Match attached slide style exactly." -o slides/03_methods.png --attach slides/02_intro.png
    
    # Combine to PDF
-   python scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
+   python <skill-dir>/scripts/slides_to_pdf.py slides/*.png -o presentation.pdf
    ```
 
 3. **Review & Iterate** (30 minutes):
@@ -328,7 +328,7 @@ If you need editable slides (e.g., for company templates):
 1. **Plan slides** as above
 2. **Generate visuals** with `--visual-only` flag:
    ```bash
-   python scripts/generate_slide_image.py "diagram description" -o figures/fig1.png --visual-only
+   python <skill-dir>/scripts/generate_slide_image.py "diagram description" -o figures/fig1.png --visual-only
    ```
 3. **Build PPTX** with PptxGenJS using the generated images
 4. **Add text** separately as native, editable text boxes

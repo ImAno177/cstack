@@ -127,7 +127,7 @@ Run:
 
 ```bash
 uv run --isolated --no-project --python 3.13 \
-  python scripts/palette_audit.py \
+  python <skill-dir>/scripts/palette_audit.py \
   --palette okabe_ito_on_white \
   --background FFFFFF \
   --role graphical

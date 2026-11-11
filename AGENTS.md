@@ -44,7 +44,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 You have standing permission to merge your own PRs. Do not ask me first.
 Before merging:
 1. Wait for CI to pass on the PR's latest commit.
-2. Start a subagent to review the PR. Give it the PR number and have it read the
+2. Start a subagent to review the PR (on Claude Code, the `cstack:pr-reviewer` agent). Give it the PR number and have it read the
    full diff (`gh pr diff <n>`) and the code that calls anything changed. It
    reports real problems only: bugs, broken behaviour, security issues, missing
    tests for new logic. Style preferences don't count.
