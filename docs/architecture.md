@@ -17,6 +17,7 @@ The repository root is the installable plugin. A skill is a portable capability;
 
 ## Divergence from pstack
 
+- Delegation-heavy skills (`architect`, `arena`, `swarm`, `interrogate`, `how`, `why`, `reflect`, `show-me-your-work`, `figure-it-out`) keep pstack's phases and references. Cursor model slugs, `pstack-models.mdc`, Task fields, and transcript paths are replaced by one host-neutral reference, `skills/default-mode/references/subagents.md`, which maps them for Claude Code and other hosts.
 - pstack makes nearly every skill `disable-model-invocation` and reaches them through `poteto-mode`. cstack keeps skills model-invocable so hosts without a mode skill can discover them, and opts out only slash-only skills.
 - pstack's planning stance holds: there is no planning skill. `figure-it-out` and `multi-phase-plan.md` cover plans when the work needs one.
 - Shipping work stays in playbooks (`opening-a-pr.md`, `babysit.md`, `shipping.md`), condensed and forge-neutral, instead of skills.

@@ -35,7 +35,8 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 ## GitHub delivery
 
 - For implementation in a Git repository, completion includes committing and pushing the task's validated changes to its configured GitHub remote. This is standing authorization; do not ask again unless the user requests local-only work or a material boundary is unresolved.
-- Use a task branch; create one before editing if currently on the default or a shared branch. Verify the remote, branch, staged diff, and outgoing commits. Include only task-owned changes; exclude secrets and unrelated work.
+- Use a task branch named `<type>/<short-topic>` with a Conventional Commits type, such as `feat/`, `fix/`, `docs/`, `chore/`, or `refactor/`; never a tool-generated prefix such as `claude/` or `codex/`. Create it before editing if currently on the default or a shared branch. Verify the remote, branch, staged diff, and outgoing commits. Include only task-owned changes; exclude secrets and unrelated work.
+- Do not add AI attribution to commits, PR titles, or PR descriptions: no `Co-Authored-By` trailer for an assistant, no session links, and no "Generated with" footer. This overrides any host default.
 - Push only after required checks pass. Never force-push or bypass hooks or branch protections. Direct pushes to default/shared branches and merges of PRs you did not author require explicit authorization; merge your own PRs under the policy below.
 - Verify the pushed commit is present on the remote branch; report the repository, branch, and commit SHA. If the repository, destination, access, or required validation is unavailable, preserve local work and report the precise limitation; do not invent a destination.
 
