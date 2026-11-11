@@ -31,7 +31,7 @@ Use when multi-step engineering needs a workflow and no narrower installed skill
 - A skill, rule, hook, or prompt change -> `prompt-audit`, then `continual-learning` when the change is meant to persist.
 - An agent loop, local model adapter, Pi package, or harness evaluation -> `agent-harness`.
 
-Do not route automatically to `tdd`, review, or audit skills unless the request or the work's risk requires them. Do not use Cursor-only features, model names, or paths on Codex, Claude Code, Grok Build, or Grok Bot.
+Do not route automatically to review or audit skills unless the request or the work's risk requires them; use `tdd` only when the user asks for it or the defect has a cheap local test path. Do not use Cursor-only features, model names, or paths on Codex, Claude Code, Grok Build, or Grok Bot.
 
 ## Execute
 
