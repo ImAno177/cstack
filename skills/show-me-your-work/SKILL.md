@@ -1,6 +1,6 @@
 ---
 name: show-me-your-work
-description: Keep a reviewable decision trail for long-running or unattended work - a TSV log with one row per decision (what, why, evidence, result) - then audit it against the transcript and have an independent reviewer flag what needs attention. Local by default; commit it when a reviewer needs the trail to trust the result. Use for autonomous or multi-phase runs, or work a human reviews after stepping away.
+description: Keep a reviewable decision trail for long-running or unattended work - a TSV log with one row per decision (what, why, evidence, result) - then audit it against the transcript and have an independent reviewer flag what needs attention. Local by default; commit it when a reviewer needs the trail to trust the result. Use for autonomous or multi-phase runs, or work a human reviews after stepping away. Not for short single-step tasks that need no trail.
 ---
 
 # Show me your work
@@ -14,16 +14,9 @@ A single TSV file, one row per decision. Cells stay single-line. Evidence is a p
 - **ts**: ISO 8601 timestamp.
 - **phase**: the phase or workstream.
 - **decision**: what was chosen or done, one line.
-- **why**: the reason in plain words. If a principle drove it, say it plainly, not as a jargon tag.
+- **why**: the reason in plain words. State a driving principle plainly, not as a jargon tag.
 - **evidence**: a link or path that proves it: commit SHA, PR number, `file:line`, or an artifact, trace, or screenshot path. Never a paragraph.
 - **result**: the outcome or predicate state: `tests green`, `reverted`, `pixel-diff 0`, `INCONCLUSIVE`, `open`.
-
-```
-ts	phase	decision	why	evidence	result
-2026-05-24T09:02:00Z	frame	counted the work first, about 100 components and roughly 75 hours	wanted to know the size before starting a long run	commit 3a9f1c2	found 5 things to sort out before starting
-2026-05-24T09:40:00Z	harness	took screenshots of the old version before changing anything	so we can compare old against new and catch any visual change	scripts/snapshot.sh, baseline/	saved 120 reference screenshots
-2026-05-24T12:30:00Z	widget	threw out a helper's work because its screenshots were blank	checked the real files instead of trusting its summary	worktree reset	reverted, tightened the instructions for next time
-```
 
 ## Logging a row
 
@@ -33,7 +26,7 @@ Run `<skill-dir>/scripts/log.sh <logfile> <phase> <decision> <why> <evidence> <r
 
 Log decision points and checkpoints, not every action: a fork chosen, a unit completed with its verification result, a pivot or revert and its trigger, a blocker surfaced, a gate fixed. For loop runs, one row per iteration.
 
-A run is one agent conversation, including its later turns. A pickup, a replacement agent, or a new chat starts a new run. When a run adds to a log that already has rows, its first row has phase `start`, and so does its first row after another run's `start` row; so a returning run first reads the last rows to see whether another run wrote since. A `start` row names the `ts` range of the rows before it that this run did not write, and its evidence names this run. Use phase `start` for nothing else.
+A run is one agent conversation, including its later turns. A pickup, a replacement agent, or a new chat starts a new run. When a run adds to a log that already has rows, its first row has phase `start`, and so does its first row after another run's `start` row; so a returning run reads the last rows first to see whether another run wrote since. A `start` row names the `ts` range of the rows before it that this run did not write, and its evidence names this run. Use phase `start` for nothing else.
 
 ## Where it lives
 
@@ -69,6 +62,27 @@ Every reply for a run that produced a trail ends with an **Attention** section: 
 
 Read top to bottom, follow the evidence pointers, spot-check. GitHub renders a committed TSV as a table; `column -s$'\t' -t decisions.tsv` renders it in a terminal.
 
+## Done when
+
+- `column -s$'\t' -t <logfile>` renders every row with six cells.
+- Each row's evidence pointer resolves, and no row was edited or deleted.
+- The reply ends with an **Attention** section naming the reviewer's model.
+
+## If it fails
+
+A row whose evidence does not resolve gets a superseding row with a pointer that does. A reviewer flag you disagree with gets a row stating why, with evidence. Rerun the reviewer after you add rows that change what it flagged. If no second model family is available, say so on the `reviewed by` line.
+
 ## Composing this skill
 
 Other skills route their audit trail here instead of inventing one. Reference it by name and let it own the format; do not restate the columns.
+
+## Example
+
+A fresh log from one run, so no `start` row is needed.
+
+```
+ts	phase	decision	why	evidence	result
+2026-05-24T09:02:00Z	frame	counted the work first, about 100 components and roughly 75 hours	wanted to know the size before starting a long run	commit 3a9f1c2	found 5 things to sort out before starting
+2026-05-24T09:40:00Z	harness	took screenshots of the old version before changing anything	so we can compare old against new and catch any visual change	scripts/snapshot.sh, baseline/	saved 120 reference screenshots
+2026-05-24T12:30:00Z	widget	threw out a helper's work because its screenshots were blank	checked the real files instead of trusting its summary	commit 8e41b07	reverted, tightened the instructions for next time
+```

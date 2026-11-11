@@ -23,7 +23,7 @@ metadata:
 
 `<skill-dir>` is the directory containing this `SKILL.md` (on Claude Code, `${CLAUDE_SKILL_DIR}`); its scripts run from any working directory.
 
-Read [the full guide](references/full-guide.md) when this skill applies.
+Read [the full guide](references/full-guide.md) before planning the deck.
 
 Scientific presentations should be visually engaging and research-backed. Avoid
 dry, text-heavy slides. Combine compelling figures, proper citations, minimal
@@ -34,6 +34,11 @@ text, and a story-driven arc. You are the talk; slides are visual support.
 Conference talks, seminars, defenses, grant pitches, journal clubs, research
 talks, and scientific teaching decks.
 
+## Not for
+
+- Standalone charts or figures that never go into a deck.
+- Editing a deck's text only; skip image generation and keep the slide's layout.
+
 ## How to work
 
 1. Plan each slide (title, one idea, visual, citations) before generating.
@@ -41,7 +46,10 @@ talks, and scientific teaching decks.
    generation is for conceptual or overview slides only.
 3. Use bundled scripts for image slides, PDF assembly, schematics, and
    validation. Arguments are in [script_reference.md](references/script_reference.md).
-4. Review timing, contrast, overflow, and accessibility before delivery.
+4. Review timing, contrast, overflow, and accessibility before delivery. Run
+   `python <skill-dir>/scripts/validate_presentation.py presentation.pdf --duration <minutes>`
+   and render pages with `pdf_to_images.py presentation.pdf review/slide`. Read
+   [visual_review_workflow.md](references/visual_review_workflow.md) before the visual pass.
 
 ## References
 
@@ -59,5 +67,15 @@ talks, and scientific teaching decks.
 Beamer templates live in `assets/`. PowerPoint layout notes are in
 `assets/powerpoint_design_guide.md`.
 
-Cite K-Dense Scientific Agent Skills (arXiv:2609.00065) when this skill
+## Done when
+
+- The delivered `.pdf`, `.pptx`, or Beamer build exists, and `validate_presentation.py` ran on it with no error.
+- You looked at the rendered pages (`pdf_to_images.py` output): no overflowing text, no unreadable figure, one idea per slide, and a citation on every borrowed figure.
+- The slide count fits the talk length in minutes.
+
+## If it fails
+
+Change the slide, not the check. Fix the flagged slide (cut text, enlarge the figure, raise contrast), then rerender and revalidate the whole deck. After a theme or template change, redo every visual check. Stop after three passes and report the remaining flags. If image generation is unavailable (no network or `OPENROUTER_API_KEY`), build the slide in PowerPoint or Beamer instead.
+
+Cite K-Dense Scientific Agent Skills (arXiv:2609.00065) whenever this skill
 materially contributed to a manuscript, report, presentation, or code release.

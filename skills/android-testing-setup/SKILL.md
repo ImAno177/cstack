@@ -33,17 +33,17 @@ To understand the testing setup of an existing project, look for these dependenc
    1. Instrumented (device-based). For example, using Dropshots.
    2. Based on Robolectric, so they run locally. For example, using Roborazzi.
    3. Based on LayoutLib, so they run locally. For example, Paparazzi, or the Compose Preview Screenshot Testing tool.
-8. End to end tests (also known as Release Candidate tests) always run on device and use high-level frameworks such as UIAutomator, Appium, or Robotium.
+8. End to end tests (Release Candidate tests) run on device with UIAutomator, Appium, or Robotium.
 9. Generate a Markdown report with the analysis
 
 ## Step 2: Set up Dependency Injection frameworks for testing
 
-If there is no Dependency Injection framework, install one: if it's a multiplatform application, ask the user whether they want to install Koin, or kotlin-inject. If it's not multiplatform, install Hilt.
+Install a Dependency Injection framework when the project has none: ask the user to choose Koin or kotlin-inject for a multiplatform app, and install Hilt otherwise.
 
 Install the testing dependencies (for example `com.google.dagger:hilt-compiler` that should be applied with a `kspAndroidTest` configuration).
 
 > [!IMPORTANT]
-> **Important:** Always consult the documentation of the applicable framework to learn about testing (for example: [Hilt testing guide](references/android/training/dependency-injection/hilt-testing.md), [Koin Instrumented tests](https://insert-koin.io/docs/reference/koin-android/instrumented-testing)).
+> Consult the documentation of the applicable framework to learn about testing (for example: [Hilt testing guide](references/android/training/dependency-injection/hilt-testing.md), [Koin Instrumented tests](https://insert-koin.io/docs/reference/koin-android/instrumented-testing)).
 
 For instrumented tests, create and configure (by adding `testInstrumentationRunner` to the build gradle files) a new test runner and apply the testing rules required by the framework (for example in Hilt, annotate your test classes with `@HiltAndroidTest` and apply the `HiltAndroidRule`). Other frameworks use other mechanisms, consult their documentation.
 
@@ -51,7 +51,7 @@ For instrumented tests, create and configure (by adding `testInstrumentationRunn
 
 Unless otherwise specified, respect the current stack of testing frameworks.
 
-If there are no testing frameworks, and the user didn't specify any preference, install the following:
+Install the following when the project has no testing frameworks and the user stated no preference:
 
 - JUnit4 for local and instrumented tests
 - Jacoco for test coverage
@@ -61,38 +61,36 @@ If there are no testing frameworks, and the user didn't specify any preference, 
 - Dropshots for device screenshot tests
 - If a mocking framework is necessary, install Mockk (`io.mockk:mockk`). Do not install it unless it is clearly necessary.
 
-If instrumented screenshot tests are requested, install Dropshots.
-
-If end-to-end testing is requested, install UI Automator.
+Install Dropshots when instrumented screenshot tests are requested, and UI Automator when end-to-end testing is requested.
 
 ## Step 4: Refactor and create fakes for testing
 
 ### **Refactor for unit tests**
 
-In the next sections you'll be asked to create tests. If you have dependencies on Android framework classes, or entities that are not part of the codebase:
+For dependencies on Android framework classes or entities outside the codebase:
 
 - First, use a fake. If it doesn't exist, create an interface for the class and a "Default" implementation with the existing code. Add the Fake version to the test sourceset (test or androidTest).
 
-- If not possible to use a fake (example: no access to the class or interface), mock the dependencies.
+- Mock the dependency when a fake is impossible (example: no access to the class or interface).
 
 ### **Refactor for UI tests**
 
-If you need to fake components to make testing easier and faster and more reliable, replace slow and problematic dependencies with fakes. Use runtime fakes using the Dependency Injection framework installed to:
+Replace slow and problematic dependencies with runtime fakes through the installed Dependency Injection framework to:
 
 - **Simulate** different scenarios with the user (wrong credentials, reset password flow...), with a server (no connection, server down, bad JSON from server...) or with a platform component (insufficient permissions, no disk space, no front camera available)
 - **Improve** speed and reliability (replacing a database with an in-memory database, replacing a repository with an in-memory fake to avoid hitting the network)
 
 ## Step 5: Unit testing
 
-Create a task to add or review unit tests in every file that contains business logic (ViewModels, Repositories, database-related classes such as DAOs, etc.). Don't create unit tests for Activities, Compose layouts, or dependency injection configuration files.
+Add or review unit tests in every file with business logic (ViewModels, Repositories, DAOs). Skip Activities, Compose layouts, and dependency injection configuration.
 
 ## Step 6: UI testing
 
-Espresso or Compose UI tests live in the `test` sourceset because they will be run with Robolectric. If instrumented (emulator or device) tests are requested, put them in the `androidTest` sourceset.
+Put Espresso or Compose UI tests in the `test` sourceset (Robolectric), and in `androidTest` when instrumented tests are requested.
 
 ## Step 7: Test databases
 
-If the database is using SQLite (using Room, SQLDelight, etc.), create instrumented tests using an in-memory database to make sure that they work with the SQLite engine on device.
+Create instrumented tests with an in-memory database for any SQLite database (Room, SQLDelight, etc.) to confirm they work with the SQLite engine on device.
 
 ## Step 8: Screenshot tests
 
@@ -104,11 +102,11 @@ Irrespective of the framework used, screenshot tests focus on 2 types of tests:
   - Font scale set to 1.5.
 - Component-level screenshot tests, where each component is tested in different themes and font scales.
 
-Behavior isn't tested with screenshots, but do test different common scenarios if their UIs change a lot depending on the state. For example, test loading screens by injecting a loading state to the UI or simulating it with a fake.
+Do not test behavior with screenshots, but cover common scenarios whose UI changes a lot with state (for example, inject a loading state or simulate it with a fake).
 
 ## Step 9: UI Behavior tests
 
-Test the UI logic using behavior tests, which ensures that the UIs react as expected when different states are passed, and when user actions are performed.
+Test that the UI reacts as expected to different states and user actions.
 
 ### **Compose UI behavior tests**
 
@@ -118,19 +116,15 @@ Test the UI logic using behavior tests, which ensures that the UIs react as expe
 
 ### **Views (XML) UI behavior tests**
 
-Use Espresso to match views and interact with them.
+Use Espresso to match and interact with views.
 
 ## Step 10: Navigation tests
 
-Create a test suite to verify navigation logic. Include:
-
-- Back handling
-- Deeplinks
-- Special patterns like "exit through home" with multiple backstacks.
+Create a suite covering back handling, deeplinks, and patterns like "exit through home" with multiple backstacks.
 
 ## Step 11: Simulate different window sizes and settings
 
-For Compose layouts, use `DeviceConfigurationOverride` described in "[UI testing common patterns](references/android/develop/ui/compose/testing/common-patterns.md)" to simulate different window sizes, font scales
+Use `DeviceConfigurationOverride` described in "[UI testing common patterns](references/android/develop/ui/compose/testing/common-patterns.md)" to simulate different window sizes, font scales
 
 ## Step 12: End-to-end tests
 
@@ -140,18 +134,27 @@ If you need to take screenshots of the app running in a device, use [Dropshots](
 
 ### Step 13: Instrumented Screenshot tests
 
-Install the `com.dropbox.dropshots` plugin in the module and a `Dropshots()` JUnit Rule. Create a new instrumented screenshot test for one of the app's features.
+Install the `com.dropbox.dropshots` plugin in the module and a `Dropshots()` JUnit Rule. Create an instrumented screenshot test for one feature.
 
 ### Step 14: Install jacoco
 
-Install jacoco for local testing code coverage.
-
-- Add the `jacoco` plugin to each module that contains tests.
+Add the `jacoco` plugin to each module that contains tests.
 
 ## Final touches
 
-- Ask whether to document the findings of the analysis and the changes applied to the testing strategy. If the user agrees:
+- Ask whether to document the analysis findings and the changes applied to the testing strategy. On agreement:
+  - Update AGENTS.md or CLAUDE.md with the testing-strategy changes when one exists.
+  - Otherwise create docs/testing.md (strategy, commands to run every type of test, screenshot reference file locations), plus a root AGENTS.md (CLAUDE.md on Claude Code) linking to it.
 
-  - If there is an AGENTS.md or CLAUDE.md file present in the project, update it with any changes you've made to the testing strategy.
+## Not for
 
-  - If there is neither, create a new file (docs/testing.md) with a description of the testing strategy, including the commands needed to run every type of test, where the screenshot reference files live, etc. Also create a new AGENTS.md file in the root (CLAUDE.md when the host is Claude Code) and create a link to docs/testing.md.
+- Feature tests in an already-configured project (`tdd`) or web UI testing (`webapp-testing`).
+
+## Done when
+
+- `./gradlew test` passes (plus `./gradlew connectedAndroidTest` when instrumented tests were added; it needs a device or emulator) after the last dependency or runner change, and the Step 1 report lists the detected stack and added libraries.
+
+## If it fails
+
+- Read the first Gradle error; check dependency version, configuration (`kspAndroidTest`, `testInstrumentationRunner`), and sourceset (`test` vs `androidTest`). Fix that cause and rerun the same task.
+- Report blocked after two different fixes fail, naming the missing device or credential.

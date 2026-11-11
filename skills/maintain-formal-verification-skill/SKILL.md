@@ -8,7 +8,7 @@ description: 'Bring a project''s formal verification back in line with the code 
 
 # Maintain a formal verification skill
 
-A formal check proves a property of what it describes. When the code changes and the verification does not, the check can keep passing while it describes code that no longer exists. That pass is the dangerous case, because it looks like a proof. This skill is the upkeep loop for a verify skill that `/create-formal-verification-skill` generated, or for any project-local skill that runs a model checker, prover, or code-level verifier against named code. The project-local skill handles a change that an agent makes while it uses that skill. This skill handles the changes that skipped it: merges, edits made without the skill, and drift that builds up across many commits.
+A formal check proves a property of what it describes. When the code changes and the verification does not, the check can keep passing while it describes code that no longer exists. This skill is the upkeep loop for a verify skill that `/create-formal-verification-skill` generated, or for any project-local skill that runs a model checker, prover, or code-level verifier against named code. This skill handles changes that skipped the project-local skill: merges, edits made without it, and drift across many commits.
 
 ## Outcomes
 
@@ -23,11 +23,11 @@ A check can be both updated and bug: the update makes the verification describe 
 
 ## Edit scope
 
-Edit only the verification: models, harnesses, property files, and the verify skill itself. Never edit product code during a run, unless the user asks you to. When a property fails on the current code, do not weaken the property or the model to make it pass. Report the failure.
+Edit only the verification: models, harnesses, property files, and the verify skill itself. Never edit product code during a run unless the user asks. Report a property that fails on the current code; never weaken the property or the model to make it pass.
 
 ## Pass
 
-1. **Find the checks.** A verify skill has no fixed name, so find it by what it does: a project skill that runs a model checker, a prover, or another verifier against named code. Read each one you find, or the one the user named. For each check, collect the property, the code it covers, the bounds and assumptions, the command that runs it, and the commit where it was last confirmed to describe the code. If no verify skill exists, stop and point at `/create-formal-verification-skill`. If the skill does not record a sync commit, use the last commit that changed the verification files, and say that you did.
+1. **Find the checks.** A verify skill has no fixed name, so find it by what it does: a project skill that runs a model checker, a prover, or another verifier against named code. Read each one you find, or the one the user named. For each check, collect the property, the code it covers, the bounds and assumptions, the command that runs it, and the commit where it was last confirmed to describe the code. Stop and point at `/create-formal-verification-skill` when no verify skill exists. Use the last commit that changed the verification files, and say that you did, when the skill records no sync commit.
 
 2. **Run it as it is.** Run each check once before you change anything, and record the result. A pass here does not tell you that the code is correct. It tells you that the old description still holds. A failure here can be drift or a bug. Do not decide which until step 5.
 
@@ -43,7 +43,7 @@ Edit only the verification: models, harnesses, property files, and the verify sk
    - **Pass:** the check can now pass on a description that has lost the ability to fail. Break the new code the way the property guards against, such as removing a new check or reordering a new step, and confirm that the check catches it. Then drop the break.
    - **Fail:** replay the counterexample against the real code, step by step. If a step cannot happen in the code, the verification is wrong. Fix the verification, and say what was wrong. If every step can happen, it is a bug. Name the commit that introduced it, tell the counterexample as a sequence of steps in the code's own words, and state the harm in one sentence. If a cheap test or reproduction against the real code shows the bug, add it to the report as evidence. Do not commit it to the product code.
 
-6. **Update the verify skill.** Update the code that each check covers, the commands, the bounds, the assumptions, and the sync commit. Set the sync commit to the commit that you checked. Do not move the sync commit for a blocked check, and say so in the report. Then follow the verify skill once as the next agent would, so that you know its steps still run.
+6. **Update the verify skill.** Update the code that each check covers, the commands, the bounds, the assumptions, and the sync commit. Set the sync commit to the commit that you checked. Leave the sync commit unchanged for a blocked check, and say so in the report. Then follow the verify skill once as the next agent would, so that you know its steps still run.
 
 ## Report
 
@@ -55,6 +55,31 @@ Tell the user, for each check:
 - each bug, in plain words: the counterexample as steps in the code's words, the harm, and the commit that introduced it;
 - what the verification still does not cover, including new code that it should cover and does not.
 
-Say outright which failures were drift in the verification and which were bugs in the code. For a check that passed before you updated it and fails after, say that the old pass was on a stale description.
+Say outright which failures were drift in the verification and which were bugs in the code. Say that the old pass was on a stale description for a check that passed before you updated it and fails after.
 
 Put the verification updates in a change of their own, separate from any product fix.
+
+## Not for
+
+- Writing a first verification skill: use `/create-formal-verification-skill`.
+- Maintaining a UI or CLI feature map: use `maintain-verification-skill`.
+
+## Done when
+
+- Every check has one outcome in the report, and each updated check has a recorded rerun and a break the check caught.
+- Each updated verify skill names the commit you checked as its sync commit, and the verification change contains no product-code edits.
+
+## If it fails
+
+Read the first counterexample or tool error, then change the model, harness, or bounds before rerunning. Mark the check `blocked`, with the exact reason, after two reruns that change nothing new. Never loosen a property to get a pass.
+
+## Example
+
+```
+<check>: updated.
+Read: <sha-old>..<sha-new> (2 commits).
+Changed: split `<step>` into `<step>` and `<step-2>` in the model, because <sha-new> made them two steps (code changed shape).
+Rerun: pass. Removing the new owner check makes TLC report <property> violated, so the check can still fail.
+Bugs: none. Sync commit is now <sha-new>.
+Not covered: the retry path added in <path>.
+```

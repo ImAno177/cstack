@@ -1,6 +1,6 @@
 ---
 name: swarm
-description: Fan out N parallel workers across independent coverage slices or identical race attempts, drain them, and return one evidence-backed report. Use for "swarm this", parallel coverage, audits, races, gauntlets, or exploration.
+description: Fan out N parallel workers across independent coverage slices or identical race attempts, drain them, and return one evidence-backed report. Use for "swarm this", parallel coverage, audits, races, gauntlets, or exploration. Not for competing designs that need a rubric, a judge, and grafting into one artifact; use `arena`.
 ---
 
 # Swarm
@@ -16,7 +16,7 @@ Keep a task list with one entry per phase: Frame, Fan out, Aggregate, Report. Re
 
 ## Phase B: Fan out
 
-Start up to three workers at a time (the `multi-agent-workflow` cap) and queue the rest, unless the user asks for more or an earlier measured run justified a higher cap. Run each in its own worktree or sandbox when it writes. Every brief stands alone: the goal, scope, exact slice or race arm, how to verify, and what to report. Results use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect lists every issue it can prove, not only the first. If a worker drops out, go on with N-1 and note it. No nested fan-out.
+Start up to three workers at a time (the `multi-agent-workflow` cap) and queue the rest; raise the cap only when the user asks or an earlier measured run justified it. Run each in its own worktree or sandbox when it writes. Every brief stands alone: the goal, scope, exact slice or race arm, how to verify, and what to report. Results use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect lists every issue it can prove, not only the first. Go on with N-1 and note it when a worker drops out. No nested fan-out.
 
 ## Phase C: Aggregate
 
@@ -25,3 +25,13 @@ Read the terminal results. Drop a result that does not record the SHAs and metho
 ## Phase D: Report
 
 One consolidated report: a result table, one line per issue, gaps and dropouts, and the race rule when used. Do not paste raw worker output, and do not hide an uncovered slice behind an aggregate result.
+
+## Example
+
+Predicate: every package under `packages/` has an audit result. Shape: slices on `<model-a>`. Race rule: none.
+
+| Slice | Result | Evidence |
+| --- | --- | --- |
+| `packages/api` | PASS | `pytest packages/api` printed `31 passed` at `<sha>` |
+| `packages/web` | ISSUES | `npm test --prefix packages/web` fails `login.spec.ts`, expected 200, got 500, at `<sha>` |
+| `packages/cli` | BLOCKED | gap: worker timed out twice; not a pass |

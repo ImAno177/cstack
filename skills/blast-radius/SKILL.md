@@ -1,15 +1,15 @@
 ---
 name: blast-radius
-description: "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it's safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', or reviewing a small diff you don't trust. For a full quality review of the change itself use change-review."
+description: "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it is safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', or reviewing a small diff you do not trust. Not for a general quality review of the change (use `change-review`), a whole-repository audit (use `repo-audit`), or a threat model and secrets review (use `security-audit`)."
 ---
 
 # Blast radius
 
-Find what a change breaks somewhere else, before it ships. Use for "blast radius of X", "what could this break", or reviewing a small diff you don't trust yet.
+Find what a change breaks somewhere else, before it ships.
 
 Companion to `how` and `why`. `how` tells you what the code does. `why` explains the evidence behind its shape. Blast radius tells you what it breaks somewhere else.
 
-Listing the callers is not the job. The agent can grep those in a second. The job is the breakage grep won't show you.
+Listing callers is not the job; `grep` does that in a second. The job is the breakage grep won't show you.
 
 ## Don't trust your own writeup
 
@@ -30,11 +30,11 @@ Step 4 is usually one small script that imports the same library the app ships a
 ## Steps
 
 1. Read the change. The diff, the symbols it adds, changes, and deletes, and what it now does differently, including the part the diff doesn't spell out. Use the repository history when the decision matters.
-2. Find the one fact it's safe because of. Most changes that look risky are safe because of a single fact, like "this call only drops already-dead cache entries and does nothing else". Find that fact. If it holds, most risky cases are cleared at once. Spend your time here, not on a long list of maybes.
+2. Find the one fact it's safe because of. Most changes that look risky are safe because of a single fact, like "this call only drops already-dead cache entries and does nothing else". Find that fact: once it holds, most risky cases are cleared at once. Spend your time here, not on a long list of maybes.
 3. Look where grep stops. Read the source of the library you call, and check its pinned version and any local patch. Work out when things run: microtasks, unmount and teardown, Solid versus React. Follow what a symbol search misses: the JSON an API returns, a DB column, a wire format, another language reading the same bytes, a feature flag, code three hops downstream.
 4. Be honest about each risk. Give it a real chance of happening and a real cost if it does. Keep the risks you confirmed. List the ones you checked and cleared separately. Cite a real `file:line`, a search that finds nothing is still an answer, and never make up a caller or an API.
-5. Prove the one fact. Write a script or test that runs the real code, run it, and paste what happened.
-6. For a big or wide change, split the investigation by boundary and keep each claim tied to a concrete command or artifact.
+5. Prove the one fact. Write a script or test that calls the real code (in a scratch path, not the repo), run it with the project's runner (for example `python3 /tmp/check.py` or `npm test -- <file>`), and paste the command and its output. It must fail loudly when the fact is false.
+6. Split a big or wide change by boundary (see `multi-agent-workflow`) and keep each claim tied to a command or artifact.
 
 ## What to hand back
 
@@ -46,4 +46,16 @@ Step 4 is usually one small script that imports the same library the app ships a
 
 Write it plainly, cite real code, and strip anything private before it goes anywhere public.
 
-**Reply:** the writeup above, with the one safety fact either proven or marked unproven.
+## Not for
+
+- A line-by-line quality review, a repo audit or a threat model (see description).
+- Listing callers alone, or a change you can only describe: read the diff first.
+
+## Done when
+
+- The reply has the five parts above, and the one safety fact is marked with its step (1 to 5) or `unproven`.
+- Every risk cites a real `file:line`; the proof script's command and output are pasted, or its absence is stated.
+
+## If it fails
+
+When the script passes although you expected a failure, or fails unexpectedly, fix the script's setup (version, imports, inputs) before changing the claim; never loosen the check to get a pass. After two failed attempts, report the fact as `unproven` with the best step reached.

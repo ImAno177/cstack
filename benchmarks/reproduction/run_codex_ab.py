@@ -6,6 +6,7 @@ import argparse
 import asyncio
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -54,6 +55,14 @@ def codex_tokens(log_path: Path) -> int | None:
             if isinstance(total, int):
                 latest = total
     return latest
+
+
+SKILL_READ = re.compile(r"\.agents/skills/([a-z0-9][a-z0-9-]*)/SKILL\.md")
+
+
+def skills_opened(log_path: Path) -> list[str]:
+    text = log_path.read_text(encoding="utf-8", errors="replace")
+    return sorted(set(SKILL_READ.findall(text)))
 
 
 async def run_trial(
@@ -136,6 +145,7 @@ async def run_trial(
         "codex_exit_code": codex_rc,
         "seconds": seconds,
         "tokens_reported": codex_tokens(events_path),
+        "skills_opened": skills_opened(events_path),
         "grade": score,
         "workspace": str(workspace),
         "events": str(events_path),
@@ -176,6 +186,15 @@ async def main_async(args: argparse.Namespace) -> int:
         (output / "results.json").write_text(
             json.dumps(rows, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
         )
+
+    deltas = []
+    for run in range(1, args.runs + 1):
+        pair = {x["variant"]: x for x in rows if x["run"] == run}
+        if all(pair[v]["status"] == "finished" for v in ("baseline", "skills")):
+            deltas.append(pair["skills"]["grade"]["passed"] - pair["baseline"]["grade"]["passed"])
+    opened = sum(1 for x in rows if x["variant"] == "skills" and x["skills_opened"])
+    print(f"paired delta (skills - baseline, finished pairs only): {deltas}", flush=True)
+    print(f"skills runs that opened at least one SKILL.md: {opened}/{args.runs}", flush=True)
 
     for variant in ("baseline", "skills"):
         values = [x for x in rows if x["variant"] == variant]

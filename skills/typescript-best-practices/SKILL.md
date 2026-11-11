@@ -29,4 +29,18 @@ Apply `principle-type-system-discipline` first.
 | Real tests | Don't mock what you can run. Prefer the framework's real test primitives with leak/disposable checks, and verify UI in a running build. Mock only what you can't run locally. |
 | Structured telemetry | Prefer structured logger diagnostics with enough context to debug from an id. No `console.log` in shipped code. |
 
-Examples: `references/patterns.md`.
+Read `references/patterns.md` for worked examples before writing a union, brand, or guard.
+
+## Not for
+
+- JavaScript-only files or generated `.d.ts` output.
+- Style the repo's formatter or linter already enforces; run them instead.
+
+## Done when
+
+- `tsc --noEmit` (or the repo's typecheck script) passes and the repo's tests pass.
+- The diff adds no `as`, `any`, or `!` without a validation or a comment naming why it is safe.
+
+## If it fails
+
+Fix the type that the error points at. Do not add `as`, `any`, or `// @ts-ignore` to silence it. When a union change breaks callers, update each caller through its exhaustiveness error. Stop and ask when the correct type needs a product decision.

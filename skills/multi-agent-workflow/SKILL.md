@@ -1,11 +1,11 @@
 ---
 name: multi-agent-workflow
-description: Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating work; stay direct for short, sequential, or shared-state tasks.
+description: Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena`), or coverage slices over a large surface (use `swarm`).
 ---
 
 # Multi-agent workflow
 
-Use multiple agents only when the work splits into independent, bounded questions. Keep short tasks, ordered steps, and edits to one shared resource in the main agent.
+Use multiple agents only when the work splits into independent, bounded questions. Keep short tasks, ordered steps, and edits to one shared resource in the main agent. Read [subagents](../default-mode/references/subagents.md) before the first spawn for the host's spawn, worktree, and model mechanics.
 
 ## Delegate
 
@@ -19,8 +19,8 @@ Use multiple agents only when the work splits into independent, bounded question
 ## Isolate writes
 
 - Never let parallel agents edit the same working tree, branch, file, or mutable state.
-- Give each writing agent its own worktree, branch, or output path. Keep the main agent as the merge owner and apply changes sequentially.
-- If the host cannot provide real isolation, keep implementation in one agent and delegate read-only work only.
+- Give each writing agent its own worktree, branch, or output path, for example `git worktree add <path> -b <branch> <sha>`. Keep the main agent as the merge owner and apply changes sequentially.
+- Keep implementation in one agent and delegate read-only work only when the host cannot provide real isolation.
 
 ## Reconcile
 
@@ -28,5 +28,14 @@ Use multiple agents only when the work splits into independent, bounded question
 - Require each result to state status, scope, changed paths, commands run, evidence, blockers, and next action. Read it, check its paths and claims against the repository, and resolve contradictions before editing.
 - For a code-ready change, assign a verifier who did not write it and who checks the current head. A new head needs a new verdict unless the relevant proof is unchanged and that reuse is explicit.
 - Trust the artifact and the proof, not a green checklist or a worker's summary. Drop results with missing evidence and record the gap instead of treating silence as success.
-- After merging each write, run the smallest real check. Remove worktrees, scratch files, logs, and generated artifacts that the repository does not own.
+- After merging each write, run the smallest real check. Remove worktrees (`git worktree remove <path>`), scratch files, logs, and generated artifacts that the repository does not own.
 - Do not put secrets or unnecessary user data in prompts, shared outputs, or handoff files.
+
+## Done when
+
+- Every spawned agent has a result with status, changed paths, commands run, and evidence, or is recorded as incomplete.
+- `git status` and `git worktree list` show only the merged changes and no leftover worker trees; the smallest real check passes on the merged result.
+
+## If it fails
+
+Read the worker's evidence before rerunning. Change the brief (scope, inputs, done predicate) before a retry, and allow one retry per worker. After the second failure, take the unit back into the main agent or drop it and report the gap; keep the done predicate unchanged.
