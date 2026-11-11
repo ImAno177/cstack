@@ -13,7 +13,7 @@ Follow these conventions when creating commits.
 
 ## Before committing
 
-Inspect the current status, branch, upstream, and intended paths. Follow the repository's `AGENTS.md` for branch and publication policy. Do not stage unrelated work, secrets, generated noise, or temporary files.
+Inspect the current status, branch, upstream, and intended paths. Follow the repository's `AGENTS.md` (or `CLAUDE.md` on Claude Code) for branch and publication policy. Do not stage unrelated work, secrets, generated noise, or temporary files.
 
 ```bash
 # Check current branch

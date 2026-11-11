@@ -13,4 +13,4 @@ Managed sources from `.cstack/upstreams.json`:
 
 Additional manually maintained or imported platform skill files (including the Cloudflare group) require their own provenance/license review. This inventory is not a blanket license clearance.
 
-After the next upstream sync, `.cstack/upstreams.lock.json` records each managed snapshot's source commit and local content hash. Inspect those changes and retained notices in the automated PR before merging.
+`.cstack/upstreams.lock.json` records each managed snapshot's source commit and local content hash. Inspect those changes and retained notices in the automated PR before merging.

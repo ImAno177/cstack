@@ -38,6 +38,28 @@ def load_json(path: Path) -> object:
         raise ValueError(f'invalid JSON: {path}: {error}') from error
 
 
+def claude_discovered_skill_dirs(root: Path, manifest: object) -> set[Path]:
+    """Mirror Claude Code discovery: skills/<name>/SKILL.md, plus each manifest
+    "skills" directory as either <dir>/SKILL.md or <dir>/<name>/SKILL.md."""
+    if not isinstance(manifest, dict):
+        raise ValueError('.claude-plugin/plugin.json must be an object')
+    extra = manifest.get('skills', [])
+    if isinstance(extra, str):
+        extra = [extra]
+    if not isinstance(extra, list) or not all(isinstance(item, str) and (item == '.' or item.startswith('./')) for item in extra):
+        raise ValueError('.claude-plugin/plugin.json "skills" must be "." or ./-relative paths')
+    found: set[Path] = set()
+    for base in [root / 'skills', *(root / item for item in extra)]:
+        base = base.resolve()
+        if not base.is_dir() or not base.is_relative_to(root):
+            raise ValueError(f'Claude Code skills path missing or outside plugin: {base}')
+        if (base / 'SKILL.md').is_file():
+            found.add(base)
+            continue
+        found.update(child.parent for child in base.glob('*/SKILL.md'))
+    return found
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', required=True, type=Path)
@@ -54,7 +76,7 @@ def main() -> int:
     if package.get('license') != 'MIT' or not (root / 'LICENSE').is_file():
         raise ValueError('MIT license declaration requires a root LICENSE file')
 
-    for relative in ('.codex-plugin/plugin.json', '.grok-plugin/plugin.json'):
+    for relative in ('.codex-plugin/plugin.json', '.grok-plugin/plugin.json', '.claude-plugin/plugin.json'):
         manifest = load_json(root / relative)
         if not isinstance(manifest, dict) or manifest.get('version') != version or manifest.get('name') != package['name']:
             raise ValueError(f'inconsistent plugin version/name in {relative}')
@@ -72,12 +94,15 @@ def main() -> int:
         raise ValueError('Claude Code marketplace version/name differs from plugin.json')
 
     skills_root = root / 'skills'
+    claude_skill_dirs = claude_discovered_skill_dirs(root, load_json(root / '.claude-plugin/plugin.json'))
     seen: set[str] = set()
     for entry in sorted(skills_root.rglob('SKILL.md')):
         name = validate_skill(entry)
         if name in seen:
             raise ValueError(f'duplicate skill name: {name}')
         seen.add(name)
+        if entry.parent.resolve() not in claude_skill_dirs:
+            raise ValueError(f'skill not discoverable by Claude Code; list its group in .claude-plugin/plugin.json "skills": {entry.relative_to(root)}')
     print(f'validated plugin {package["name"]} {version} with {len(seen)} skills')
     return 0
 
