@@ -46,7 +46,7 @@ By default the log is a working artifact: `decisions.tsv` in the work directory,
 
 ## Audit the log against the transcript
 
-Before handing back, check that the log told the truth. Read this run's transcript (see [transcripts](../default-mode/references/subagents.md#transcripts); never another project's history) and walk this run's rows against what happened:
+Before handing back, check that the log told the truth. Read this run's transcript (see [transcripts](../default-mode/references/subagents.md#transcripts); on Claude Code its file is `${CLAUDE_SESSION_ID}.jsonl`; never another project's history) and walk this run's rows against what happened:
 
 - every row maps to a real decision or action;
 - each row's evidence resolves and shows what the row claims;

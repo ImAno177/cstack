@@ -46,7 +46,7 @@ Every brief stands alone, because the worker sees none of this conversation: the
 
 Skills that audit a run (`reflect`, `show-me-your-work`) read the current session's transcript. Read only this workspace's history, never another project's.
 
-- Claude Code: `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with each `/` and `.` replaced by `-`. The newest `.jsonl` directly in that folder is the current session; `<session>/subagents/` holds subagent transcripts.
+- Claude Code: `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with every character other than a letter or digit replaced by `-` (`/tmp/my_app` becomes `-tmp-my-app`). `<session>` is the current session id, which Claude Code substitutes for `${CLAUDE_SESSION_ID}` in skill text; prefer it to picking the newest `.jsonl`, which can belong to another session in the same workspace. `<session>/subagents/` holds subagent transcripts.
 - Other hosts: the transcript path the system prompt or host docs name.
 - When no transcript is reachable, write a tight digest of the session (requests, decisions, commands and results, corrections) and use that instead. Say so.
 

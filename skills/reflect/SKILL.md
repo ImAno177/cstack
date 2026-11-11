@@ -9,7 +9,7 @@ Mine the current conversation for durable learnings, then route them into skill 
 
 ## 1. Locate the active transcript
 
-Find this conversation's transcript per [transcripts](../default-mode/references/subagents.md#transcripts). Read only this workspace's history. When several candidates exist, take the one whose first user message matches this conversation's opening prompt. If none is reachable, pass a tight digest of the session instead, and say so.
+Find this conversation's transcript per [transcripts](../default-mode/references/subagents.md#transcripts); on Claude Code its file is `${CLAUDE_SESSION_ID}.jsonl`. Read only this workspace's history. When several candidates exist, take the one whose first user message matches this conversation's opening prompt. If none is reachable, pass a tight digest of the session instead, and say so.
 
 ## 2. Spawn three reviewers in parallel
 
