@@ -46,8 +46,8 @@ def claude_discovered_skill_dirs(root: Path, manifest: object) -> set[Path]:
     extra = manifest.get('skills', [])
     if isinstance(extra, str):
         extra = [extra]
-    if not isinstance(extra, list) or not all(isinstance(item, str) and item.startswith('./') for item in extra):
-        raise ValueError('.claude-plugin/plugin.json "skills" must be ./-relative paths')
+    if not isinstance(extra, list) or not all(isinstance(item, str) and (item == '.' or item.startswith('./')) for item in extra):
+        raise ValueError('.claude-plugin/plugin.json "skills" must be "." or ./-relative paths')
     found: set[Path] = set()
     for base in [root / 'skills', *(root / item for item in extra)]:
         base = base.resolve()

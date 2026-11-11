@@ -11,10 +11,10 @@ Invoke only when selection is ambiguous or the request spans capabilities. If on
 ## Routes
 
 - image generation or raster image editing -> `imagegen`
-- DOCX or Word layout, redlining, or comments -> `documents:documents`; on Claude -> `docx`
-- PDF work or visual PDF verification -> `pdf:pdf`; on Claude -> `pdf`
-- PowerPoint or presentation work -> `presentations:Presentations`; on Claude -> `pptx`
-- spreadsheet files -> `spreadsheets:Spreadsheets`, on Claude `xlsx`; live Excel -> `spreadsheets:excel-live-control`
+- DOCX or Word layout, redlining, or comments -> `documents:documents`; on Claude -> `document-skills:docx`
+- PDF work or visual PDF verification -> `pdf:pdf`; on Claude -> `document-skills:pdf`
+- PowerPoint or presentation work -> `presentations:Presentations`; on Claude -> `document-skills:pptx`
+- spreadsheet files -> `spreadsheets:Spreadsheets`, on Claude `document-skills:xlsx`; live Excel -> `spreadsheets:excel-live-control`
 - connected Google Drive, Docs, Sheets, or Slides -> the matching `google-drive:*` skill
 - ChatGPT Pages or Spaces -> the matching `pages:*` skill
 - website creation or management -> `sites:sites`; site remix -> `sites:sites-remix`
