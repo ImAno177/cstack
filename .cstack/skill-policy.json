@@ -11,6 +11,7 @@
     "documents:documents",
     "pdf:pdf",
     "document-skills:docx",
+    "example-skills:mcp-builder",
     "document-skills:pdf",
     "document-skills:pptx",
     "document-skills:xlsx",

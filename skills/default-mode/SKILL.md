@@ -17,14 +17,16 @@ Use when multi-step engineering needs a workflow and no narrower installed skill
 ## Route
 
 - Select one matching playbook under [playbooks](playbooks/) before executing a non-trivial workflow. Read only that playbook and the skills it names.
-- `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill.
+- `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill; `opening-a-pr.md` ends any playbook that changes a repository; `babysit.md` drives an open PR to merge-ready; `shipping.md` lands verified PRs.
 - A read-only explanation -> `how` or `why`.
-- A defect with a reproducible symptom -> `principle-fix-root-causes`, then the narrow implementation skill.
+- A defect with a reproducible symptom -> `principle-fix-root-causes`, then the narrow implementation skill; `tdd` when there is a cheap local test path.
 - A new behavior or structural change -> `architect` when a boundary changes, then the implementation skill.
 - A novel design fork -> `principle-exhaust-design-space`, then prototype behavior through the available tools.
 - Several independent workers -> `multi-agent-workflow`; same-task alternatives -> `arena`; coverage slices -> `swarm`.
 - Parallel, async, programmatic, or offline batch tool calls -> `tool-orchestration`.
-- An adversarial review -> `interrogate`; an ordinary change review -> `change-review`.
+- An adversarial review -> `interrogate`; an ordinary change review -> `change-review`; a security review -> `security-audit`.
+- Proving UI, CLI, or service behavior the way a user would -> `webapp-testing` for a web app now, `create-verification-skill` for a repeatable project harness.
+- A research question answered from papers -> `literature-review`.
 - A long or unattended run -> `agent-context`, `agent-completion`, and `show-me-your-work` when a reviewer needs the decisions.
 - A skill, rule, hook, or prompt change -> `prompt-audit`, then `continual-learning` when the change is meant to persist.
 - An agent loop, local model adapter, Pi package, or harness evaluation -> `agent-harness`.

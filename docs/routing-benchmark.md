@@ -1,6 +1,6 @@
 # Routing benchmark
 
-The 32 cases in `benchmarks/skill-routing/cases.json` distinguish similar skills by outcome, scope, stage, and platform. This is an **evaluation dataset**, not a claim that the router passed.
+The 37 cases in `benchmarks/skill-routing/cases.json` distinguish similar skills by outcome, scope, stage, and platform. This is an **evaluation dataset**, not a claim that the router passed.
 
 1. Print the cases: `python scripts/evaluate_skill_routing.py`.
 2. Run each task at least 3 times on the **same host, model, tool catalog and permissions** before and after a router change; use 5+ when measuring small gains.
