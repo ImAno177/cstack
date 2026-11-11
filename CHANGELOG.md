@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 0.2.0
+
+- Breaking: every skill now lives at `skills/<name>/`, the one-level layout Claude Code, Codex, Cursor, Grok, and the `skills` CLI all scan. The `cloudflare/`, `kaggle/`, `colab/`, `huggingface/`, and `frontend/` group folders are gone, and `.claude-plugin/plugin.json` no longer lists extra skill roots.
+- Breaking: remove `skills-router`. Hosts choose skills from their descriptions; overlapping skills now name each other and say when to use which.
+- Cloudflare skills are copied verbatim from `cloudflare/skills` by the upstream sync, like Kaggle, Colab, and Hugging Face. `sandbox-sdk` is replaced by upstream's `sandbox-stable`, `sandbox-next`, and `sandbox-migrate-to-next`, and `cf-cli` is added because `wrangler` now defers to it.
+- Document installs for Cursor (Agent Plugin) and other Agent Skills hosts through `npx skills add`; ship the Apache-2.0 license text for the synced upstream skills.
 ## 0.1.7
 
 - Replace `doc`, which carried another project's instructions (AgentOps, an `ocppoc` cluster, missing Council and explorer skills), with `md-docs`, adapted from iliaal/ai-skills, for README.md, AGENTS.md, CLAUDE.md, CONTRIBUTING.md, and DOCS.md.

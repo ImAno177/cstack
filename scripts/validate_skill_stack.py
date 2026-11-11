@@ -8,8 +8,6 @@ from pathlib import Path
 import yaml
 
 
-ROUTE_PATTERN = re.compile(r"→|->")
-BACKTICK_PATTERN = re.compile(r"`([^`]+)`")
 LINK_PATTERN = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 
@@ -35,15 +33,6 @@ def frontmatter(path: Path) -> dict:
     if not isinstance(value, dict):
         raise ValueError(f"frontmatter is not a mapping: {path}")
     return value
-
-
-def route_allowed(route: str, catalog: set[str], external: set[str]) -> bool:
-    if route in catalog or route in external:
-        return True
-    if route.endswith(":*"):
-        prefix = route[:-1]
-        return any(name.startswith(prefix) for name in catalog | external)
-    return False
 
 
 def validate_links(catalog_root: Path, path: Path, errors: list[str]) -> None:
@@ -77,7 +66,6 @@ def main() -> int:
     policy = json.loads(args.policy.read_text(encoding="utf-8"))
     excluded = set(policy.get("exclude", []))
     host_markers = [marker.casefold() for marker in policy.get("host_markers", [])]
-    external_routes = set(policy.get("external_routes", []))
     link_exclude_prefixes = [
         prefix.replace("\\", "/")
         for prefix in policy.get("link_exclude_prefixes", [])
@@ -141,20 +129,6 @@ def main() -> int:
     source_catalog = {skill.name for root in source_roots for skill in skill_dirs(root, excluded)}
     for name in sorted(catalog - source_catalog):
         errors.append(f"plugin skill has no source provenance: {name}")
-
-    router = next(
-        (skill / "SKILL.md" for skill in plugin_skills if skill.name == "skills-router"),
-        None,
-    )
-    if router is not None and router.is_file():
-        for line in router.read_text(encoding="utf-8").splitlines():
-            if not ROUTE_PATTERN.search(line):
-                continue
-            routes = BACKTICK_PATTERN.findall(line.split("→", 1)[-1].split("->", 1)[-1])
-            for route in routes:
-                if route_allowed(route, catalog, external_routes):
-                    continue
-                errors.append(f"router points to missing skill: {route}")
 
     if upstreams_path.is_file():
         for entry in upstreams.get("skills", []):

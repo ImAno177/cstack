@@ -53,8 +53,8 @@ def validate_specs(specs: object) -> list[dict]:
             raise ValueError(f'invalid upstream ref: {ref!r}')
         relative_path(spec.get('path'), 'path')
         destination = relative_path(spec.get('destination'), 'destination')
-        if len(destination.parts) < 3 or destination.parts[0] != 'skills':
-            raise ValueError(f'upstream destination must be in skills/: {destination}')
+        if len(destination.parts) != 2 or destination.parts[0] != 'skills':
+            raise ValueError(f'upstream destination must be skills/<name>: {destination}')
         if any(destination == other or destination in other.parents or other in destination.parents for other in destinations):
             raise ValueError(f'overlapping upstream destinations: {destination}')
         destinations.append(destination)

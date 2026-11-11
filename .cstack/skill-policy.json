@@ -6,29 +6,21 @@
     ".cursor/",
     "Cursor's built-in"
   ],
-  "external_routes": [
-    "imagegen",
-    "documents:documents",
-    "pdf:pdf",
-    "document-skills:docx",
-    "example-skills:mcp-builder",
-    "document-skills:pdf",
-    "document-skills:pptx",
-    "document-skills:xlsx",
-    "presentations:Presentations",
-    "spreadsheets:Spreadsheets",
-    "spreadsheets:excel-live-control",
-    "google-drive:*",
-    "pages:*",
-    "sites:sites",
-    "sites:sites-remix",
-    "work-pets:*",
-    "plugin-management:plugin-management",
-    "openai-docs",
-    "skill-creator",
-    "skill-installer",
-    "find-skills"
-  ],
   "max_entry_lines": 160,
-  "link_exclude_prefixes": ["skills/cloudflare/"]
+  "link_exclude_prefixes": [
+    "skills/agents-sdk/",
+    "skills/cf-cli/",
+    "skills/cloudflare/",
+    "skills/cloudflare-email-service/",
+    "skills/cloudflare-one/",
+    "skills/cloudflare-one-migrations/",
+    "skills/durable-objects/",
+    "skills/sandbox-migrate-to-next/",
+    "skills/sandbox-next/",
+    "skills/sandbox-stable/",
+    "skills/turnstile-spin/",
+    "skills/web-perf/",
+    "skills/workers-best-practices/",
+    "skills/wrangler/"
+  ]
 }

@@ -1,6 +1,6 @@
 ---
 name: reflect
-description: Mine a completed or failed agent episode for durable learnings with three parallel reviewers (judgment, tooling, divergent) and a synthesizer, then route each accepted learning to a concrete edit on an existing skill, with rejected and backlog items listed separately. Use when the user says reflect, or after a long task whose recipe should be captured.
+description: "Mine a completed or failed agent episode for durable learnings with three parallel reviewers (judgment, tooling, divergent) and a synthesizer, then route each accepted learning to a concrete edit on an existing skill, with rejected and backlog items listed separately. Use when the user says reflect, or after a long task whose recipe should be captured. To measure and promote learnings across many episodes use continual-learning."
 ---
 
 # Reflect

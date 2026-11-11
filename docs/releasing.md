@@ -32,4 +32,4 @@
 - Grok: `.grok-plugin/plugin.json`, `.grok-plugin/marketplace.json`, generated `.grok-plugin/plugin-index.json`
 - Claude Code: `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 
-No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; `skills-router` remains an optional skill for ambiguous requests. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.
+No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; there is no router skill. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.

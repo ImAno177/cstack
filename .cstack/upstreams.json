@@ -1,32 +1,130 @@
 {
-  "skills": [
-    {
-      "name": "kaggle-cli",
-      "repository": "Kaggle/kaggle-cli",
-      "ref": "main",
-      "path": "skills",
-      "destination": "skills/kaggle/kaggle-cli"
-    },
-    {
-      "name": "colab-operator",
-      "repository": "googlecolab/google-colab-cli",
-      "ref": "main",
-      "path": "skills/colab-operator",
-      "destination": "skills/colab/colab-operator"
-    },
-    {
-      "name": "hf-cli",
-      "repository": "huggingface/skills",
-      "ref": "main",
-      "path": "skills/hf-cli",
-      "destination": "skills/huggingface/hf-cli"
-    },
-    {
-      "name": "trl-training",
-      "repository": "huggingface/skills",
-      "ref": "main",
-      "path": "skills/trl-training",
-      "destination": "skills/huggingface/trl-training"
-    }
-  ]
+ "skills": [
+  {
+   "name": "kaggle-cli",
+   "repository": "Kaggle/kaggle-cli",
+   "ref": "main",
+   "path": "skills",
+   "destination": "skills/kaggle-cli"
+  },
+  {
+   "name": "colab-operator",
+   "repository": "googlecolab/google-colab-cli",
+   "ref": "main",
+   "path": "skills/colab-operator",
+   "destination": "skills/colab-operator"
+  },
+  {
+   "name": "hf-cli",
+   "repository": "huggingface/skills",
+   "ref": "main",
+   "path": "skills/hf-cli",
+   "destination": "skills/hf-cli"
+  },
+  {
+   "name": "trl-training",
+   "repository": "huggingface/skills",
+   "ref": "main",
+   "path": "skills/trl-training",
+   "destination": "skills/trl-training"
+  },
+  {
+   "name": "agents-sdk",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/agents-sdk",
+   "destination": "skills/agents-sdk"
+  },
+  {
+   "name": "cf-cli",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/cf-cli",
+   "destination": "skills/cf-cli"
+  },
+  {
+   "name": "cloudflare",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/cloudflare",
+   "destination": "skills/cloudflare"
+  },
+  {
+   "name": "cloudflare-email-service",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/cloudflare-email-service",
+   "destination": "skills/cloudflare-email-service"
+  },
+  {
+   "name": "cloudflare-one",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/cloudflare-one",
+   "destination": "skills/cloudflare-one"
+  },
+  {
+   "name": "cloudflare-one-migrations",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/cloudflare-one-migrations",
+   "destination": "skills/cloudflare-one-migrations"
+  },
+  {
+   "name": "durable-objects",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/durable-objects",
+   "destination": "skills/durable-objects"
+  },
+  {
+   "name": "sandbox-migrate-to-next",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/sandbox-migrate-to-next",
+   "destination": "skills/sandbox-migrate-to-next"
+  },
+  {
+   "name": "sandbox-next",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/sandbox-next",
+   "destination": "skills/sandbox-next"
+  },
+  {
+   "name": "sandbox-stable",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/sandbox-stable",
+   "destination": "skills/sandbox-stable"
+  },
+  {
+   "name": "turnstile-spin",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/turnstile-spin",
+   "destination": "skills/turnstile-spin"
+  },
+  {
+   "name": "web-perf",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/web-perf",
+   "destination": "skills/web-perf"
+  },
+  {
+   "name": "workers-best-practices",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/workers-best-practices",
+   "destination": "skills/workers-best-practices"
+  },
+  {
+   "name": "wrangler",
+   "repository": "cloudflare/skills",
+   "ref": "main",
+   "path": "skills/wrangler",
+   "destination": "skills/wrangler"
+  }
+ ]
 }

@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: Security review of a repository or change - threat model, secrets, dependencies, authentication and authorization, injection, and unsafe data handling - where every finding comes with proof and a fix. Use for "security audit", "is this safe", threat modeling, pre-release security checks, or reviewing auth, input handling, or secrets.
+description: "Security review of a repository or change - threat model, secrets, dependencies, authentication and authorization, injection, and unsafe data handling - where every finding comes with proof and a fix. Use for \"security audit\", \"is this safe\", threat modeling, pre-release security checks, or reviewing auth, input handling, or secrets. For a general quality audit of the whole repository use repo-audit."
 license: MIT
 ---
 

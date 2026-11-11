@@ -54,11 +54,11 @@ class UpstreamSyncTests(unittest.TestCase):
     def test_write_then_check_lock_and_detect_tampering(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            target = root / 'skills' / 'hf' / 'hf-cli'
+            target = root / 'skills' / 'hf-cli'
             target.mkdir(parents=True)
             (target / 'SKILL.md').write_text('safe', encoding='utf-8')
             upstream = {'name': 'hf-cli', 'repository': 'huggingface/skills', 'ref': 'main',
-                        'path': 'skills/hf-cli', 'destination': 'skills/hf/hf-cli'}
+                        'path': 'skills/hf-cli', 'destination': 'skills/hf-cli'}
             record = {**sync.entry_identity(upstream), 'commit': 'a' * 40,
                       'sha256': sync.directory_sha256(target)}
             lock = root / '.cstack' / 'upstreams.lock.json'
@@ -70,8 +70,14 @@ class UpstreamSyncTests(unittest.TestCase):
 
     def test_reject_path_traversal(self):
         entry = {'name': 'sample', 'repository': 'good/repo', 'path': '../secret',
-                 'destination': 'skills/test/entry'}
+                 'destination': 'skills/entry'}
         with self.assertRaisesRegex(ValueError, 'unsafe upstream path'):
+            sync.validate_specs([entry])
+
+    def test_reject_nested_destination(self):
+        entry = {'name': 'sample', 'repository': 'good/repo', 'path': 'skills/sample',
+                 'destination': 'skills/group/sample'}
+        with self.assertRaisesRegex(ValueError, r'must be skills/<name>'):
             sync.validate_specs([entry])
 
 
