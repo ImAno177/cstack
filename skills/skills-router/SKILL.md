@@ -6,15 +6,15 @@ license: MIT
 
 # Skills router
 
-Invoke only when selection is ambiguous or the request spans capabilities. If one skill clearly owns the outcome, use it directly. Never invent an unavailable route.
+Invoke only when selection is ambiguous or the request spans capabilities. If one skill clearly owns the outcome, use it directly. Never invent an unavailable route. Routes name each host's skill; use only the one the current host has installed. On Claude Code, plugin skills are namespaced, e.g. `cstack:default-mode` or `/cstack:default-mode`.
 
 ## Routes
 
 - image generation or raster image editing -> `imagegen`
-- DOCX or Word layout, redlining, or comments -> `documents:documents`
-- PDF work or visual PDF verification -> `pdf:pdf`
-- PowerPoint or presentation work -> `presentations:Presentations`
-- spreadsheet files -> `spreadsheets:Spreadsheets`; live Excel -> `spreadsheets:excel-live-control`
+- DOCX or Word layout, redlining, or comments -> `documents:documents`; on Claude -> `docx`
+- PDF work or visual PDF verification -> `pdf:pdf`; on Claude -> `pdf`
+- PowerPoint or presentation work -> `presentations:Presentations`; on Claude -> `pptx`
+- spreadsheet files -> `spreadsheets:Spreadsheets`, on Claude `xlsx`; live Excel -> `spreadsheets:excel-live-control`
 - connected Google Drive, Docs, Sheets, or Slides -> the matching `google-drive:*` skill
 - ChatGPT Pages or Spaces -> the matching `pages:*` skill
 - website creation or management -> `sites:sites`; site remix -> `sites:sites-remix`

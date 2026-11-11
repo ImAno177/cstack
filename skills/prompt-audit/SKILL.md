@@ -18,7 +18,7 @@ Look for:
 - commands, paths, skill names, routes, and metadata that no longer resolve;
 - contradictory rules, duplicate ownership, and descriptions that grow by trigger-case enumeration;
 - rigid step choreography, numeric output caps, repetitive prohibition lists, generic padding, and fake grading language where the task is judgment rather than a fixed procedure;
-- instructions that silently change behavior across Codex, Grok Build, and Grok Bot.
+- instructions that silently change behavior across Codex, Claude Code, Grok Build, and Grok Bot.
 
 Keep context, safety constraints, current demonstrated failure guards, tool contracts, compliance rules, and genuinely format-sensitive examples. Length alone is not evidence of cruft.
 

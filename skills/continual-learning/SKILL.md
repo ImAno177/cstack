@@ -6,7 +6,7 @@ license: MIT
 
 # Continual learning
 
-Use this skill when Codex, Grok Build, or Grok Bot should look back at prior work, extract a reusable improvement, and verify that the improvement helps later tasks without damaging earlier ones.
+Use this skill when Codex, Claude Code, Grok Build, or Grok Bot should look back at prior work, extract a reusable improvement, and verify that the improvement helps later tasks without damaging earlier ones.
 
 This is agent-side learning through skills, rules, memory, and evaluation. It does not train the model, tune model settings, or make a hook itself learn. For stale wording or rules written for an older model or host, use [prompt-audit](../prompt-audit/SKILL.md).
 

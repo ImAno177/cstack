@@ -152,6 +152,6 @@ Install jacoco for local testing code coverage.
 
 - Ask whether to document the findings of the analysis and the changes applied to the testing strategy. If the user agrees:
 
-  - If there is an AGENTS.md file present in the project, update it with any changes you've made to the testing strategy.
+  - If there is an AGENTS.md or CLAUDE.md file present in the project, update it with any changes you've made to the testing strategy.
 
-  - If there is no AGENTS.md file, create a new file (docs/testing.md) with a description of the testing strategy, including the commands needed to run every type of test, where the screenshot reference files live, etc. Also create a new AGENTS.md file in the root and create a link to docs/testing.md.
+  - If there is neither, create a new file (docs/testing.md) with a description of the testing strategy, including the commands needed to run every type of test, where the screenshot reference files live, etc. Also create a new AGENTS.md file in the root (CLAUDE.md when the host is Claude Code) and create a link to docs/testing.md.

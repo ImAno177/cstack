@@ -9,7 +9,7 @@
   },
   "repository": "https://github.com/ImAno177/cstack",
   "license": "MIT",
-  "keywords": ["skills", "codex", "chatgpt", "grok", "academic-research", "continual-learning"],
+  "keywords": ["skills", "codex", "chatgpt", "grok", "claude-code", "academic-research", "continual-learning"],
   "extensions": {
     "com.openai": {
       "interface": {
