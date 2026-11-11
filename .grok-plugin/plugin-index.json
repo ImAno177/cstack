@@ -27,11 +27,11 @@
           },
           {
             "name": "architect",
-            "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
+            "description": "Sketch types, signatures, and module structure before code, design it at least twice, then stay in the loop while implementation fills in the sketch. Use for \"architect this\", \"design this\", a change that crosses a module or service boundary, or non-trivial work where jumping to code would lock in the wrong shape."
           },
           {
             "name": "arena",
-            "description": "Run isolated alternative attempts at the same design or artifact, compare them against a declared rubric, and graft only proven improvements. Use for design bakeoffs or when one attempt could lock in the wrong shape."
+            "description": "Run N parallel candidates at the same task against a declared rubric, cross-judge them, pick a base, and graft the strongest parts of the losers into it. Use for \"arena this\", design bakeoffs, or when one attempt at a non-trivial artifact would lock in the wrong shape."
           },
           {
             "name": "benchmark-checklist",
@@ -127,7 +127,7 @@
           },
           {
             "name": "figure-it-out",
-            "description": "Design an auditable playbook when no narrower skill owns a large migration, multi-part change, or ambiguous engineering task."
+            "description": "Design an auditable playbook when no narrower one fits - a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions. Use for \"figure it out\" or work too large for a single default-mode playbook."
           },
           {
             "name": "find-skills",
@@ -143,7 +143,7 @@
           },
           {
             "name": "how",
-            "description": "Explain how a codebase works, where behavior belongs, and what a change can affect before implementation."
+            "description": "Explain how a codebase or subsystem works at the level of a senior engineer onboarding onto it - architecture, runtime flow, where things live, and gotchas. Use for \"how does X work\", code walkthroughs before changing something, and placement or ownership questions (\"where should this live\", \"which package owns this\", \"is this the right layer\"). Use why for motivation."
           },
           {
             "name": "hf-cli",
@@ -159,7 +159,7 @@
           },
           {
             "name": "interrogate",
-            "description": "Run an adversarial review of a change or design where every surviving finding must be proven by a repro, failing check, or direct artifact evidence. Use for blind-spot and stress-test requests."
+            "description": "Adversarial review where independent adversaries try to break a change or design, and only findings proven by a run survive. Use for \"interrogate\", \"adversarial review\", \"multi-model review\", \"challenge this\", \"stress test this\", \"find blind spots\", or \"tear this apart\"."
           },
           {
             "name": "kaggle-cli",
@@ -299,7 +299,7 @@
           },
           {
             "name": "reflect",
-            "description": "Mine a completed or failed agent episode for durable improvements, route each learning to an existing skill or rule, and separate accepted edits from rejected and deferred candidates."
+            "description": "Mine a completed or failed agent episode for durable learnings with three parallel reviewers (judgment, tooling, divergent) and a synthesizer, then route each accepted learning to a concrete edit on an existing skill, with rejected and backlog items listed separately. Use when the user says reflect, or after a long task whose recipe should be captured."
           },
           {
             "name": "repo-audit",
@@ -327,7 +327,7 @@
           },
           {
             "name": "show-me-your-work",
-            "description": "Keep a compact, reviewable decision trail for long-running, unattended, or multi-phase work. Use when a reviewer needs to trust the path from decision to evidence."
+            "description": "Keep a reviewable decision trail for long-running or unattended work - a TSV log with one row per decision (what, why, evidence, result) - then audit it against the transcript and have an independent reviewer flag what needs attention. Local by default; commit it when a reviewer needs the trail to trust the result. Use for autonomous or multi-phase runs, or work a human reviews after stepping away."
           },
           {
             "name": "skills-router",
@@ -339,7 +339,7 @@
           },
           {
             "name": "swarm",
-            "description": "Fan out bounded workers across independent coverage slices or identical race attempts, drain them, and return one evidence-backed report. Use for parallel research, audits, or verification."
+            "description": "Fan out N parallel workers across independent coverage slices or identical race attempts, drain them, and return one evidence-backed report. Use for \"swarm this\", parallel coverage, audits, races, gauntlets, or exploration."
           },
           {
             "name": "tdd",
@@ -371,7 +371,7 @@
           },
           {
             "name": "why",
-            "description": "Explain why code or a design has its current shape using repository history and directly observable evidence."
+            "description": "Investigate why code or a design has its current shape - design rationale, tradeoffs, regressions, postmortems, or data-backed thresholds - by querying every available evidence source (git history and PRs, issue tracker, docs, chat, observability, error tracking, analytics) in parallel and returning a cited read that separates facts from inference. Use for \"why does X work this way\" or \"why did we pick Y\". Use how for runtime behavior."
           }
         ]
       }
