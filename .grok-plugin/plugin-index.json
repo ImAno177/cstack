@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.3.0",
+      "version": "0.4.0",
       "components": {
         "skills": [
           {
@@ -55,7 +55,7 @@
           },
           {
             "name": "change-review",
-            "description": "Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
+            "description": "Review a diff, commit, branch, or pull request before merge. Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
           },
           {
             "name": "cloudflare",
@@ -179,7 +179,7 @@
           },
           {
             "name": "principle-boundary-discipline",
-            "description": "Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions."
+            "description": "Apply when building or changing anything that accepts outside input (HTTP service, CLI, config, external API), including validation, error handling, identifiers, and framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions."
           },
           {
             "name": "principle-build-the-lever",
@@ -243,7 +243,7 @@
           },
           {
             "name": "principle-prove-it-works",
-            "description": "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'"
+            "description": "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles', and probe it with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported)."
           },
           {
             "name": "principle-redesign-from-first-principles",

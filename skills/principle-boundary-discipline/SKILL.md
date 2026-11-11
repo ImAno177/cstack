@@ -1,6 +1,6 @@
 ---
 name: principle-boundary-discipline
-description: Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries
+description: Apply when building or changing anything that accepts outside input (HTTP service, CLI, config, external API), including validation, error handling, identifiers, and framework adapters. Concentrate guards at system boundaries
   (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.
 ---
 
@@ -22,6 +22,12 @@ Validation and error handling:
 - Parse raw data into domain types at the boundary
 - Do not re-export transport, storage, framework, or wire types through the public surface
 - No redundant nil checks deep in call chains if the boundary already validated
+
+Safe defaults at the boundary:
+- Generate every identifier a stranger can use to reach stored data with a CSPRNG (`secrets.token_urlsafe`, `crypto.randomUUID`); never expose a counter or row id unless the spec asks for it
+- Answer every request the interface can receive in the documented error format: unsupported methods, unknown routes, and unexpected internal failures included
+- Accept or reject each input class on purpose (non-ASCII, oversized, wrong type), and make every route that returns the data handle what the write route accepted
+- Compare secrets with a constant-time function (`hmac.compare_digest`)
 
 Code organization:
 - Business logic in pure functions with no framework dependencies
