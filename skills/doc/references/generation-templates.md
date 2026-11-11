@@ -2,7 +2,7 @@
 
 ## CODING: Code-Map Template
 
-**CRITICAL**: Load `code-map-standard` skill before generating.
+**CRITICAL**: Follow the 16 required code-map sections in [validation-rules.md](validation-rules.md#coding-validation) before generating.
 
 ```markdown
 ---

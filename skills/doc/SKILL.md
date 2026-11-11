@@ -1,7 +1,8 @@
 ---
 name: doc
-description: 'Generate and validate repo docs, READMEs, and OSS doc packs. Triggers: "doc", "generate and validate repo docs",
-  "doc skill".'
+description: Generate, refresh, and validate repository documentation (code maps, READMEs, and OSS doc packs such as
+  CONTRIBUTING, CHANGELOG, and AGENTS.md) traced to the code. Use when writing or auditing repo docs; for prose style alone
+  use technical-writing.
 metadata:
   capabilities:
   - doc
@@ -13,6 +14,8 @@ metadata:
   dependencies: []
 ---
 # Doc Skill
+
+`<skill-dir>` is the directory containing this `SKILL.md` (on Claude Code, `${CLAUDE_SKILL_DIR}`); its scripts run from any working directory.
 
 **YOU MUST EXECUTE THIS WORKFLOW. Do not just describe it.**
 
@@ -84,7 +87,7 @@ doc** failure mode — accurate, complete, and useless.
 - **Path:** default-mode reports go to the artifact directory `.agents/scratch/doc/`; README mode updates the repository `README.md`; OSS scaffold mode creates missing root documentation only by default. The separate OSS `refresh` path may update an existing doc only after explicit user confirmation.
 - **Filename:** default reports use the filename convention `YYYY-MM-DD-<target>.md`; README and OSS filenames follow their mode references.
 - **Format:** outputs are Markdown; the default report schema records coverage percentage, generated artifacts, gaps, and validation issues.
-- **Validation command:** validate the skill contract with `bash skills/doc/scripts/validate.sh`, then run the mode-specific validation required by its reference before reporting completion.
+- **Validation command:** validate the skill contract with `bash <skill-dir>/scripts/validate.sh`, then run the mode-specific validation required by its reference before reporting completion.
 - **Downstream handoff:** return changed paths, validation results, coverage or remaining gaps, and any blocked decision to the requesting caller or evidence consumer.
 
 ## Quality Checklist

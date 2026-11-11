@@ -11,6 +11,7 @@ skills/                         canonical skills, with platform groups where use
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
 .claude-plugin/                 Claude Code manifest and marketplace
+agents/                         Claude Code subagents (pr-reviewer)
 .cstack/                        routing policy, upstream manifest, and generated lock
 .agents/plugins/                Codex marketplace
 ```

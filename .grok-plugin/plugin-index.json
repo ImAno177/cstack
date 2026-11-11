@@ -22,6 +22,10 @@
             "description": "Design, debug, or evaluate the runtime around a model-driven agent: loop, model adapter, tools, context, permissions, orchestration, extensibility, and verification. Use for Codex, Claude Code, DSH, Pi, Prime Agent, local-model integrations, or coding-agent harnesses; not for ordinary application code."
           },
           {
+            "name": "android-testing-setup",
+            "description": "Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure, create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests."
+          },
+          {
             "name": "architect",
             "description": "Define data shapes, interfaces, ownership, and error boundaries before a change crosses a module or function boundary."
           },
@@ -115,7 +119,7 @@
           },
           {
             "name": "doc",
-            "description": "Generate and validate repo docs, READMEs, and OSS doc packs. Triggers: \"doc\", \"generate and validate repo docs\", \"doc skill\"."
+            "description": "Generate, refresh, and validate repository documentation (code maps, READMEs, and OSS doc packs such as CONTRIBUTING, CHANGELOG, and AGENTS.md) traced to the code. Use when writing or auditing repo docs; for prose style alone use technical-writing."
           },
           {
             "name": "figure-it-out",
@@ -328,10 +332,6 @@
           {
             "name": "technical-writing",
             "description": "Layered technical-writing standard: Diátaxis structure, Google developer style sentences, STE instruction rules, Global English syntax. Use for /technical-writing or when writing or reviewing docs, RFCs, readmes, PR descriptions, or commit messages."
-          },
-          {
-            "name": "testing-setup",
-            "description": "Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure, create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests."
           },
           {
             "name": "tool-orchestration",

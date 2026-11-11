@@ -6,6 +6,7 @@ on:
     paths:
       - ".cstack/**"
       - "skills/**"
+      - "agents/**"
       - ".agents/**"
       - ".github/workflows/**"
       - ".codex-plugin/**"
@@ -26,6 +27,7 @@ on:
     paths:
       - ".cstack/**"
       - "skills/**"
+      - "agents/**"
       - ".agents/**"
       - ".github/workflows/**"
       - ".codex-plugin/**"
