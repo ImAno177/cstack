@@ -17,7 +17,7 @@ Check the real thing, not a proxy:
 
 ## Probe hostile inputs through the real interface
 
-Passing the happy path proves little. Before declaring done, drive the real entry point (the CLI, the HTTP port, the public function) with each class below and read the result back end to end:
+Passing the happy path proves little. Before declaring done on a change that adds or alters a surface accepting outside input, drive the real entry point (the CLI, the HTTP port, the public function) with each class below and read the result back end to end:
 
 - empty, missing, and wrong-type fields;
 - oversized input;

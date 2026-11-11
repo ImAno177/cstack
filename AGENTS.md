@@ -14,7 +14,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 - Read applicable instructions and task-relevant sources, consumers, configuration, and artifacts. Inspect status before editing; preserve unrelated and unrecognized work.
 - Use every skill the user names; report any that is missing.
 - Load a skill only when it clearly owns the task, and a supporting skill only for a concrete need. Load no other workflow unless the task or an applicable policy requires it.
-- Scan the installed skill list before each phase of non-trivial work and open the skill that owns that phase before acting, not after: `change-review` to review a diff, commit, branch, or PR; `tdd` to fix a reproducible bug; `default-mode` to build a feature or a new project; `security-audit` for threat or secret questions; `conventional-commit` to write a commit message; `create-pr` to open a pull request; `principle-prove-it-works` before declaring done.
+- Scan the installed skill list before each phase of non-trivial work and open the skill that owns that phase before acting, not after: `change-review` to review a diff, commit, branch, or PR; `tdd` to fix a reproducible bug that has a cheap local test path or when the user asks for it; `default-mode` to build a non-trivial feature or a new project that no narrower skill owns; `security-audit` for threat or secret questions; `conventional-commit` to write a commit message; `create-pr` to open a pull request; `principle-prove-it-works` before declaring done.
 - Follow the output format of an opened skill exactly, including its first line, location format, and closing lines.
 - Name the skill you used in your reply whenever a skill shaped the work.
 
@@ -38,7 +38,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 ## Verify and hand off
 
 - After meaningful changes, run the smallest relevant existing checks. Before handoff, run project-required gates and inspect the artifact or behavior in proportion to risk. Repeat checks only for relevant changes or new evidence.
-- Probe the real interface with hostile inputs before handoff: empty, missing, wrong type, oversized, non-ASCII, duplicate, and concurrent requests, plus one restart when state persists. Each must end in a correct result or the documented error, read back end to end.
+- Probe the real interface with hostile inputs before handing off any change that adds or alters a surface accepting outside input: empty, missing, wrong type, oversized, non-ASCII, duplicate, and concurrent requests, plus one restart when state persists. Each must end in a correct result or the documented error, read back end to end.
 - Separate attempted, executed, and verified. Inspect actual results; a clean exit, green check, or agent report alone does not prove completion.
 - Inspect the final diff. Report the result, verification evidence, skipped or failed checks, and remaining risk; state when completion is blocked or unverified.
 
