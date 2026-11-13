@@ -11,7 +11,7 @@ skills/                         canonical skills, with platform groups where use
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
 .claude-plugin/                 Claude Code manifest and marketplace
-agents/                         Claude Code subagents (pr-reviewer, researcher, implementer)
+agents/                         Claude Code subagents (pr-reviewer)
 .cstack/                        routing policy, upstream manifest, and generated lock
 .agents/plugins/                Codex marketplace
 ```
@@ -65,7 +65,7 @@ claude plugin marketplace add ImAno177/cstack
 claude plugin install cstack@cstack
 ```
 
-Skills load as `/cstack:<skill>`. Claude Code also loads the subagents in `agents/` as `cstack:pr-reviewer`, `cstack:researcher`, and `cstack:implementer`. `AGENTS.md` is contributor guidance for this repository; the root `CLAUDE.md` imports it for sessions here.
+Skills load as `/cstack:<skill>`. Claude Code reads `CLAUDE.md`, not `AGENTS.md`: the root `CLAUDE.md` imports `AGENTS.md` for sessions in this repository; to use the instructions everywhere, add `@/path/to/cstack/AGENTS.md` to `~/.claude/CLAUDE.md`.
 
 All examples describe the intended host integration; verify installation and native skill discovery on your specific client before reporting support as tested. cstack does not install or require any lifecycle hooks.
 
