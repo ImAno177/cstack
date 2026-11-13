@@ -83,4 +83,6 @@ The [micrograd A/B benchmark](benchmarks/reproduction/micrograd/README.md) launc
 
 ## Release and licensing
 
+Contributor workflow, validator details, and skill rules are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 `.github/workflows/validate-cstack.yml` runs the root validators and checks the generated Grok plugin index. See [changelog](CHANGELOG.md), [release checklist](docs/releasing.md), [MIT license](LICENSE), and [third-party notices](THIRD_PARTY_NOTICES.md). Bundled upstream skill content may have separate licenses.

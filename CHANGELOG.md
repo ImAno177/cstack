@@ -7,7 +7,8 @@
 - Add Claude Code subagents in `agents/`: `pr-reviewer` (now on Haiku, ends with `VERDICT: CLEAN` or `VERDICT: PROBLEMS`), `researcher` (read-only, cited report), and `implementer` (branch, checks, and pull request; never merges).
 - `default-mode` gains operating lessons: denied tools end the action, one CI watch instead of polling, list-then-delete cleanup, no `git commit -a` in repositories with submodules, Windows Git Bash path and line-ending rules.
 - Narrow the descriptions of `find-skills` (only when asked to find or install a skill), `principle-build-the-lever`, `principle-prove-it-works`, and `unslop` (when rewriting AI-sounding prose).
-- `AGENTS.md` is now contributor guidance for this repository. Its agent-facing routing and safety rules are removed; users who imported it through `~/.claude/CLAUDE.md` should remove that import.
+- `AGENTS.md` names the `cstack:pr-reviewer` agent, which runs on Haiku, for the pre-merge review step.
+- Add `CONTRIBUTING.md` with contributor guidance for this repository: validators, upstream-synced skills, host sync, and validator-enforced skill rules.
 
 ## 0.4.0
 
