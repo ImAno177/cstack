@@ -1,6 +1,6 @@
 ---
 name: find-skills
-description: Discovers and installs agent skills from the open skills ecosystem with the `npx skills` CLI. Use when the user asks "how do I do X", "find a skill for X", "is there a skill that can...", or wants to extend agent capabilities in a specialized domain. Not for skills already in this pack; read them directly.
+description: Finds and installs agent skills from the open skills ecosystem with the `npx skills` CLI. Use only when the user asks to find or install a skill, such as "find a skill for X" or "is there a skill that can...". Not for ordinary how-to questions or for skills already in this pack; read those directly.
 ---
 
 # Find Skills

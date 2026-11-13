@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.5.0
+
+- Add Claude Code subagents in `agents/`: `pr-reviewer` (now on Haiku, ends with `VERDICT: CLEAN` or `VERDICT: PROBLEMS`), `researcher` (read-only, cited report), and `implementer` (branch, checks, and pull request; never merges).
+- `default-mode` gains operating lessons: denied tools end the action, one CI watch instead of polling, list-then-delete cleanup, no `git commit -a` in repositories with submodules, Windows Git Bash path and line-ending rules.
+- Narrow the descriptions of `find-skills` (only when asked to find or install a skill), `principle-build-the-lever`, `principle-prove-it-works`, and `unslop` (when rewriting AI-sounding prose).
+- `AGENTS.md` names the `cstack:pr-reviewer` agent, which runs on Haiku, for the pre-merge review step.
+- Add `CONTRIBUTING.md` with contributor guidance for this repository: validators, upstream-synced skills, host sync, and validator-enforced skill rules.
+
 ## 0.4.0
 
 Changes from paired Haiku runs of 0.2.0 against 0.3.0 (14 runs, three tasks): agents skipped the owning skill in a third of review runs, three of four built services exposed sequential ids and dropped the connection on a non-ASCII URL, and one baseline agent ran a recursive delete outside its workspace.

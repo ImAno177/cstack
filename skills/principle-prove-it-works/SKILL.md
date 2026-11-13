@@ -1,7 +1,6 @@
 ---
 name: principle-prove-it-works
-description: Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read
-  the actual value, inspect the diff), not a proxy, self-report, or 'it compiles', and probe it with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported).
+description: Use before declaring a change done, when the work is a feature, fix, or interface that must be checked against its real artifact. Run the feature, read the actual value, or inspect the diff, not a self-report or 'it compiles'. Probe any input-accepting surface with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported).
 ---
 
 # Prove It Works

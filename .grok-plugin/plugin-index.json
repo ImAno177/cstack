@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.4.0",
+      "version": "0.5.0",
       "components": {
         "skills": [
           {
@@ -115,7 +115,7 @@
           },
           {
             "name": "find-skills",
-            "description": "Discovers and installs agent skills from the open skills ecosystem with the `npx skills` CLI. Use when the user asks \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or wants to extend agent capabilities in a specialized domain. Not for skills already in this pack; read them directly."
+            "description": "Finds and installs agent skills from the open skills ecosystem with the `npx skills` CLI. Use only when the user asks to find or install a skill, such as \"find a skill for X\" or \"is there a skill that can...\". Not for ordinary how-to questions or for skills already in this pack; read those directly."
           },
           {
             "name": "frontend-design",
@@ -183,7 +183,7 @@
           },
           {
             "name": "principle-build-the-lever",
-            "description": "Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun."
+            "description": "Use when a change repeats one mechanical edit across many sites, when a manual check must be done more than once, or when a reviewer needs to rerun the proof. Build the codemod, script, generator, or check that does or proves it instead of working by hand. Not for a single-line edit."
           },
           {
             "name": "principle-encode-lessons-in-structure",
@@ -243,7 +243,7 @@
           },
           {
             "name": "principle-prove-it-works",
-            "description": "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles', and probe it with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported)."
+            "description": "Use before declaring a change done, when the work is a feature, fix, or interface that must be checked against its real artifact. Run the feature, read the actual value, or inspect the diff, not a self-report or 'it compiles'. Probe any input-accepting surface with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported)."
           },
           {
             "name": "principle-redesign-from-first-principles",
@@ -355,7 +355,7 @@
           },
           {
             "name": "unslop",
-            "description": "Edits text to remove AI-writing tells such as filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression, keeping meaning and tone. Use before delivering prose, docs, commit messages, PR bodies, or replies, and when asked to unslop or humanize text. Not for restructuring documents; use `technical-writing` or `md-docs`."
+            "description": "Edits text to remove AI-writing tells such as filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression, keeping meaning and tone. Use when rewriting prose that reads AI-generated, before delivering docs, commit messages, PR bodies, or replies, or when asked to unslop or humanize text. Not for restructuring documents; use `technical-writing` or `md-docs`."
           },
           {
             "name": "web-perf",

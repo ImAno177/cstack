@@ -50,6 +50,16 @@ The principle skills behind these playbooks are indexed, with when to apply each
 
 - A task a narrower skill owns, or a short single-file edit: act directly.
 
+## Operating lessons
+
+- A denied tool call ends that action. Ask the user instead of retrying it or finding another route to the same effect.
+- Wait on CI with one `gh run watch` or `gh pr checks --watch`, not a polling loop.
+- Cleanup: list what exists, verify merges on the remote, then delete. Never remove a worktree or branch you did not create in this session without listing it first.
+- In a repository with submodules, never `git commit -a`; stage paths explicitly.
+- Ask before installing tools outside the project's own dependency manager.
+- In Git Bash on Windows, set `MSYS_NO_PATHCONV=1` before passing device or Unix-style paths to `adb`.
+- Write generated files with the repository's line endings.
+
 ## Finish
 
 Done when the real artifact (diff, file, command output, or PR URL) satisfies the done predicate you set in Start. Report what changed, what was verified with which command, what was skipped, partial or blocked work, and remaining risk. Never relax the predicate to declare success.
