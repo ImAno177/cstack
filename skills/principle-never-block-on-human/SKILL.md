@@ -1,6 +1,7 @@
 ---
 name: principle-never-block-on-human
 description: Apply when tempted to ask whether to take a reversible action that the task already authorizes.
+disable-model-invocation: true
 ---
 
 # Never block on the human

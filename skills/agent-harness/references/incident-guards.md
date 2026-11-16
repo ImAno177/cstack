@@ -5,7 +5,7 @@ Use this reference when converting an agent failure into a reusable rule. The Re
 | Failure shape | Smallest guard | Evidence to retain | Owning cstack skill |
 | --- | --- | --- | --- |
 | A verifier silently checked zero items | Assert the expected subject count and matched-evidence count before returning pass | Scope, expected count, matched count, unknown reason | `agent-completion`, `agent-evaluation` |
-| A hook or worker leaked processes or touched an unsaved artifact | Give each operation an identity, timeout, owner, and cleanup receipt | Process or artifact identity, cleanup result, stop reason | `agent-harness`, `principle-make-operations-idempotent` |
+| A hook or worker leaked processes or touched an unsaved artifact | Give each operation an identity, timeout, owner, and cleanup receipt | Process or artifact identity, cleanup result, stop reason | `agent-harness`, [`principle-make-operations-idempotent`](../../principle-make-operations-idempotent/SKILL.md) |
 | Fan-out spawned too many expensive workers | Require explicit model, depth, concurrency, token, and time budgets | Spawn decision, budget, worker result, cancellation result | `multi-agent-workflow` |
 | A driver exhausted context between execution and review | Checkpoint durable state before compaction and start the next phase from a compact handoff | Checkpoint path, summary version, replay boundary | `agent-context`, `default-mode` |
 | A local model hallucinated tools or a changing tool list destroyed cache locality | Keep a small phase-stable catalog and defer discovery to a boundary | Catalog version, tool-validation result, phase id | `agent-harness`, `tool-orchestration` |

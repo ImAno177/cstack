@@ -23,7 +23,7 @@ Run Phase A for every task except greenfield work with no surrounding system to 
 
 Run `arena` with the design-sketch task and the Phase A grounding. Pass [references/runner-prompt.md](references/runner-prompt.md) as each runner's prompt. Pick runners per [subagents](../default-mode/references/subagents.md#models-and-diversity), preferring model diversity for design work.
 
-Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient: whole-shape alternatives, not point fixes inside one shape (`principle-exhaust-design-space`).
+Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient: whole-shape alternatives, not point fixes inside one shape ([`principle-exhaust-design-space`](../principle-exhaust-design-space/SKILL.md)).
 
 Screen every candidate against [references/design-red-flags.md](references/design-red-flags.md). Assume the next contributor is an agent that sees only the files it opened, copies the nearest example, and takes the shortest path that compiles. Prefer the design where a change that looks right from one file is right for the whole repository.
 
@@ -33,7 +33,7 @@ Compare viable candidates on interface depth: prefer the design that hides more 
 
 By default, proceed to implementation with the synthesized design. Stop for sign-off when the user asks, such as "show me before implementing"; otherwise do not stop.
 
-The sketch can ship as its own commit (the "scaffold first" mode of `principle-foundational-thinking`). Planned breakage during fill-in is fine (`principle-outcome-oriented-execution`). For adversarial pressure before implementing, run `interrogate` on the sketch. Treat user pushback on the shape as Phase A evidence: re-ground and re-run Phase B before writing more code.
+The sketch can ship as its own commit (the "scaffold first" mode of [`principle-foundational-thinking`](../principle-foundational-thinking/SKILL.md)). Planned breakage during fill-in is fine ([`principle-outcome-oriented-execution`](../principle-outcome-oriented-execution/SKILL.md)). For adversarial pressure before implementing, run `interrogate` on the sketch. Treat user pushback on the shape as Phase A evidence: re-ground and re-run Phase B before writing more code.
 
 ## Phase D: Implement against the sketch
 
@@ -41,7 +41,7 @@ Replace `not implemented` bodies with code. The sketch is the contract. A deviat
 
 ## Phase E: Scrap when the architecture is wrong
 
-If implementation keeps producing friction the sketch cannot absorb, throw it out instead of bolting fixes onto it (`principle-redesign-from-first-principles`, `principle-fix-root-causes`). The signal is a pattern, not one instance:
+If implementation keeps producing friction the sketch cannot absorb, throw it out instead of bolting fixes onto it ([`principle-redesign-from-first-principles`](../principle-redesign-from-first-principles/SKILL.md), `principle-fix-root-causes`). The signal is a pattern, not one instance:
 
 - the same workaround shape repeating across unrelated code;
 - unrelated edge cases that each need a special-case branch;
@@ -50,7 +50,7 @@ If implementation keeps producing friction the sketch cannot absorb, throw it ou
 - callers that must know the abstraction's internal rules;
 - two or more independent Phase D deviations of the same shape.
 
-A few edge cases do not condemn a design; complexity in the data is not complexity in the design. Scrap by this method, or an equivalent that ends with a smaller sketch: re-run `how` over what was built, redesign as if the new constraints were day-one assumptions, make the new sketch smaller than the old one before it grows (`principle-subtract-before-add`), and return to Phase B.
+A few edge cases do not condemn a design; complexity in the data is not complexity in the design. Scrap by this method, or an equivalent that ends with a smaller sketch: re-run `how` over what was built, redesign as if the new constraints were day-one assumptions, make the new sketch smaller than the old one before it grows ([`principle-subtract-before-add`](../principle-subtract-before-add/SKILL.md)), and return to Phase B.
 
 ## Outputs
 

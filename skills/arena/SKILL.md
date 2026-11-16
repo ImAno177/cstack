@@ -14,7 +14,7 @@ Every candidate gets the same prompt, so the prompt is the contract.
 1. State the artifact each candidate produces.
 2. Derive the rubric: 3-6 concrete, gradeable criteria for success on this task. It is the picker's tool in Phase D; candidates see only the task.
 3. Pick the runners: at least two, across model families when the host offers them (see [models and diversity](../default-mode/references/subagents.md#models-and-diversity)). Add runners when the arena covers several design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Say which models ran.
-4. Give each candidate its own output location, a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/` (`principle-separate-before-serializing-shared-state`).
+4. Give each candidate its own output location, a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/` ([`principle-separate-before-serializing-shared-state`](../principle-separate-before-serializing-shared-state/SKILL.md)).
 
 ## Phase B: Fan out
 
@@ -28,11 +28,11 @@ After every candidate finishes, start one read-only judge that produced none of 
 
 Read every candidate end to end. Score each against the rubric criterion by criterion, not on overall feel, and compare with the judge. Agreement confirms the pick. On disagreement, read both rationales before deciding: one of you is biased or the rubric was ambiguous.
 
-Pick the base a future maintainer can extend most easily without breaking invariants. When two feel tied, prefer the cleaner boundary or smaller API (`principle-laziness-protocol`). Do not select by prose quality, worker confidence, or a clean process exit.
+Pick the base a future maintainer can extend most easily without breaking invariants. When two feel tied, prefer the cleaner boundary or smaller API ([`principle-laziness-protocol`](../principle-laziness-protocol/SKILL.md)). Do not select by prose quality, worker confidence, or a clean process exit.
 
 ## Phase E: Graft
 
-Walk each losing candidate once more for what is worth porting into the base, usually one or two things, not most of it. Fold each graft in by hand so the result stays coherent under one mental model (`principle-redesign-from-first-principles`); do not paste mechanically.
+Walk each losing candidate once more for what is worth porting into the base, usually one or two things, not most of it. Fold each graft in by hand so the result stays coherent under one mental model ([`principle-redesign-from-first-principles`](../principle-redesign-from-first-principles/SKILL.md)); do not paste mechanically.
 
 Ship the consensus shape without grafting when the candidates converge on one shape. Reframe and re-run rather than average when they diverge wildly, because Phase A was under-specified.
 

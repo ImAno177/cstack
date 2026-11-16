@@ -29,7 +29,8 @@ Skills listed in `.cstack/upstreams.json` are copied from their upstream reposit
 
 - Declare the version in `plugin.json`, `.codex-plugin/plugin.json`, `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json`. `validate_plugin.py` rejects a mismatch.
 - Regenerate `.grok-plugin/plugin-index.json` with `python scripts/generate_grok_plugin_index.py` after any change to a skill description or to a skill's name.
-- `agents/` holds Claude Code subagents only. Codex and Grok manifests do not reference it, and the validators do not scan it.
+- `agents/` holds Claude Code subagents. Grok Build loads them through its Claude Code compatibility; Codex ignores them. The Codex and Grok manifests do not reference `agents/`, and the validators do not scan it.
+- Run `claude plugin validate .` when Claude Code is installed. It checks the Claude manifests and component files, which the Python validators do not.
 - Claude Code reads the version from `.claude-plugin/plugin.json`. Users receive skill changes only after that version changes.
 
 ## Skill rules enforced by the validators

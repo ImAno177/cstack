@@ -1,6 +1,7 @@
 ---
 name: principle-exhaust-design-space
 description: Apply when a novel interaction or architecture decision has no useful precedent. Build two or three competing prototypes and compare them before committing.
+disable-model-invocation: true
 ---
 
 # Exhaust the design space

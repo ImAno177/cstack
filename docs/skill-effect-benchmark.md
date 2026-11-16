@@ -17,6 +17,12 @@ The routing benchmark (`docs/routing-benchmark.md`) checks which skill a descrip
 4. Compare arms task by task. Keep a change only when it fired in at least one run, raises the mean, and makes no task that never failed start failing. Delete an item only when it fired and removing it lost nothing measurable; keep any item that never fired.
 5. Re-run after every model change: a stronger model may already do what a skill teaches.
 
+## Claude Code
+
+`claude plugin eval` (Claude Code v2.1.269 or later) runs this protocol on Claude Code: each case runs three times by default with the plugin and again with no plugin, and the report gives both scores and their difference. Create a suite with `claude plugin eval init` from the repository root; cases live in `evals/`. Every run is a billed model call. cstack does not ship a suite yet, so no Claude Code result is claimed here.
+
+`/skill-doctor` reports what each skill costs in the always-on listing and how often it was invoked. Use it before adding a skill, and to pick skills to mark `disable-model-invocation`.
+
 ## Runner
 
 `benchmarks/reproduction/run_codex_ab.py` runs paired, repeated arms on Codex for the micrograd fixture. Its arms are no skills versus the whole pack, so it measures the pack, not one change; to test one change, stage two cstack checkouts that differ only in that change and compare their results the same way:

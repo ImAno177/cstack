@@ -29,7 +29,7 @@ Start one synthesizer on the strongest available model with [references/synthesi
 
 ## 4. Structural enforcement check
 
-Move any Accepted item that a lint rule, script, metadata flag, validator, or runtime check would enforce more reliably to Backlog (`principle-encode-lessons-in-structure`).
+Move any Accepted item that a lint rule, script, metadata flag, validator, or runtime check would enforce more reliably to Backlog ([`principle-encode-lessons-in-structure`](../principle-encode-lessons-in-structure/SKILL.md)).
 
 ## 5. Check before applying
 

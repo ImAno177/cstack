@@ -35,7 +35,7 @@ By default the log is a working artifact: `decisions.tsv` in the work directory,
 ## Rules
 
 - Append-only. A wrong call gets a new row that supersedes it. Never edit or delete history.
-- Prefer evidence produced by committed scripts over one-off commands (`principle-encode-lessons-in-structure`).
+- Prefer evidence produced by committed scripts over one-off commands ([`principle-encode-lessons-in-structure`](../principle-encode-lessons-in-structure/SKILL.md)).
 
 ## Audit the log against the transcript
 

@@ -1,6 +1,7 @@
 ---
 name: principle-build-the-lever
 description: 'Use when a change repeats one mechanical edit across many sites, when a manual check must be done more than once, or when a reviewer needs to rerun the proof. Build the codemod, script, generator, or check that does or proves it instead of working by hand. Not for a single-line edit.'
+disable-model-invocation: true
 ---
 # Build the Lever
 
