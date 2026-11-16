@@ -11,7 +11,7 @@ skills/                         canonical skills, with platform groups where use
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
 .claude-plugin/                 Claude Code manifest and marketplace
-agents/                         Claude Code subagents (pr-reviewer)
+agents/                         Claude Code subagents (verifier, researcher, implementer)
 .cstack/                        routing policy, upstream manifest, and generated lock
 .agents/plugins/                Codex marketplace
 ```
@@ -65,7 +65,11 @@ claude plugin marketplace add ImAno177/cstack
 claude plugin install cstack@cstack
 ```
 
-Skills load as `/cstack:<skill>`. Claude Code reads `CLAUDE.md`, not `AGENTS.md`: the root `CLAUDE.md` imports `AGENTS.md` for sessions in this repository; to use the instructions everywhere, add `@/path/to/cstack/AGENTS.md` to `~/.claude/CLAUDE.md`.
+Skills load as `/cstack:<skill>`. Claude Code does not load instruction files from a plugin, so installing cstack does not apply `AGENTS.md`. To use the instructions in every project, add `@~/.claude/plugins/marketplaces/cstack/AGENTS.md` to `~/.claude/CLAUDE.md`. In this repository the root `CLAUDE.md` imports `AGENTS.md`.
+
+cstack lists about 70 skill descriptions. Claude Code gives the listing 1% of the context window and drops the descriptions of the least-used skills when it overflows, which removes the words a request is matched on. Raise the budget in `~/.claude/settings.json` with `"skillListingBudgetFraction": 0.03`, and run `/skill-doctor` to see which skills you never use. Codex has the same limit at 2% (`skills.max_context_tokens`).
+
+Grok Build also reads Claude Code marketplaces, plugins, skills, agents, and instruction files with no extra configuration.
 
 All examples describe the intended host integration; verify installation and native skill discovery on your specific client before reporting support as tested. cstack does not install or require any lifecycle hooks.
 

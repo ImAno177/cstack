@@ -1,6 +1,6 @@
 # Principles
 
-The 24 principle skills are the reasons behind cstack's playbooks. Each is a short skill named `principle-<title>`, with the title in kebab case. When text says "the **fix-root-causes** principle", it means `principle-fix-root-causes`. Read a principle's own `SKILL.md` before you apply it, and in your reply name each principle that changed a decision and the choice it changed.
+The 24 principle skills are the reasons behind cstack's playbooks. Each is a short skill named `principle-<title>`, with the title in kebab case. When text says "the **fix-root-causes** principle", it means `principle-fix-root-causes`. Only `principle-prove-it-works` and `principle-fix-root-causes` are listed for automatic invocation; the other 22 are kept out of the always-on skill listing, so open them by path: `../../principle-<title>/SKILL.md` from this file. Read a principle's own `SKILL.md` before you apply it, and in your reply name each principle that changed a decision and the choice it changed.
 
 ## Contents
 

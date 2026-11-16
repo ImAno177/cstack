@@ -12,13 +12,13 @@ The repository root is the installable plugin. A skill is a portable capability;
 ## What stays out of cstack
 
 - `assets/logo.png` in pstack is branding, not instruction or runtime input, so cstack does not carry it.
-- pstack `agents/` (poteto-agent, Comment Sicko), Cursor automations, Bugbot helpers, and Claude harness adapters are host-specific. cstack keeps portable delegation and completion guidance in skills without startup hooks. The one exception is `agents/pr-reviewer.md`, a Claude Code subagent for the pre-merge review that other hosts ignore; skills name it only as "on Claude Code".
+- pstack `agents/` (poteto-agent, Comment Sicko), Cursor automations, Bugbot helpers, and Claude harness adapters are host-specific. cstack keeps portable delegation and completion guidance in skills without startup hooks. The exception is `agents/`, Claude Code subagents that Grok Build also loads and Codex ignores. `agents/verifier.md` gives the pre-merge verdict the way pstack's shipping playbook does: an agent that did not write the change runs it as a user would and returns `PASS`, `PASS+NOTES`, or `FAIL`. It replaced a diff-reading reviewer, because a read of the diff does not run the change. Skills name it only as "on Claude Code".
 - pstack's PR watcher and statechart fixture corpus are executable tooling or test data, not portable skill content. They are not copied without a cstack-owned host adapter.
 
 ## Divergence from pstack
 
 - Delegation-heavy skills (`architect`, `arena`, `swarm`, `interrogate`, `how`, `why`, `reflect`, `show-me-your-work`, `figure-it-out`) keep pstack's phases and references. Cursor model slugs, `pstack-models.mdc`, Task fields, and transcript paths are replaced by one host-neutral reference, `skills/default-mode/references/subagents.md`, which maps them for Claude Code and other hosts.
-- pstack makes nearly every skill `disable-model-invocation` and reaches them through `poteto-mode`. cstack keeps skills model-invocable so hosts without a mode skill can discover them, and opts out only slash-only skills.
+- pstack makes nearly every skill `disable-model-invocation` and reaches them through `poteto-mode`. cstack keeps skills model-invocable so hosts without a mode skill can discover them, and opts out slash-only skills and 22 of the 24 principles. The principles are reached through `skills/default-mode/references/principles.md`; listing them cost the always-on skill listing more than its budget, so hosts dropped other skills' descriptions.
 - pstack's planning stance holds: there is no planning skill. `figure-it-out` and `multi-phase-plan.md` cover plans when the work needs one.
 - Shipping work stays in playbooks (`opening-a-pr.md`, `babysit.md`, `shipping.md`), condensed and forge-neutral, instead of skills.
 - Not ported: `poteto-help`, `setup-pstack`, `automate-me`, `recall`, `bro`, `no-comments`, `make-bot-ui`, and the Cursor-specific playbooks (autopilot, orchestrate, worktree and simulator cleanup). `AGENTS.md` carries the no-comments rule.

@@ -2,6 +2,7 @@
 name: principle-boundary-discipline
 description: Apply when building or changing anything that accepts outside input (HTTP service, CLI, config, external API), including validation, error handling, identifiers, and framework adapters. Concentrate guards at system boundaries
   (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.
+disable-model-invocation: true
 ---
 
 # Boundary Discipline

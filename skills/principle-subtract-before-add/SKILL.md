@@ -1,6 +1,7 @@
 ---
 name: principle-subtract-before-add
 description: Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references before building on the base.
+disable-model-invocation: true
 ---
 
 # Subtract before add

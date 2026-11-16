@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.6.0
+
+Changes from a review against the Claude Code, Codex, and Grok Build documentation and pstack's shipping playbook as of 2026-11-16.
+
+- Breaking: replace the `pr-reviewer` agent with `verifier`. It runs the change the way a user would, parent against head, and ends with `VERDICT: PASS`, `VERDICT: PASS+NOTES`, or `VERDICT: FAIL`. A read of the diff is no longer a merge verdict. `AGENTS.md` and the shipping playbook name `cstack:verifier`.
+- The merge policy in `AGENTS.md` asks for the repository's required gate (CI where it runs on pull requests, otherwise the documented local gate) instead of always waiting for CI.
+- Mark 22 of the 24 principle skills `disable-model-invocation`. With 90 listed descriptions the always-on skill listing overflowed its budget and hosts dropped descriptions of other skills. `principle-prove-it-works` and `principle-fix-root-causes` stay listed; the rest are opened by path from the principles index.
+- `subagents.md`: resume a Claude Code worker with `SendMessage`, state the model resolution order, and respect a user's pinned subagent model.
+- README: Claude Code does not load a plugin's instruction files, so it documents the `~/.claude/CLAUDE.md` import, the listing budget setting, and Grok Build's Claude Code compatibility.
+- Document `claude plugin eval`, `/skill-doctor`, and `claude plugin validate`.
+
 ## 0.5.0
 
 - Add Claude Code subagents in `agents/`: `pr-reviewer` (now on Haiku, ends with `VERDICT: CLEAN` or `VERDICT: PROBLEMS`), `researcher` (read-only, cited report), and `implementer` (branch, checks, and pull request; never merges).

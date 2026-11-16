@@ -19,7 +19,7 @@ How cstack skills delegate. A skill that says "spawn", "fan out", a "worker", "r
 | Parallel workers | Several `Agent` calls in one message; they run in the background and notify you when done | Start them together if the host allows it; otherwise run them one after another and say so |
 | A worker that writes files | `subagent_type: "general-purpose"` with `isolation: "worktree"` and the branch or commit to check out | A separate git worktree or branch per worker |
 | A worker that needs MCP tools | `general-purpose`; it keeps the session's MCP servers | Confirm the worker type keeps MCP access before relying on it |
-| Resume a finished worker | Start a new one and paste the earlier result into its brief | Same |
+| Resume a finished worker | `SendMessage` to the agent's id or name; it keeps its context. Start a new one only when the old one is gone, and paste the earlier result into its brief | Start a new one and paste the earlier result into its brief |
 
 Never ask one worker to own two MCP servers, two slices, or two candidates. Use bounded retries and no nested fan-out unless the skill asks for it.
 
@@ -27,7 +27,8 @@ Never ask one worker to own two MCP servers, two slices, or two candidates. Use 
 
 Some skills ask for different models, such as runners from more than one model family, or a judge from a family other than the parent's. Diversity catches blind spots, but only real diversity counts.
 
-- On Claude Code, `Agent` takes `model` (`opus`, `sonnet`, `haiku`, or `fable`) and `effort`. Use the strongest model for judgment, synthesis, and prose, and a faster one for broad mechanical work. Omit `model` to run on the session model.
+- On Claude Code, `Agent` takes `model` (`opus`, `sonnet`, `haiku`, or `fable`) and `effort`. Use the strongest model for judgment, synthesis, and prose, and a faster one for broad mechanical work. Omit `model` to use the model in the agent's definition, then `CLAUDE_CODE_SUBAGENT_MODEL`, then the session model.
+- When the user pins subagents to one model (`CLAUDE_CODE_SUBAGENT_MODEL` with `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`, or a hook that denies other models), every worker runs on it and a `model` you pass is ignored or refused. Do not retry with another model; give a weaker worker a narrower brief and a check it can run instead.
 - A Claude Code session has only Claude models. When a skill asks for another family, use a different Claude model or a fresh context on the same model, and say in the reply that cross-family diversity was not available.
 - On a host that offers several families, pick across them as the skill asks. When the host rejects a model, use its default and say so.
 - A user rule that names models per role overrides these defaults.
