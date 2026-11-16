@@ -36,7 +36,7 @@ Some skills ask for different models, such as runners from more than one model f
 ## Read-only and isolated workers
 
 - A read-only worker gets a brief that says "do not edit files". On Claude Code use `subagent_type: "Explore"` when it needs no MCP tools, and check `git status` after it returns either way.
-- A worker that writes gets its own worktree, branch, or scratch directory, per `principle-separate-before-serializing-shared-state`. Name the exact SHA it starts from.
+- A worker that writes gets its own worktree, branch, or scratch directory, per [`principle-separate-before-serializing-shared-state`](../../principle-separate-before-serializing-shared-state/SKILL.md). Name the exact SHA it starts from.
 - Copy uncommitted changes the worker must see into its worktree; a fresh worktree does not contain them.
 
 ## Briefs and results

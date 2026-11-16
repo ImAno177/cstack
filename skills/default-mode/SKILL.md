@@ -21,7 +21,7 @@ Use for multi-step engineering that needs a workflow when no narrower installed 
 - Read-only explanation -> `how` or `why`.
 - Defect with a reproducible symptom -> `principle-fix-root-causes`, then the narrow implementation skill; add `tdd` when a cheap local test path exists.
 - New behavior or structural change -> `architect` when a boundary changes, then the implementation skill.
-- Novel design fork -> `principle-exhaust-design-space`, then prototype behavior through the available tools.
+- Novel design fork -> [`principle-exhaust-design-space`](../principle-exhaust-design-space/SKILL.md), then prototype behavior through the available tools.
 - Several independent workers -> `multi-agent-workflow`; same-task alternatives -> `arena`; coverage slices -> `swarm`.
 - Parallel, async, programmatic, or offline batch tool calls -> `tool-orchestration`.
 - Adversarial review -> `interrogate`; one change -> `change-review`; whole repository -> `repo-audit`; threat model or secrets -> `security-audit`; what a small change breaks elsewhere -> `blast-radius`.
