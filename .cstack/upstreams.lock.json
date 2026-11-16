@@ -61,8 +61,8 @@
       "ref": "main",
       "path": "skills/colab-operator",
       "destination": "skills/colab-operator",
-      "commit": "6045e34cd9b50319ab92e38e200ceaf411d8b96c",
-      "sha256": "e75e0291f514093ac4a5de4ff7647e4619f566da06378248541b9adc5b5a8b2f"
+      "commit": "02d2321c38dd215b7804eebf78b61d98b856bcd3",
+      "sha256": "d94c0fbece018cd92e591a0212f59c548b052ca36be9a68f4f46a7747b6b7440"
     },
     {
       "name": "durable-objects",
@@ -88,7 +88,7 @@
       "ref": "main",
       "path": "skills",
       "destination": "skills/kaggle-cli",
-      "commit": "fdc788faffe3f29ae317480325c44080a00a5434",
+      "commit": "e3583ad834dc4237e25c876507f9de2bb241a14f",
       "sha256": "92ec2fcc3d0b9a5ad6456eac92b03be9ff5cfaf5f33c7f03418ec382695eb219"
     },
     {
