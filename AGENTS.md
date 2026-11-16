@@ -15,6 +15,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 - Use every skill the user names; report any that is missing.
 - Load a skill only when it clearly owns the task, and a supporting skill only for a concrete need. Load no other workflow unless the task or an applicable policy requires it.
 - Scan the installed skill list before each phase of non-trivial work and open the skill that owns that phase before acting, not after: `change-review` to review a diff, commit, branch, or PR; `tdd` to fix a reproducible bug that has a cheap local test path or when the user asks for it; `default-mode` to build a non-trivial feature or a new project that no narrower skill owns; `security-audit` for threat or secret questions; `conventional-commit` to write a commit message; `create-pr` to open a pull request; `principle-prove-it-works` before declaring done.
+- Open the `if-u-are-<model>` skill for the exact model your harness names you as, once, before non-trivial work: `if-u-are-fable-5-2`, `if-u-are-opus-5-5`, `if-u-are-haiku-5-5`, `if-u-are-gpt-6-astra`, `if-u-are-gpt-6-1-sol`, `if-u-are-gpt-5-6-luna`. Open none when no name matches; never open another model's.
 - Follow the output format of an opened skill exactly, including its first line, location format, and closing lines.
 - Name the skill you used in your reply whenever a skill shaped the work.
 

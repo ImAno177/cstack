@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.7.0
+
+- Add six model-specific skills, each loaded only by the model it names: `if-u-are-fable-5-2`, `if-u-are-opus-5-5`, `if-u-are-haiku-5-5`, `if-u-are-gpt-6-astra`, `if-u-are-gpt-6-1-sol`, and `if-u-are-gpt-5-6-luna`. Each pairs a behavior the vendor documented for that model with the correction, and links its sources. The Sol and Luna skills say where the vendor publishes only family-level guidance.
+- `AGENTS.md` tells an agent to open the skill for its exact model once before non-trivial work.
+- The `verifier`, `researcher`, and `implementer` agents, which run on Haiku, preload `if-u-are-haiku-5-5`.
+- Not measured: whether these skills change task outcomes. Run the protocol in `docs/skill-effect-benchmark.md` per model before relying on them.
+
 ## 0.6.0
 
 Changes from a review against the Claude Code, Codex, and Grok Build documentation and pstack's shipping playbook as of 2026-11-16.
