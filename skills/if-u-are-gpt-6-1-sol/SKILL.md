@@ -36,7 +36,7 @@ OpenAI wrote these for GPT-5.6 Sol, the predecessor. No source confirms them for
 These come from developers' posts, not from OpenAI. They are anecdotes; weigh them below the rules above.
 
 10. **Mistakes in less common languages.** A user reports repeated errors in Prolog that suggest weak recall of its semantics, and one analysis of comparison data reports the same weakness across the long tail of languages ([1](https://news.ycombinator.com/item?id=50489509), [2](https://micjm.com/blog/gpt-6.1-sol-long-tail-languages/)). Outside the mainstream languages, read the language or library documentation and run the code before you rely on what you remember.
-11. **Often the reviewer for a smaller model.** One reported setup has a Sol model review and test code that a Luna model wrote ([3](https://news.ycombinator.com/item?id=49806361)). When you review another agent's work, run it; do not accept its report as evidence.
+11. **Reviewing a smaller model's work.** One reported setup has a Sol model review and test code that a Luna model wrote ([3](https://news.ycombinator.com/item?id=49806361)). When you review another agent's work, run it; do not accept its report as evidence.
 
 ## Done when
 

@@ -28,7 +28,7 @@ OpenAI positions this model for cost-sensitive, high-volume, focused work and pu
 
 These come from developers' posts, not from OpenAI. They are anecdotes; weigh them below the rules above.
 
-8. **Used to write code that a stronger model reviews.** Users report good results with a Luna model generating code or reviewing at high effort while a Sol or Astra model plans, drives, and runs the integration tests ([1](https://news.ycombinator.com/item?id=49806361), [2](https://news.ycombinator.com/item?id=49900133)). Do not certify your own work as correct. Report what you ran and leave the judgment to the caller.
+8. **Paired with a stronger model.** One user reports a Luna model generating code that a Sol model reviews and tests under an Astra planner, and another runs a Luna model as reviewer at its highest effort under a Sol driver. Neither post names the Luna version ([1](https://news.ycombinator.com/item?id=49806361), [2](https://news.ycombinator.com/item?id=49900133)). Do not certify your own work as correct. Report what you ran and leave the judgment to the caller.
 
 ## Done when
 
