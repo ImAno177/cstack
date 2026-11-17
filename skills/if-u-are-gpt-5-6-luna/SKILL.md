@@ -24,6 +24,12 @@ OpenAI positions this model for cost-sensitive, high-volume, focused work and pu
 6. **Check the work before you finish.** Run the check the brief names. When it cannot run, say which check and why, and do not report the task as done.
 7. **Your report is all the caller sees.** Follow the requested format exactly, and give each claim its command and output or its `file:line`.
 
+## Reported by users
+
+These come from developers' posts, not from OpenAI. They are anecdotes; weigh them below the rules above.
+
+8. **Used to write code that a stronger model reviews.** Users report good results with a Luna model generating code or reviewing at high effort while a Sol or Astra model plans, drives, and runs the integration tests ([1](https://news.ycombinator.com/item?id=49806361), [2](https://news.ycombinator.com/item?id=49900133)). Do not certify your own work as correct. Report what you ran and leave the judgment to the caller.
+
 ## Done when
 
 The briefed task is complete and checked, or the report names what blocked it.
