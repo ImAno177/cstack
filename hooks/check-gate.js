@@ -43,9 +43,16 @@ function editedFiles(input) {
   return files.filter((f) => codeExt.test(f) && inProject(f, input));
 }
 
+const readers = /^(git|cat|less|more|head|tail|type|echo|printf|rg|grep|findstr|select-string|find|ls|dir|sed|awk|wc|diff|code|vim?|nano|open|start)$/i;
+
 function exercises(cmd, files) {
   const unquoted = cmd.replace(/"[^"]*"|'[^']*'/g, '""');
-  if (checkCommand.test(unquoted)) return true;
+  const segments = unquoted.split(/\r?\n|&&|\|\||;|\|/);
+  const ran = segments.some((seg) => {
+    const first = (seg.trim().split(/\s+/)[0] || '').replace(/^.*[\\/]/, '').replace(/\.exe$/i, '');
+    return first && !readers.test(first) && checkCommand.test(seg);
+  });
+  if (ran) return true;
   return files.some((f) => {
     const name = path.basename(f);
     const at = cmd.indexOf(name);

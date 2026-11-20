@@ -10,7 +10,7 @@ const pinLimit = 2000;
 function capped(text, file) {
   if (text.length <= pinLimit) return text;
   const cut = text.lastIndexOf('\n', pinLimit);
-  const kept = text.slice(0, cut > 0 ? cut : 0);
+  const kept = cut > 0 ? text.slice(0, cut) : Array.from(text.slice(0, pinLimit + 1)).slice(0, -1).join('');
   return `${kept}\n(${text.length - kept.length} more characters in ${file} were not loaded; keep the file under ${pinLimit} characters.)`;
 }
 

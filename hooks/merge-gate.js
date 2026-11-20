@@ -30,17 +30,45 @@ function check(sha, how) {
 }
 
 function shaIn(text, flag) {
-  const m = String(text).match(new RegExp(`${flag}["']?(?:\\s+|=|:)\\s*["']?([0-9a-fA-F]{40})\\b`));
-  return m ? m[1].toLowerCase() : null;
+  const values = [...String(text).matchAll(new RegExp(`${flag}(?:\\s+|=|:)\\s*([0-9a-fA-F]{7,64})?`, 'g'))].map((m) =>
+    (m[1] || '').toLowerCase()
+  );
+  if (values.length !== 1) return { sha: null, many: values.length > 1 };
+  return { sha: /^[0-9a-f]{40}$/.test(values[0]) ? values[0] : null, many: false };
 }
 
-function shellReason(cmd) {
+const wrapperBefore = /(?:\s-c|\s-command|\s-encodedcommand|\s-e)\s*$/i;
+
+function normalize(cmd) {
+  let out = '';
+  let last = 0;
+  for (const m of cmd.matchAll(/"([^"]*)"|'([^']*)'/g)) {
+    const content = m[1] !== undefined ? m[1] : m[2];
+    const before = cmd.slice(last, m.index);
+    out += before;
+    if (/(^|[\\/])gh(\.exe)?$/i.test(content.trim())) out += 'gh';
+    else if (/^(--?[\w-]+|[0-9a-fA-F]{7,64}|\d+)$/.test(content.trim())) out += content.trim();
+    else if (wrapperBefore.test(out)) out += ` ${normalize(content)} `;
+    else out += '""';
+    last = m.index + m[0].length;
+  }
+  return out + cmd.slice(last);
+}
+
+function shellReason(raw) {
+  const cmd = normalize(raw);
   const merge = cmd.match(ghMerge);
   if (merge && !/(^|\s)(--help|-h)(\s|$)/.test(merge[1])) {
-    return check(shaIn(merge[1], '--match-head-commit'), 'merging');
+    const found = shaIn(merge[1], '--match-head-commit');
+    if (found.many) return 'name --match-head-commit exactly once, with the SHA the verifier checked.';
+    return check(found.sha, 'merging');
   }
   const api = cmd.match(apiMerge);
-  if (api) return check(shaIn(cmd, '\\bsha'), 'merging through the API');
+  if (api) {
+    const found = shaIn(cmd, '\\bsha');
+    if (found.many) return 'name the sha parameter exactly once, with the SHA the verifier checked.';
+    return check(found.sha, 'merging through the API');
+  }
   return null;
 }
 

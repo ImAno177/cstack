@@ -255,6 +255,17 @@ class HookTests(unittest.TestCase):
         ok = self.run_hook("merge-gate.js", {"tool_name": "mcp__github__merge_pull_request", "tool_input": {"pullNumber": 5, "sha": SHA}})
         self.assertEqual(ok.returncode, 0)
 
+    def test_merge_gate_ignores_quoted_text_and_rejects_two_shas(self):
+        bash = lambda cmd: self.run_hook("merge-gate.js", {"tool_name": "Bash", "tool_input": {"command": cmd}})
+        for cmd in ['git commit -m "gh pr merge 5 is next"', "echo 'gh pr merge 5 --squash'", "gh pr view 5", "gh pr checkout 5"]:
+            self.assertEqual(bash(cmd).returncode, 0, cmd)
+        self.handback(f"Head: {SHA}\nVERDICT: PASS")
+        two = bash(f"gh pr merge 5 --match-head-commit {SHA} --match-head-commit {OTHER}")
+        self.assertEqual(two.returncode, 2)
+        self.assertIn("exactly once", two.stderr)
+        self.assertEqual(bash(f"gh pr merge 5 --squash --match-head-commit {SHA}; echo done").returncode, 0)
+        self.assertEqual(bash(f"pwsh -Command \"gh pr merge 5 --squash\"").returncode, 2)
+
     def test_merge_gate_blocks_env_var_paths_to_verdicts(self):
         cmd = f'echo x > "$CLAUDE_PLUGIN_DATA/verdicts/{SHA}.json"'
         self.assertEqual(self.run_hook("merge-gate.js", {"tool_name": "Bash", "tool_input": {"command": cmd}}).returncode, 2)
@@ -267,7 +278,7 @@ class HookTests(unittest.TestCase):
         return code
 
     def test_check_gate_ignores_commands_that_do_not_exercise_code(self):
-        for cmd in ["git diff app.py", "git add app.py", "cat app.py", 'git commit -m "make validate notes"', "echo validate", "make -n"]:
+        for cmd in ["git diff app.py", "git add app.py", "cat app.py", 'git commit -m "make validate notes"', "echo validate", "make -n", "grep -n pytest notes.txt"]:
             self.assertEqual(self.run_after_edit(cmd), 2, cmd)
         for cmd in ["python app.py", "python scripts/validate_plugin.py --root .", "make test"]:
             self.assertEqual(self.run_after_edit(cmd), 0, cmd)
@@ -315,6 +326,10 @@ class HookTests(unittest.TestCase):
         self.assertIn("project rule ZZZ", text)
         self.assertIn("were not loaded", text)
         text.encode("utf-8")
+        (self.home / ".claude" / "pinned-rules.md").write_text("- one long global rule " + "x" * 2300, encoding="utf-8")
+        long_line = self.context(self.run_hook("standing-rules.js", {"hook_event_name": "SessionStart", "source": "startup"}))
+        self.assertIn("one long global rule", long_line)
+        self.assertIn("were not loaded", long_line)
         for value in ["0", "-1", "1", "2.5", "abc", ""]:
             prompt = {"hook_event_name": "UserPromptSubmit", "session_id": f"cad{value}", "cwd": str(self.project)}
             fired = [bool(self.context(self.run_hook("standing-rules.js", prompt, CSTACK_REMIND_EVERY=value))) for _ in range(8)]
