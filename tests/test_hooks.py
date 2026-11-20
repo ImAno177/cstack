@@ -257,7 +257,13 @@ class HookTests(unittest.TestCase):
 
     def test_merge_gate_ignores_quoted_text_and_rejects_two_shas(self):
         bash = lambda cmd: self.run_hook("merge-gate.js", {"tool_name": "Bash", "tool_input": {"command": cmd}})
-        for cmd in ['git commit -m "gh pr merge 5 is next"', "echo 'gh pr merge 5 --squash'", "gh pr view 5", "gh pr checkout 5"]:
+        for cmd in [
+            'git commit -m "gh pr merge 5 is next"',
+            'git commit -m "run gh pr merge 5 next time with env set"',
+            "echo 'gh pr merge 5 --squash'",
+            "gh pr view 5",
+            "gh pr checkout 5",
+        ]:
             self.assertEqual(bash(cmd).returncode, 0, cmd)
         self.handback(f"Head: {SHA}\nVERDICT: PASS")
         two = bash(f"gh pr merge 5 --match-head-commit {SHA} --match-head-commit {OTHER}")
@@ -265,6 +271,12 @@ class HookTests(unittest.TestCase):
         self.assertIn("exactly once", two.stderr)
         self.assertEqual(bash(f"gh pr merge 5 --squash --match-head-commit {SHA}; echo done").returncode, 0)
         self.assertEqual(bash(f"pwsh -Command \"gh pr merge 5 --squash\"").returncode, 2)
+        self.assertEqual(bash('bash -c "echo \\"hi\\" && gh pr merge 5 --squash"').returncode, 2)
+        self.assertEqual(bash(f'bash -c "echo \\"hi\\" && gh pr merge 5 --squash --match-head-commit {SHA}"').returncode, 0)
+        self.assertEqual(bash("cat <<EOF > notes.md\nnext: gh pr merge 5 --squash\nEOF").returncode, 0)
+        self.assertEqual(bash("cat > notes.md <<'EOF'\ngh pr merge 5\nEOF").returncode, 0)
+        self.assertEqual(bash("bash <<EOF\ngh pr merge 5 --squash\nEOF").returncode, 2)
+        self.assertEqual(bash('echo "$(gh pr merge 5)"').returncode, 2)
 
     def test_merge_gate_blocks_env_var_paths_to_verdicts(self):
         cmd = f'echo x > "$CLAUDE_PLUGIN_DATA/verdicts/{SHA}.json"'
