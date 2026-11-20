@@ -81,11 +81,11 @@ Instructions in a prompt are followed probabilistically and fade: prohibitions w
 | Hook | Events | What it does |
 | --- | --- | --- |
 | `model-skill` | SessionStart, SubagentStart, PostModelSwitch | Injects the `if-u-are-<model>` skill for the model the host reports, so the model does not have to find it. |
-| `standing-rules` | SessionStart, SubagentStart, UserPromptSubmit | Re-injects `hooks/standing-rules.md` after every compaction and every 8 prompts (`CSTACK_REMIND_EVERY`), and pinned rules from `.claude/pinned-rules.md` and `~/.claude/pinned-rules.md` (see the `pin-rule` skill). |
-| `check-gate` | PostToolUse, Stop, SubagentStop | Blocks a stop once when code files in the project changed and no test, build, type-check, or run of the changed code followed. |
-| `merge-gate` | PreToolUse | Blocks `gh pr merge` unless it names `--match-head-commit <sha>` and a verifier recorded `PASS` or `PASS+NOTES` for that SHA; blocks edits to the verdict records. |
-| `verdict-record` | PreToolUse, PostToolUse, SubagentStop | Records a subagent's `VERDICT:` line against the SHA it names; makes `cstack:verifier` include both. |
-| `usage-log` | SessionStart, SubagentStart, PostToolUse | Logs which skills were injected and opened. `python scripts/skill_usage_report.py` summarizes it. |
+| `standing-rules` | SessionStart, SubagentStart, UserPromptSubmit | Re-injects `hooks/standing-rules.md` after every compaction and every 8 prompts (`CSTACK_REMIND_EVERY`, an integer of 2 or more; other values fall back to 8), and pinned rules (up to 2,000 characters per file, cut at a line break with a note) from `.claude/pinned-rules.md` and `~/.claude/pinned-rules.md` (see the `pin-rule` skill). |
+| `check-gate` | PostToolUse, PostToolUseFailure, Stop, SubagentStop | Blocks a stop once when code files in the project changed and no test, build, type-check, or interpreter run of the changed file followed, or when the last such check failed. |
+| `merge-gate` | PreToolUse | Blocks `gh pr merge` and API or MCP merges unless they name the full head SHA and a verifier recorded `PASS` or `PASS+NOTES` for it; blocks edits to the verdict records. |
+| `verdict-record` | PreToolUse, PostToolUse, SubagentStop | Records a verifier's final `VERDICT:` line against the SHA on its `Head:` line. Only agents whose type is in `CSTACK_VERIFIER_AGENTS` (default `verifier`, which matches `cstack:verifier`) count, so an implementer cannot certify its own work. |
+| `usage-log` | SessionStart, SubagentStart, PostModelSwitch, PostToolUse | Logs which skills were injected and opened. `python scripts/skill_usage_report.py` summarizes it. |
 
 State and logs live in the plugin data directory (`~/.claude/plugins/data/cstack-cstack/` on Claude Code). Set `CSTACK_HOOKS=off` to turn every hook off, or `CSTACK_HOOKS_DISABLE=check-gate,merge-gate` to turn off named ones. The hooks need Node.js.
 

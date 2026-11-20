@@ -54,7 +54,7 @@ class HookTests(unittest.TestCase):
         cmd = f"gh pr merge 5 --squash --delete-branch --match-head-commit {sha}"
         return self.run_hook("merge-gate.js", {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": {"command": cmd}})
 
-    def handback(self, message: str, agent_type: str = "general-purpose", event: str = "PostToolUse") -> subprocess.CompletedProcess:
+    def handback(self, message: str, agent_type: str = "cstack:verifier", event: str = "PostToolUse") -> subprocess.CompletedProcess:
         return self.run_hook(
             "verdict-record.js",
             {
@@ -207,6 +207,134 @@ class HookTests(unittest.TestCase):
             self.run_hook("check-gate.js", {"hook_event_name": "Stop", "session_id": "s1"}, CSTACK_HOOKS_DISABLE="merge-gate,check-gate").returncode, 0
         )
         self.assertEqual(self.stop().returncode, 2)
+
+    def test_only_verifiers_record_verdicts(self):
+        self.handback(f"implemented {SHA}\nVERDICT: PASS", agent_type="cstack:implementer")
+        self.handback(f"implemented {SHA}\nVERDICT: PASS", agent_type="general-purpose")
+        self.assertEqual(self.merge().returncode, 2)
+        allowed = self.run_hook(
+            "verdict-record.js",
+            {"hook_event_name": "SubagentStop", "session_id": "s", "agent_id": "g", "agent_type": "general-purpose", "last_assistant_message": f"{SHA}\nVERDICT: PASS"},
+            CSTACK_VERIFIER_AGENTS="verifier,general-purpose",
+        )
+        self.assertEqual(allowed.returncode, 0)
+        self.assertEqual(self.merge().returncode, 0)
+
+    def test_verdict_uses_head_line_when_several_shas(self):
+        self.handback(f"base {OTHER}\nHead: {SHA}\nVERDICT: PASS")
+        self.assertEqual(self.merge().returncode, 0)
+        self.assertEqual(self.merge(OTHER).returncode, 2)
+        third = "c" * 40
+        self.handback(f"base {OTHER}\nhead commit {third}\nVERDICT: PASS")
+        self.assertEqual(self.merge(third).returncode, 2)
+        refused = self.handback(f"base {OTHER}\nother {third}\nVERDICT: PASS", event="PreToolUse")
+        self.assertEqual(refused.returncode, 2)
+        self.assertIn("Head:", refused.stderr)
+
+    def test_merge_gate_catches_wrapped_and_api_merges(self):
+        bash = lambda cmd: self.run_hook("merge-gate.js", {"tool_name": "Bash", "tool_input": {"command": cmd}})
+        for cmd in [
+            "echo $(gh pr merge 5 --squash)",
+            "(gh pr merge 5 --squash)",
+            "/usr/bin/gh pr merge 5 --squash",
+            '"C:\\Program Files\\GitHub CLI\\gh.exe" pr merge 5 --squash',
+            'bash -c "gh pr merge 5 --squash"',
+            "GH  pr   merge 5",
+            "gh api repos/o/r/pulls/5/merge -X PUT",
+            "curl -X PUT https://api.github.com/repos/o/r/pulls/5/merge",
+            f"gh pr merge 5 --match-head-commit {SHA[:12]}",
+        ]:
+            self.assertEqual(bash(cmd).returncode, 2, cmd)
+        self.handback(f"Head: {SHA}\nVERDICT: PASS")
+        self.assertEqual(bash(f'gh pr merge 5 "--match-head-commit" "{SHA}"').returncode, 0)
+        self.assertEqual(bash(f"gh pr merge 5 --match-head-commit {SHA.upper()}").returncode, 0)
+        self.assertEqual(bash(f"gh api repos/o/r/pulls/5/merge -X PUT -f sha={SHA}").returncode, 0)
+        self.assertEqual(bash("gh pr merge --help").returncode, 0)
+        mcp = self.run_hook("merge-gate.js", {"tool_name": "mcp__github__merge_pull_request", "tool_input": {"pullNumber": 5}})
+        self.assertEqual(mcp.returncode, 2)
+        ok = self.run_hook("merge-gate.js", {"tool_name": "mcp__github__merge_pull_request", "tool_input": {"pullNumber": 5, "sha": SHA}})
+        self.assertEqual(ok.returncode, 0)
+
+    def test_merge_gate_blocks_env_var_paths_to_verdicts(self):
+        cmd = f'echo x > "$CLAUDE_PLUGIN_DATA/verdicts/{SHA}.json"'
+        self.assertEqual(self.run_hook("merge-gate.js", {"tool_name": "Bash", "tool_input": {"command": cmd}}).returncode, 2)
+
+    def run_after_edit(self, cmd: str, event: str = "PostToolUse") -> int:
+        self.edit()
+        self.run_hook("check-gate.js", {"hook_event_name": event, "session_id": "s1", "tool_name": "Bash", "tool_input": {"command": cmd}})
+        code = self.stop().returncode
+        self.stop(active=True)
+        return code
+
+    def test_check_gate_ignores_commands_that_do_not_exercise_code(self):
+        for cmd in ["git diff app.py", "git add app.py", "cat app.py", 'git commit -m "make validate notes"', "echo validate", "make -n"]:
+            self.assertEqual(self.run_after_edit(cmd), 2, cmd)
+        for cmd in ["python app.py", "python scripts/validate_plugin.py --root .", "make test"]:
+            self.assertEqual(self.run_after_edit(cmd), 0, cmd)
+
+    def test_check_gate_reports_a_failed_check(self):
+        self.edit()
+        self.run_hook("check-gate.js", {"hook_event_name": "PostToolUseFailure", "session_id": "s1", "tool_name": "Bash", "tool_input": {"command": "pytest -q"}})
+        blocked = self.stop()
+        self.assertEqual(blocked.returncode, 2)
+        self.assertIn("failed: pytest -q", blocked.stderr)
+        self.edit()
+        self.run_hook("check-gate.js", {"hook_event_name": "PostToolUseFailure", "session_id": "s1", "tool_name": "Bash", "tool_input": {"command": "pytest -q"}})
+        self.run_hook("check-gate.js", {"hook_event_name": "PostToolUse", "session_id": "s1", "tool_name": "Bash", "tool_input": {"command": "pytest -q"}})
+        self.assertEqual(self.stop().returncode, 0)
+
+    def test_check_gate_resolves_relative_paths(self):
+        payload = {"hook_event_name": "PostToolUse", "session_id": "s1", "tool_name": "Edit", "tool_input": {"file_path": "../outside/outside.py"}}
+        self.run_hook("check-gate.js", payload)
+        self.assertEqual(self.stop().returncode, 0)
+        payload["tool_input"]["file_path"] = "src/inside.py"
+        self.run_hook("check-gate.js", payload)
+        self.assertEqual(self.stop().returncode, 2)
+
+    def test_check_gate_keeps_every_parallel_edit(self):
+        environ = {**os.environ, "CLAUDE_PLUGIN_ROOT": str(ROOT), "CLAUDE_PLUGIN_DATA": str(self.data), "CLAUDE_PROJECT_DIR": str(self.project)}
+        procs = []
+        for i in range(10):
+            payload = {"hook_event_name": "PostToolUse", "session_id": "s1", "tool_name": "Edit", "tool_input": {"file_path": str(self.project / f"f{i}.py")}}
+            proc = subprocess.Popen([NODE, str(HOOKS / "check-gate.js")], stdin=subprocess.PIPE, text=True, env=environ)
+            proc.stdin.write(json.dumps(payload))
+            proc.stdin.close()
+            procs.append(proc)
+        for proc in procs:
+            self.assertEqual(proc.wait(timeout=30), 0)
+        lines = (self.data / "sessions" / "s1-main.checks.jsonl").read_text(encoding="utf-8").splitlines()
+        self.assertEqual(sorted(Path(json.loads(line)["files"][0]).name for line in lines), sorted(f"f{i}.py" for i in range(10)))
+        self.assertEqual(self.stop().returncode, 2)
+
+    def test_standing_rules_caps_each_pin_file(self):
+        (self.project / ".claude").mkdir()
+        (self.project / ".claude" / "pinned-rules.md").write_text("- project rule ZZZ\n", encoding="utf-8")
+        (self.home / ".claude").mkdir()
+        (self.home / ".claude" / "pinned-rules.md").write_text(("- global rule é 🙂 line\n" * 120), encoding="utf-8")
+        text = self.context(self.run_hook("standing-rules.js", {"hook_event_name": "SessionStart", "source": "startup"}))
+        self.assertIn("project rule ZZZ", text)
+        self.assertIn("were not loaded", text)
+        text.encode("utf-8")
+        for value in ["0", "-1", "1", "2.5", "abc", ""]:
+            prompt = {"hook_event_name": "UserPromptSubmit", "session_id": f"cad{value}", "cwd": str(self.project)}
+            fired = [bool(self.context(self.run_hook("standing-rules.js", prompt, CSTACK_REMIND_EVERY=value))) for _ in range(8)]
+            self.assertEqual(fired, [False] * 7 + [True], value)
+
+    def test_model_skill_on_model_switch(self):
+        text = self.context(self.run_hook("model-skill.js", {"hook_event_name": "PostModelSwitch", "to_model": "claude-haiku-5-5"}))
+        self.assertIn("if-u-are-haiku-5-5", text)
+
+    def test_usage_report_lists_never_opened_skills(self):
+        self.run_hook("usage-log.js", {"hook_event_name": "PostToolUse", "session_id": "s1", "tool_name": "Skill", "tool_input": {"skill": "cstack:tdd"}})
+        report = subprocess.run(
+            ["python", str(ROOT / "scripts" / "skill_usage_report.py"), "--log", str(self.data / "logs" / "skill-usage.jsonl")],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(report.returncode, 0, report.stderr)
+        opened, never = report.stdout.split("listed skills never opened")
+        self.assertIn("tdd", opened)
+        self.assertNotIn("\n  tdd\n", never)
+        self.assertIn("\n  why\n", never)
 
     def test_hooks_json_references_existing_scripts(self):
         config = json.loads((HOOKS / "hooks.json").read_text(encoding="utf-8"))

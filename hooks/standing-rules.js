@@ -3,8 +3,16 @@ const os = require('os');
 const path = require('path');
 const { pluginRoot, run, sessionState, writeJson } = require('./lib');
 
-const every = Math.max(2, parseInt(process.env.CSTACK_REMIND_EVERY || '8', 10) || 8);
+const requested = Number(process.env.CSTACK_REMIND_EVERY);
+const every = Number.isInteger(requested) && requested >= 2 ? requested : 8;
 const pinLimit = 2000;
+
+function capped(text, file) {
+  if (text.length <= pinLimit) return text;
+  const cut = text.lastIndexOf('\n', pinLimit);
+  const kept = text.slice(0, cut > 0 ? cut : 0);
+  return `${kept}\n(${text.length - kept.length} more characters in ${file} were not loaded; keep the file under ${pinLimit} characters.)`;
+}
 
 function read(file) {
   try {
@@ -16,12 +24,9 @@ function read(file) {
 
 function pins(input) {
   const project = process.env.CLAUDE_PROJECT_DIR || input.cwd || process.cwd();
-  const parts = [
-    read(path.join(os.homedir(), '.claude', 'pinned-rules.md')),
-    read(path.join(project, '.claude', 'pinned-rules.md'))
-  ].filter(Boolean);
-  const text = parts.join('\n').slice(0, pinLimit);
-  return text ? `Pinned rules the user asked to keep for this work:\n${text}` : '';
+  const files = [path.join(project, '.claude', 'pinned-rules.md'), path.join(os.homedir(), '.claude', 'pinned-rules.md')];
+  const parts = files.map((f) => [f, read(f)]).filter(([, t]) => t).map(([f, t]) => capped(t, f));
+  return parts.length ? `Pinned rules the user asked to keep for this work:\n${parts.join('\n')}` : '';
 }
 
 function rules() {

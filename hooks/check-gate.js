@@ -1,5 +1,6 @@
+const fs = require('fs');
 const path = require('path');
-const { run, sessionState, writeJson, shellCommand } = require('./lib');
+const { dataDir, run, shellCommand } = require('./lib');
 
 const codeExt = /\.(c|cc|cpp|cs|cjs|cts|dart|ex|exs|go|gradle|h|hpp|java|js|jsx|kt|kts|lua|m|mjs|mts|php|ps1|py|rb|rs|scala|sh|svelte|swift|ts|tsx|vue|zig)$/i;
 
@@ -9,21 +10,27 @@ const checkCommand = new RegExp(
     '\\b(jest|vitest|mocha|ava|playwright|cypress|eslint|biome|tsc)\\b',
     '\\b(npm|pnpm|yarn|bun)\\s+(test|t|run\\s+\\S+|build|lint|typecheck|check)\\b',
     '\\bnode\\s+--test\\b',
-    '\\b(deno)\\s+(test|check|lint)\\b',
+    '\\bdeno\\s+(test|check|lint)\\b',
     '\\bgo\\s+(test|build|vet)\\b',
     '\\bcargo\\s+(test|build|check|clippy|nextest)\\b',
-    '\\b(gradlew?|mvnw?|make|ctest|bazel|buck2?|xcodebuild|phpunit|rspec|rake)\\b',
+    '\\b(gradlew?|mvnw?|ctest|bazel|buck2?|xcodebuild|phpunit|rspec|rake)\\b',
+    '\\bmake\\b(?![^\\n]*\\s(-n|--dry-run|--just-print)\\b)',
     '\\bcmake\\s+--build\\b',
     '\\b(dotnet|swift)\\s+(test|build)\\b',
-    '\\bvalidate[_-]?\\w*'
+    '\\bvalidate[_-]\\w+\\.(py|js|mjs|ts|sh|ps1)\\b'
   ].join('|'),
   'i'
 );
 
+const interpreter = /\b(python3?|py|node|bun|deno\s+run|ruby|go\s+run|bash|sh|pwsh|powershell|php|perl|rscript|dotnet\s+run|java)\b/i;
+
+function project(input) {
+  return process.env.CLAUDE_PROJECT_DIR || input.cwd || process.cwd();
+}
+
 function inProject(file, input) {
-  const project = process.env.CLAUDE_PROJECT_DIR || input.cwd;
-  if (!project || !path.isAbsolute(file)) return true;
-  const rel = path.relative(path.resolve(project), path.resolve(file));
+  const root = path.resolve(project(input));
+  const rel = path.relative(root, path.resolve(root, file));
   return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
 }
 
@@ -36,41 +43,95 @@ function editedFiles(input) {
   return files.filter((f) => codeExt.test(f) && inProject(f, input));
 }
 
-function exercisesEdit(cmd, files) {
-  if (checkCommand.test(cmd)) return true;
+function exercises(cmd, files) {
+  const unquoted = cmd.replace(/"[^"]*"|'[^']*'/g, '""');
+  if (checkCommand.test(unquoted)) return true;
   return files.some((f) => {
     const name = path.basename(f);
-    return name.length > 3 && cmd.includes(name);
+    const at = cmd.indexOf(name);
+    return at > 0 && interpreter.test(cmd.slice(0, at)) && !/^\s*(git|cat|less|head|tail|type|echo|rg|grep)\b/i.test(cmd);
   });
+}
+
+function logFile(input) {
+  const key = `${input.session_id || 'nosession'}-${input.agent_id || 'main'}`.replace(/[^A-Za-z0-9_-]/g, '_').slice(0, 160);
+  return path.join(dataDir, 'sessions', `${key}.checks.jsonl`);
+}
+
+function append(file, record) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.appendFileSync(file, JSON.stringify(record) + '\n');
+}
+
+function events(file) {
+  try {
+    return fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => {
+      try {
+        return JSON.parse(l);
+      } catch (e) {
+        return {};
+      }
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+function status(list) {
+  let lastEdit = -1;
+  list.forEach((e, i) => {
+    if (e.t === 'edit') lastEdit = i;
+  });
+  if (lastEdit < 0) return null;
+  const after = list.slice(lastEdit + 1);
+  if (after.some((e) => e.t === 'blocked')) return null;
+  const checks = after.filter((e) => e.t === 'check');
+  const last = checks[checks.length - 1];
+  if (last && last.ok) return null;
+  let start = lastEdit;
+  for (let i = lastEdit; i >= 0; i--) {
+    if (list[i].t === 'check' && list[i].ok) break;
+    start = i;
+  }
+  const files = [...new Set(list.slice(start, lastEdit + 1).filter((e) => e.t === 'edit').flatMap((e) => e.files))];
+  return { files, failed: last ? last.cmd : null };
 }
 
 run('check-gate', (input) => {
   const event = input.hook_event_name;
-  const { file, state } = sessionState(input, 'checks');
-  const files = state.files || [];
+  const file = logFile(input);
 
   if (event === 'PostToolUse' || event === 'PostToolUseFailure') {
     const edited = editedFiles(input);
     if (edited.length) {
-      const next = { ...state, seq: (state.seq || 0) + 1, dirty: true, files: [...new Set([...files, ...edited])].slice(-20) };
-      writeJson(file, next);
+      append(file, { t: 'edit', files: edited });
       return null;
     }
     const cmd = shellCommand(input);
-    if (cmd && state.dirty && exercisesEdit(cmd, files)) {
-      writeJson(file, { ...state, dirty: false, files: [], lastCheck: cmd.slice(0, 200), lastCheckFailed: event === 'PostToolUseFailure' });
+    const list = events(file);
+    const pending = status(list);
+    if (cmd && pending && exercises(cmd, pending.files)) {
+      append(file, { t: 'check', ok: event === 'PostToolUse', cmd: cmd.slice(0, 200) });
     }
     return null;
   }
 
   if (event === 'Stop' || event === 'SubagentStop') {
     if (input.stop_hook_active) return null;
-    if (!state.dirty || state.blockedSeq === state.seq) return null;
-    writeJson(file, { ...state, blockedSeq: state.seq });
-    const list = files.slice(0, 5).map((f) => path.basename(f)).join(', ');
+    const pending = status(events(file));
+    if (!pending) return null;
+    append(file, { t: 'blocked' });
+    const names = pending.files.slice(0, 8).map((f) => path.basename(f)).join(', ');
+    if (pending.failed) {
+      return {
+        block:
+          `the last check after your edits to ${names} failed: ${pending.failed}. ` +
+          `Fix the cause and run it again, or report the failure and what you tried in your reply; this hook will not stop you again for these edits.`
+      };
+    }
     return {
       block:
-        `you changed ${list} and no test, build, type-check, or run of the changed code followed. ` +
+        `you changed ${names} and no test, build, type-check, or run of the changed code followed. ` +
         `Run the project's check that exercises this change and report its result. ` +
         `If no check can run here, say which one and why in your reply; this hook will not stop you again for these edits.`
     };
