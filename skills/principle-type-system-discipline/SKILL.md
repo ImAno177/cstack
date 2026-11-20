@@ -10,6 +10,8 @@ disable-model-invocation: true
 
 Make the compiler reject impossible states, mismatched primitives, and unhandled variants. Prefer defining errors and special cases out of existence over proliferating handlers. For TypeScript syntax, see the `typescript-best-practices` skill.
 
+- **Make illegal states unrepresentable.** Model variants as a tagged union or enum with per-variant data, not a bag of optional fields and booleans that can disagree. A value that cannot be constructed needs no runtime guard.
+- **Exhaust variants.** Switch over every variant with no catch-all default, so adding a variant fails the build at each place that must handle it.
 - **Brand semantic primitives.** `UserId` and `OrderId` are strings underneath but should not be interchangeable. Give each its own type, such as a branded intersection in TypeScript or a newtype elsewhere. Validate once at creation, trust the type downstream. If two arguments share a primitive type but mean different things, brand them.
 - **External data is untyped until parsed.** RPC payloads, JSON, IPC messages, CLI args, config files, environment variables, database rows. Have a parse function at every boundary that turns unstructured input into the typed model. [`principle-boundary-discipline`](../principle-boundary-discipline/SKILL.md) says where to put validation.
 - **Derive types from authoritative schemas.** When a protocol buffer, OpenAPI spec, GraphQL schema, database migration, design-token file, or another file owns a shape, derive from it instead of hand-rolling a parallel type. See [`principle-encode-lessons-in-structure`](../principle-encode-lessons-in-structure/SKILL.md).

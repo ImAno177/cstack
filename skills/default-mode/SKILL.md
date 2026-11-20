@@ -17,7 +17,7 @@ Use for multi-step engineering that needs a workflow when no narrower installed 
 ## Route
 
 - Select one matching playbook under [playbooks](playbooks/) before executing a non-trivial workflow. Read only that playbook and the skills it names.
-- `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill; `opening-a-pr.md` ends any playbook that changes a repository; `babysit.md` drives an open PR to merge-ready; `shipping.md` lands verified PRs.
+- `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `hillclimb.md` loops one metric toward a target; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill; `opening-a-pr.md` ends any playbook that changes a repository; `babysit.md` drives an open PR to merge-ready; `shipping.md` lands verified PRs.
 - Read-only explanation -> `how` or `why`.
 - Defect with a reproducible symptom -> `principle-fix-root-causes`, then the narrow implementation skill; add `tdd` when a cheap local test path exists.
 - New behavior or structural change -> `architect` when a boundary changes, then the implementation skill.

@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from validate_skill_stack import validate_overlap_groups
+from validate_skill_stack import validate_frontmatter, validate_overlap_groups
 
 
 class OverlapGroupTests(unittest.TestCase):
@@ -40,6 +40,32 @@ class OverlapGroupTests(unittest.TestCase):
         errors = self.check([["ghost", "a"], ["solo"]], {"a": "ghost"})
         self.assertIn("overlap group names unknown skill: ghost", errors)
         self.assertIn("invalid overlap group: ['solo']", errors)
+
+
+class FrontmatterTests(unittest.TestCase):
+    ALLOWED = {"name", "description", "compatibility"}
+
+    def check(self, metadata):
+        errors: list[str] = []
+        validate_frontmatter(metadata, Path("skills/x/SKILL.md"), self.ALLOWED, errors)
+        return errors
+
+    def test_allowed_keys_pass(self):
+        self.assertEqual(self.check({"name": "x", "description": "d", "compatibility": "needs gh"}), [])
+
+    def test_unknown_key_reported(self):
+        self.assertEqual(
+            self.check({"name": "x", "description": "d", "class": "workflow"}),
+            ["unsupported frontmatter key in skills/x/SKILL.md: class"],
+        )
+
+    def test_long_description_reported(self):
+        self.assertEqual(len(self.check({"name": "x", "description": "d" * 1025})), 1)
+        self.assertEqual(self.check({"name": "x", "description": "d" * 1024}), [])
+
+    def test_long_or_non_string_compatibility_reported(self):
+        self.assertEqual(len(self.check({"name": "x", "description": "d", "compatibility": "c" * 501})), 1)
+        self.assertEqual(len(self.check({"name": "x", "description": "d", "compatibility": ["a"]})), 1)
 
 
 if __name__ == "__main__":

@@ -10,6 +10,8 @@ import yaml
 
 LINK_PATTERN = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+MAX_DESCRIPTION_CHARS = 1024
+MAX_COMPATIBILITY_CHARS = 500
 
 
 def skill_dirs(root: Path, excluded: set[str]) -> list[Path]:
@@ -55,6 +57,17 @@ def link_check_excluded(path: Path, source_root: Path, prefixes: list[str]) -> b
     )
 
 
+def validate_frontmatter(metadata: dict, entrypoint: Path, allowed_keys: set[str], errors: list[str]) -> None:
+    for key in sorted(set(metadata) - allowed_keys):
+        errors.append(f"unsupported frontmatter key in {entrypoint}: {key}")
+    description = metadata.get("description")
+    if isinstance(description, str) and len(description) > MAX_DESCRIPTION_CHARS:
+        errors.append(f"description exceeds {MAX_DESCRIPTION_CHARS} characters: {entrypoint}")
+    compatibility = metadata.get("compatibility")
+    if compatibility is not None and (not isinstance(compatibility, str) or len(compatibility) > MAX_COMPATIBILITY_CHARS):
+        errors.append(f"compatibility must be a string of at most {MAX_COMPATIBILITY_CHARS} characters: {entrypoint}")
+
+
 def validate_overlap_groups(groups: list, descriptions: dict[str, str], errors: list[str]) -> None:
     for group in groups:
         if not isinstance(group, list) or len(group) < 2:
@@ -86,6 +99,7 @@ def main() -> int:
         for prefix in policy.get("link_exclude_prefixes", [])
     ]
     max_entry_lines = int(policy.get("max_entry_lines", 160))
+    allowed_keys = set(policy.get("allowed_frontmatter_keys", []))
     errors: list[str] = []
     upstreams_path = args.upstreams or (args.source_root / ".cstack" / "upstreams.json")
     upstreams = {}
@@ -119,6 +133,8 @@ def main() -> int:
             catalog.add(name)
             if isinstance(description, str):
                 descriptions[name] = description
+        if allowed_keys and entrypoint.resolve() not in managed_entrypoints:
+            validate_frontmatter(metadata, entrypoint, allowed_keys, errors)
         if entrypoint.resolve() not in managed_entrypoints and len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
             errors.append(f"entrypoint exceeds {max_entry_lines} lines: {entrypoint}")
         for artifact in skill.rglob("*"):

@@ -21,6 +21,9 @@
    python scripts/validate_plugin.py --root .
    python scripts/validate_skill_stack.py --source-root . --plugin-root . --policy .cstack/skill-policy.json
    python scripts/generate_grok_plugin_index.py --check
+   python -m unittest discover -s tests -p 'test_*.py'
+   python scripts/sync_upstream_skills.py --check
+   claude plugin validate .   # when Claude Code is installed
    ```
 
 4. Update `CHANGELOG.md` and release notes. Verify marketplace install instructions on the target host before claiming platform compatibility; declared support alone does not prove native skill discovery.
@@ -32,4 +35,4 @@
 - Grok: `.grok-plugin/plugin.json`, `.grok-plugin/marketplace.json`, generated `.grok-plugin/plugin-index.json`
 - Claude Code: `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 
-No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; there is no router skill. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.
+No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; there is no router skill. See [routing benchmark](routing-benchmark.md). CI does not test host installation or skill discovery. Maintainers verify both on each real client before claiming support.

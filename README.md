@@ -7,7 +7,7 @@ Portable cstack plugin for ChatGPT, Codex, Grok Build, Grok Bot, and Claude Code
 The repository root is the canonical, installable plugin.
 
 ```text
-skills/                         canonical skills, with platform groups where useful
+skills/                         canonical skills, one directory per skill
 .codex-plugin/                  Codex manifest
 .grok-plugin/                   Grok manifest, marketplace, and index
 .claude-plugin/                 Claude Code manifest and marketplace
@@ -79,7 +79,7 @@ All examples describe the intended host integration; verify installation and nat
 
 ## Routing evaluation
 
-Use the [37-case routing benchmark](docs/routing-benchmark.md) to compare task success, selected skills, tokens, and latency. No model performance improvements are claimed without real repeated runs.
+Use the [59-case routing benchmark](docs/routing-benchmark.md) to compare task success, selected skills, tokens, and latency. No model performance improvements are claimed without real repeated runs.
 
 ## Reproduction benchmark
 

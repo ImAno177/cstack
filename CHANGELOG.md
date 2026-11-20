@@ -1,6 +1,18 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
+
+Changes from a best-practice review against Claude Code skill and subagent docs, the Agent Skills authoring guide, and the upstream pstack source.
+
+- Add the missing `skills/android-testing-setup/LICENSE.txt` that the skill's frontmatter names. Add a provenance table and the MIT notice for the adapted skills to `THIRD_PARTY_NOTICES.md`.
+- Complete the truncated bodies of `principle-encode-lessons-in-structure`, `principle-guard-the-context-window`, `principle-migrate-callers-then-delete-legacy-apis`, and `principle-type-system-discipline`, and restore the defaults of `principle-subtract-before-add`.
+- Add `default-mode/playbooks/hillclimb.md` for sustained metric improvement. `benchmark-checklist` now points at `perf-issue.md` and `hillclimb.md` by path instead of by a playbook name that did not exist.
+- Remove the non-standard `class` key from `md-docs` and move `source` under `metadata` in `scientific-slides`.
+- `validate_skill_stack.py` rejects frontmatter keys outside `allowed_frontmatter_keys`, descriptions over 1024 characters, and `compatibility` over 500 characters.
+- `validate_plugin.py` checks each `agents/*.md` (name, description, model) and the plugin version in every marketplace entry.
+- Add 22 routing cases for owned, model-invoked skills that no case named (59 in total).
+- Run `verifier` and `implementer` on Sonnet. The merge gate needs judgment; Haiku remains on `researcher`, which is read-only.
+- Fix stale docs: the README layout line, the routing case count, the release checklist (unit tests, upstream check, `claude plugin validate`), and the untested host-discovery claim.
 
 ## 0.6.0
 

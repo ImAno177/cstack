@@ -7,6 +7,28 @@
     "Cursor's built-in"
   ],
   "max_entry_lines": 160,
+  "allowed_frontmatter_keys": [
+    "name",
+    "description",
+    "when_to_use",
+    "argument-hint",
+    "arguments",
+    "disable-model-invocation",
+    "user-invocable",
+    "allowed-tools",
+    "disallowed-tools",
+    "model",
+    "effort",
+    "context",
+    "agent",
+    "background",
+    "hooks",
+    "paths",
+    "shell",
+    "license",
+    "compatibility",
+    "metadata"
+  ],
   "link_exclude_prefixes": [
     "skills/agents-sdk/",
     "skills/cf-cli/",

@@ -39,6 +39,8 @@ Skills listed in `.cstack/upstreams.json` are copied from their upstream reposit
 - Entrypoints stay within `max_entry_lines` in `.cstack/skill-policy.json`.
 - Skills in an `overlap_groups` entry name each other in their descriptions.
 - Skill files must not contain the host-specific markers listed in the policy.
+- Frontmatter keys must appear in `allowed_frontmatter_keys` in `.cstack/skill-policy.json`. `description` is at most 1024 characters and `compatibility` at most 500.
+- Each `agents/*.md` has `name` matching its file name, a `description`, and a `model` that is `inherit`, a Claude Code alias, or a full `claude-*` model ID.
 - Internal links must resolve.
 
 Write descriptions that say when to use the skill, and when not to, in concrete terms.

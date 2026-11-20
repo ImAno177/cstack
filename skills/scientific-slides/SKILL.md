@@ -1,6 +1,5 @@
 ---
 name: scientific-slides
-source: https://github.com/K-Dense-AI/claude-scientific-skills/tree/a1043ef544e3a100c28e70a736b6cf32554d0677/skills/scientific-slides
 description: >
   Use when building or reviewing research/scientific slide decks (conference talks,
   seminars, defenses) — minimal text, one idea per slide, visual hierarchy,
@@ -17,6 +16,7 @@ metadata:
   version: "1.12"
   last-reviewed: "2026-10-01"
   skill-author: K-Dense Inc.
+  source: https://github.com/K-Dense-AI/claude-scientific-skills/tree/a1043ef544e3a100c28e70a736b6cf32554d0677/skills/scientific-slides
 ---
 
 # Scientific Slides

@@ -58,6 +58,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+## Other adapted skills
+
+These skills are not managed by the upstream sync. Each one started from the source below. The status column records what was checked against the source text in May-November 2026 (similarity is a character-level ratio from `difflib`; 1.0 is identical).
+
+| Local entry | Source | License | Copyright | Status |
+| --- | --- | --- | --- | --- |
+| `skills/conventional-commit`, `skills/create-pr` | [marcelorodrigo/agent-skills](https://github.com/marcelorodrigo/agent-skills) | MIT | Copyright (c) 2026 Marcelo Rodrigo | Adapted; text differs from source |
+| `skills/find-skills` | [vercel-labs/skills](https://github.com/vercel-labs/skills/tree/main/skills/find-skills) | MIT | Copyright (c) 2026 Vercel, Inc. | Adapted; text differs from source |
+| `skills/peft-lora-qlora` | [Orchestra-Research/AI-research-SKILLs](https://github.com/Orchestra-Research/AI-research-SKILLs/tree/main/03-fine-tuning/peft) | MIT | Copyright (c) 2025 Claude AI Research Skills Contributors | Adapted; `references/troubleshooting.md` is a near-verbatim copy (similarity 0.99) |
+| `skills/bitsandbytes-quantization` | [Orchestra-Research/AI-research-SKILLs](https://github.com/Orchestra-Research/AI-research-SKILLs/tree/main/10-optimization/bitsandbytes) | MIT | Copyright (c) 2025 Claude AI Research Skills Contributors | Adapted; `references/memory-optimization.md` is identical to source |
+| `skills/scientific-slides`, `skills/scientific-visualization` | [K-Dense-AI/claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills) | MIT | Copyright (c) 2025 K-Dense Inc. | Adapted; `scientific-visualization/references/publication_guidelines.md` is identical to source |
+| `skills/write-kaggle-benchmarks` | [Kaggle/kaggle-skills](https://github.com/Kaggle/kaggle-skills/tree/main/write-kaggle-benchmarks) | Apache-2.0 | Kaggle (see `licenses/Apache-2.0.txt`) | `references/full-guide.md` is a near-verbatim copy of the upstream SKILL.md (similarity 0.98) |
+| `skills/android-testing-setup` | [android/skills](https://github.com/android/skills/tree/main/testing/testing-setup) | Apache-2.0 (`skills/android-testing-setup/LICENSE.txt`) | Google LLC (per the skill's metadata) | Adapted; text differs from source (similarity 0.80) |
+| `skills/frontend-design` | [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/frontend-design) | Apache-2.0 (`skills/frontend-design/LICENSE.txt`) | Anthropic, PBC | Adapted; text differs from source |
+| `skills/prompt-audit` | [anthropics/skills, claude-api/shared/prompt-audit.md](https://github.com/anthropics/skills/blob/main/skills/claude-api/shared/prompt-audit.md) | Apache-2.0 | Anthropic, PBC | Rewritten for cstack; the upstream guidance is cited in the skill (similarity 0.05) |
+
+### MIT license text for the adapted MIT skills
+
+The four MIT sources above share one permission notice. Their copyright lines are listed first:
+
+```text
+Copyright (c) 2026 Marcelo Rodrigo
+Copyright (c) 2026 Vercel, Inc.
+Copyright (c) 2025 Claude AI Research Skills Contributors
+Copyright (c) 2025 K-Dense Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notices and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
 ## Upstream-synced skills
 
 Managed sources from `.cstack/upstreams.json`, copied verbatim by `scripts/sync_upstream_skills.py`:

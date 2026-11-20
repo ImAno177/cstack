@@ -224,6 +224,138 @@
       "prompt": "What does the research say about LoRA rank versus accuracy for 7B models? Cite the papers.",
       "primary": "literature-review",
       "allowed_support": []
+    },
+    {
+      "id": "android-testing",
+      "prompt": "Set up a testing strategy for my native Android app with unit, UI, and screenshot tests.",
+      "primary": "android-testing-setup",
+      "allowed_support": []
+    },
+    {
+      "id": "design-before-build",
+      "prompt": "Design the module boundaries and core types before I build a new sync service that spans two packages.",
+      "primary": "architect",
+      "allowed_support": []
+    },
+    {
+      "id": "vet-speedup",
+      "prompt": "I measured a 20% speedup on the export path. Check the numbers before I report it.",
+      "primary": "benchmark-checklist",
+      "allowed_support": []
+    },
+    {
+      "id": "write-commit-message",
+      "prompt": "Write the commit message for my staged change that fixes the null-user crash.",
+      "primary": "conventional-commit",
+      "allowed_support": []
+    },
+    {
+      "id": "model-check-race",
+      "prompt": "Model-check the lock handoff race in our queue worker and prove the invariant holds.",
+      "primary": "create-formal-verification-skill",
+      "allowed_support": []
+    },
+    {
+      "id": "open-pr",
+      "prompt": "Open a pull request for this branch with a proper title and body.",
+      "primary": "create-pr",
+      "allowed_support": []
+    },
+    {
+      "id": "find-skill",
+      "prompt": "Is there an installable skill that helps debug Kubernetes cluster networking?",
+      "primary": "find-skills",
+      "allowed_support": []
+    },
+    {
+      "id": "design-landing-page",
+      "prompt": "Design a distinctive landing page for my bakery's new product line.",
+      "primary": "frontend-design",
+      "allowed_support": []
+    },
+    {
+      "id": "maintain-tla-model",
+      "prompt": "Our TLA+ model was written before the refactor. Check whether it still describes the code and rerun it.",
+      "primary": "maintain-formal-verification-skill",
+      "allowed_support": []
+    },
+    {
+      "id": "maintain-feature-map",
+      "prompt": "Our project's verification skill feature map is stale after the new settings screen. Update it.",
+      "primary": "maintain-verification-skill",
+      "allowed_support": []
+    },
+    {
+      "id": "trace-state-bug",
+      "prompt": "The dashboard total is wrong after reload. Find the first place the state went wrong and fix it there.",
+      "primary": "principle-fix-root-causes",
+      "allowed_support": []
+    },
+    {
+      "id": "prove-cli-change",
+      "prompt": "Before you say this CLI change is done, run it with empty, oversized, and non-ASCII input and show the output.",
+      "primary": "principle-prove-it-works",
+      "allowed_support": []
+    },
+    {
+      "id": "defense-deck",
+      "prompt": "Build a 15-minute thesis defense deck from my results, with one idea per slide.",
+      "primary": "scientific-slides",
+      "allowed_support": []
+    },
+    {
+      "id": "list-shortcuts",
+      "prompt": "List every shortcut comment in this repo and flag the ones with no upgrade trigger.",
+      "primary": "shortcut-debt",
+      "allowed_support": []
+    },
+    {
+      "id": "audit-trail",
+      "prompt": "This migration runs unattended overnight. Keep a decision log a reviewer can audit afterward.",
+      "primary": "show-me-your-work",
+      "allowed_support": []
+    },
+    {
+      "id": "payment-statechart",
+      "prompt": "Draw the payment flow as a statechart and show the shortest path from my TLA+ spec to the double-charge bug.",
+      "primary": "statechart",
+      "allowed_support": []
+    },
+    {
+      "id": "explain-cache",
+      "prompt": "Help me really understand how our cache invalidation works before I touch it.",
+      "primary": "teach",
+      "allowed_support": []
+    },
+    {
+      "id": "rewrite-readme-section",
+      "prompt": "Rewrite this README section so each sentence is short and states one instruction.",
+      "primary": "technical-writing",
+      "allowed_support": []
+    },
+    {
+      "id": "parallel-lookups",
+      "prompt": "I have 40 independent lookups and two steps that depend on earlier results. Decide what runs in parallel.",
+      "primary": "tool-orchestration",
+      "allowed_support": []
+    },
+    {
+      "id": "ts-union-review",
+      "prompt": "Review the discriminated union types in this .ts file and replace the optional-field bag.",
+      "primary": "typescript-best-practices",
+      "allowed_support": []
+    },
+    {
+      "id": "remove-ai-tone",
+      "prompt": "Remove the AI-sounding filler from this PR description before I post it.",
+      "primary": "unslop",
+      "allowed_support": []
+    },
+    {
+      "id": "kaggle-benchmark-task",
+      "prompt": "Write a Kaggle benchmark task that checks an LLM's arithmetic, then push it.",
+      "primary": "write-kaggle-benchmarks",
+      "allowed_support": []
     }
   ]
 }

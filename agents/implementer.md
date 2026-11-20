@@ -1,7 +1,7 @@
 ---
 name: implementer
 description: Implements one scoped change on a new branch, runs the repository's checks, and opens a pull request. Give it the goal, the files in scope, and the check that proves the change works. It never merges. Use for a bounded implementation task the session has scoped.
-model: haiku
+model: sonnet
 tools: Read, Edit, Write, Grep, Glob, Bash
 ---
 

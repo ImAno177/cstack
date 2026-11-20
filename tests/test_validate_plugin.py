@@ -67,3 +67,42 @@ class ClaudeDiscoveryTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class AgentValidationTests(unittest.TestCase):
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self._tmp.name)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def agent(self, stem: str, frontmatter: str) -> Path:
+        path = self.dir / f'{stem}.md'
+        path.write_text(f'---\n{frontmatter}\n---\nbody\n', encoding='utf-8')
+        return path
+
+    def test_valid_agent_returns_name(self):
+        path = self.agent('verifier', 'name: verifier\ndescription: checks\nmodel: inherit\ntools: Read, Bash')
+        self.assertEqual(validate.validate_agent(path), 'verifier')
+
+    def test_full_model_id_is_accepted(self):
+        validate.validate_agent(self.agent('a', 'name: a\ndescription: d\nmodel: claude-opus-5-5'))
+
+    def test_name_must_match_file(self):
+        with self.assertRaises(ValueError):
+            validate.validate_agent(self.agent('verifier', 'name: other\ndescription: checks'))
+
+    def test_missing_description_is_rejected(self):
+        with self.assertRaises(ValueError):
+            validate.validate_agent(self.agent('a', 'name: a'))
+
+    def test_unknown_model_is_rejected(self):
+        with self.assertRaises(ValueError):
+            validate.validate_agent(self.agent('a', 'name: a\ndescription: d\nmodel: gpt'))
+
+    def test_missing_frontmatter_is_rejected(self):
+        path = self.dir / 'a.md'
+        path.write_text('no frontmatter\n', encoding='utf-8')
+        with self.assertRaises(ValueError):
+            validate.validate_agent(path)

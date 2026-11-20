@@ -12,7 +12,10 @@ NAME_PATTERN = re.compile(r'^[a-z0-9][a-z0-9-]{0,63}$')
 VERSION_PATTERN = re.compile(r'^\d+\.\d+\.\d+(?:[-+][A-Za-z0-9.-]+)?$')
 
 
-def validate_skill(path: Path) -> str:
+AGENT_MODELS = {'inherit', 'haiku', 'sonnet', 'opus', 'fable'}
+
+
+def read_frontmatter(path: Path) -> dict:
     text = path.read_text(encoding='utf-8')
     if not text.startswith('---\n'):
         raise ValueError(f'missing frontmatter: {path}')
@@ -22,6 +25,28 @@ def validate_skill(path: Path) -> str:
     frontmatter = yaml.safe_load(text[4:end])
     if not isinstance(frontmatter, dict):
         raise ValueError(f'frontmatter is not a mapping: {path}')
+    return frontmatter
+
+
+def validate_agent(path: Path) -> str:
+    frontmatter = read_frontmatter(path)
+    name = frontmatter.get('name')
+    if not isinstance(name, str) or not NAME_PATTERN.fullmatch(name) or name != path.stem:
+        raise ValueError(f'agent name must be kebab-case and match its file name: {path}')
+    description = frontmatter.get('description')
+    if not isinstance(description, str) or not description.strip():
+        raise ValueError(f'invalid agent description: {path}')
+    model = frontmatter.get('model')
+    if model is not None and model not in AGENT_MODELS and not (isinstance(model, str) and model.startswith('claude-')):
+        raise ValueError(f'unsupported agent model {model!r}: {path}')
+    tools = frontmatter.get('tools')
+    if tools is not None and not isinstance(tools, (str, list)):
+        raise ValueError(f'agent tools must be a string or a list: {path}')
+    return name
+
+
+def validate_skill(path: Path) -> str:
+    frontmatter = read_frontmatter(path)
     name = frontmatter.get('name')
     description = frontmatter.get('description')
     if not isinstance(name, str) or not NAME_PATTERN.fullmatch(name):
@@ -84,6 +109,9 @@ def main() -> int:
         manifest = load_json(root / relative)
         if not isinstance(manifest, dict) or not isinstance(manifest.get('plugins'), list):
             raise ValueError(f'invalid marketplace: {relative}')
+        for entry in manifest['plugins']:
+            if isinstance(entry, dict) and entry.get('name') == package['name'] and entry.get('version', version) != version:
+                raise ValueError(f'inconsistent plugin version in {relative}')
 
     claude_path = root / '.claude-plugin/marketplace.json'
     claude = load_json(claude_path)
@@ -103,7 +131,10 @@ def main() -> int:
         seen.add(name)
         if entry.parent.resolve() not in claude_skill_dirs:
             raise ValueError(f'skill not discoverable by Claude Code; list its group in .claude-plugin/plugin.json "skills": {entry.relative_to(root)}')
-    print(f'validated plugin {package["name"]} {version} with {len(seen)} skills')
+    agents = [validate_agent(entry) for entry in sorted((root / 'agents').glob('*.md'))]
+    if len(agents) != len(set(agents)):
+        raise ValueError('duplicate agent name')
+    print(f'validated plugin {package["name"]} {version} with {len(seen)} skills and {len(agents)} agents')
     return 0
 
 

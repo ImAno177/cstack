@@ -35,12 +35,12 @@ For a quick ballpark the user asked for, one run is enough. Still check question
 - Lead with the verdict: faster, slower, no measurable difference, or inconclusive.
 - Give the number with its unit, the run count, the range, the limiter, and the error and work counts.
 - Call the verdict inconclusive when you cannot name the limiter, a side ran untuned, or you could not check questions 4 and 7. Name the gap.
-- Keep a PR body to one primary number, per the **Opening a PR** playbook. Put the runs, range, and limiter evidence in a linked artifact or notes file.
+- Keep a PR body to one primary number, per `default-mode`'s `opening-a-pr.md` playbook. Put the runs, range, and limiter evidence in a linked artifact or notes file.
 
 ## Other perf material
 
-- Vet the **Perf issue** playbook's baseline before the playbook plans from it, and every number after that.
-- Vet the **Hillclimb** playbook's harness before it is frozen. The frozen harness then prints error and work counts, so each keep-or-revert checks questions 4 and 7 for free.
+- Vet the baseline of `default-mode`'s `perf-issue.md` playbook before the playbook plans from it, and every number after that.
+- Vet the harness of `default-mode`'s `hillclimb.md` playbook before it is frozen. The frozen harness then prints error and work counts, so each keep-or-revert checks questions 4 and 7 for free.
 
 ## Done when
 
