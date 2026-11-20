@@ -277,6 +277,24 @@ class HookTests(unittest.TestCase):
         self.assertEqual(bash("cat > notes.md <<'EOF'\ngh pr merge 5\nEOF").returncode, 0)
         self.assertEqual(bash("bash <<EOF\ngh pr merge 5 --squash\nEOF").returncode, 2)
         self.assertEqual(bash("cat <<EOF | bash\ngh pr merge 5 --squash\nEOF").returncode, 2)
+        for cmd in [
+            "bash -s <<EOF\ngh pr merge 5 --squash\nEOF",
+            "node -e \"require('child_process').execSync('gh pr merge 5 --squash')\"",
+            "python -c \"import os; os.system('gh pr merge 5')\"",
+            "xargs -I{} gh pr merge {}",
+            "cmd /c gh pr merge 5",
+            "ruby -e 'system(\"gh pr merge 5\")'",
+            "echo $(gh pr merge 5)",
+            "git commit -m \"$(gh pr merge 5)\"",
+        ]:
+            self.assertEqual(bash(cmd).returncode, 2, cmd)
+        for cmd in [
+            'git commit -m "fix: gh pr merge race"',
+            "printf '%s' \"gh pr merge 5\"",
+            "gh pr comment 5 --body 'run gh pr merge 5 after review'",
+            "cat > notes.md <<EOF\ngh pr merge 5\nEOF",
+        ]:
+            self.assertEqual(bash(cmd).returncode, 0, cmd)
         self.assertEqual(bash('echo "$(gh pr merge 5)"').returncode, 2)
 
     def test_merge_gate_blocks_env_var_paths_to_verdicts(self):

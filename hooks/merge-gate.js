@@ -55,27 +55,29 @@ function normalize(cmd) {
   return out + cmd.slice(last);
 }
 
-const shellNames = /^(bash|sh|zsh|ksh|dash|fish|pwsh|powershell|cmd)(\.exe)?$/i;
-const executor = /(^|[\s;&|(])(bash|sh|zsh|ksh|dash|fish|pwsh|powershell|cmd|eval|exec|source|xargs|nohup|env|sudo|time)(\.exe)?(\s|$)|\s-c(\s|$)|-command\b|-encodedcommand\b/i;
-const substitution = /`|\$\(/;
+const dataOnlyCommands = new Set(['git', 'echo', 'printf', 'cat', 'tee', 'gh']);
 
-function dropHeredocData(cmd) {
-  if (/\|\s*(\S*[\\/])?(bash|sh|zsh|ksh|dash|fish|pwsh|powershell|cmd)(\.exe)?\b/i.test(cmd)) return cmd;
-  return cmd.replace(/(\S*)\s*<<-?\s*(['"]?)(\w+)\2[^\n]*\n([\s\S]*?)\n\s*\3\s*(?=\n|$)/g, (whole, consumer, q, marker, body) => {
-    const name = String(consumer).replace(/^.*[\\/]/, '');
-    return shellNames.test(name) ? whole : `${consumer} <<${marker}\n${marker}`;
-  });
+function withoutHeredocBodies(cmd) {
+  return cmd.replace(/<<-?\s*(['"]?)(\w+)\1([^\n]*)\n[\s\S]*?\n\s*\2\s*(?=\n|$)/g, '<<$2$3');
+}
+
+function onlyDataCommands(cmd) {
+  const unquoted = withoutHeredocBodies(cmd).replace(/"(?:[^"\\]|\\.)*"|'[^']*'/g, '""');
+  if (/`|\$\(|<\(/.test(unquoted) || /`|\$\(/.test(cmd.replace(/'[^']*'/g, "''"))) return false;
+  return unquoted
+    .split(/\r?\n|&&|\|\||;|\||&/)
+    .map((seg) => (seg.trim().split(/\s+/)[0] || '').replace(/^.*[\\/]/, '').replace(/\.exe$/i, '').toLowerCase())
+    .filter(Boolean)
+    .every((word) => dataOnlyCommands.has(word));
 }
 
 function shellReason(raw) {
-  const text = dropHeredocData(raw);
-  const cmd = normalize(text);
-  const literal = text.replace(/\\(["'])/g, '$1');
-  const unquoted = text.replace(/"(?:[^"\\]|\\.)*"|'[^']*'/g, '""');
-  if (!ghMerge.test(cmd) && ghMerge.test(literal) && (executor.test(unquoted) || substitution.test(literal))) {
-    const found = shaIn(literal, '--match-head-commit');
-    if (found.many) return 'name --match-head-commit exactly once, with the SHA the verifier checked.';
-    return check(found.sha, 'merging through a nested shell');
+  const cmd = normalize(withoutHeredocBodies(raw));
+  const literal = raw.replace(/\\(["'])/g, '$1');
+  if (!ghMerge.test(cmd) && (ghMerge.test(literal) || apiMerge.test(literal)) && !onlyDataCommands(raw)) {
+    const found = shaIn(literal, '(?:--match-head-commit|\\bsha)');
+    if (found.many) return 'name the head SHA exactly once, with the SHA the verifier checked.';
+    return check(found.sha, 'merging through another program');
   }
   const merge = cmd.match(ghMerge);
   if (merge && !/(^|\s)(--help|-h)(\s|$)/.test(merge[1])) {
