@@ -2,6 +2,8 @@
 name: researcher
 description: Read-only researcher for one question. It finds the answer in the repository, official documentation, and primary sources, and returns a compact report with cited sources. Use for investigation that must not change any file.
 model: haiku
+skills:
+  - if-u-are-haiku-5-5
 tools: Read, Grep, Glob, WebFetch, WebSearch
 ---
 

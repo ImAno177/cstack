@@ -67,7 +67,7 @@ claude plugin install cstack@cstack
 
 Skills load as `/cstack:<skill>`. Claude Code does not load instruction files from a plugin, so installing cstack does not apply `AGENTS.md`. To use the instructions in every project, add `@~/.claude/plugins/marketplaces/cstack/AGENTS.md` to `~/.claude/CLAUDE.md`. In this repository the root `CLAUDE.md` imports `AGENTS.md`.
 
-cstack lists about 70 skill descriptions. Claude Code gives the listing 1% of the context window and drops the descriptions of the least-used skills when it overflows, which removes the words a request is matched on. Raise the budget in `~/.claude/settings.json` with `"skillListingBudgetFraction": 0.03`, and run `/skill-doctor` to see which skills you never use. Codex has the same limit at 2% (`skills.max_context_tokens`).
+cstack lists about 75 skill descriptions. Claude Code gives the listing 1% of the context window and drops the descriptions of the least-used skills when it overflows, which removes the words a request is matched on. Raise the budget in `~/.claude/settings.json` with `"skillListingBudgetFraction": 0.03`, and run `/skill-doctor` to see which skills you never use. Codex has the same limit at 2% (`skills.max_context_tokens`).
 
 Grok Build also reads Claude Code marketplaces, plugins, skills, agents, and instruction files with no extra configuration.
 

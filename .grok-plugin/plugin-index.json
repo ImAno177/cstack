@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.6.0",
+      "version": "0.7.0",
       "components": {
         "skills": [
           {
@@ -128,6 +128,30 @@
           {
             "name": "how",
             "description": "Explain how a codebase or subsystem works at the level of a senior engineer onboarding onto it - architecture, runtime flow, where things live, and gotchas. Use for \"how does X work\", code walkthroughs before changing something, and placement or ownership questions (\"where should this live\", \"which package owns this\", \"is this the right layer\"). Not for motivation or history; use `why`."
+          },
+          {
+            "name": "if-u-are-fable-5-2",
+            "description": "Load once at the start of non-trivial work when your harness names you as Claude Fable 5.2 or Claude Mythos 5.2 (claude-fable-5-2). Corrects this model's documented habits. Not for any other model."
+          },
+          {
+            "name": "if-u-are-gpt-5-6-luna",
+            "description": "Load once at the start of a task when your harness names you as GPT-5.6 Luna (gpt-5.6-luna), including as a subagent. Applies OpenAI's GPT-5.6 guidance to the small tier. Not for any other model."
+          },
+          {
+            "name": "if-u-are-gpt-6-1-sol",
+            "description": "Load once at the start of non-trivial work when your harness names you as GPT-6.1 Sol (gpt-6.1-sol). Applies OpenAI's GPT-6 family guidance to this model. Not for any other model."
+          },
+          {
+            "name": "if-u-are-gpt-6-astra",
+            "description": "Load once at the start of non-trivial work when your harness names you as GPT-6 Astra (gpt-6-astra). Corrects this model's documented habits. Not for any other model."
+          },
+          {
+            "name": "if-u-are-haiku-5-5",
+            "description": "Load once at the start of a task when your harness names you as Claude Haiku 5.5 (claude-haiku-5-5), including as a subagent. Corrects this model's documented habits. Not for any other model."
+          },
+          {
+            "name": "if-u-are-opus-5-5",
+            "description": "Load once at the start of non-trivial work when your harness names you as Claude Opus 5.5 (claude-opus-5-5). Corrects this model's documented habits. Not for any other model."
           },
           {
             "name": "in-your-own-words",

@@ -2,6 +2,8 @@
 name: verifier
 description: Independent pre-merge verifier for one pull request. Give it the PR number, the head commit SHA, and what the change must do; it runs the change the way a user would, parent against head, and returns PASS, PASS+NOTES, or FAIL with evidence. Use before merging a PR the session authored.
 model: haiku
+skills:
+  - if-u-are-haiku-5-5
 tools: Read, Grep, Glob, Bash
 ---
 
