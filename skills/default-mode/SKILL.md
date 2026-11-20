@@ -18,6 +18,7 @@ Use for multi-step engineering that needs a workflow when no narrower installed 
 
 - Select one matching playbook under [playbooks](playbooks/) before executing a non-trivial workflow. Read only that playbook and the skills it names.
 - `investigation.md` is read-only research; `bug-fix.md` is for a reproduced defect; `feature.md` adds behavior; `refactoring.md` preserves behavior; `perf-issue.md` requires measurements; `prototype.md` settles one question; `eval.md` evaluates an agent and harness; `multi-phase-plan.md` stops at a plan; `authoring-a-skill.md` changes a skill; `opening-a-pr.md` ends any playbook that changes a repository; `babysit.md` drives an open PR to merge-ready; `shipping.md` lands verified PRs.
+- Additional playbooks: `hillclimb.md` for repeated metric improvement; `runtime-forensics.md` for live captures; `trace-forensics.md` for existing traces; `visual-parity.md` for screenshot equivalence; `session-pickup.md` for one prior run; `pause-safely.md` for a durable stop; `autonomous-run.md` for bounded continuation when the host supports it.
 - Read-only explanation -> `how` or `why`.
 - Defect with a reproducible symptom -> `principle-fix-root-causes`, then the narrow implementation skill; add `tdd` when a cheap local test path exists.
 - New behavior or structural change -> `architect` when a boundary changes, then the implementation skill.
@@ -27,7 +28,10 @@ Use for multi-step engineering that needs a workflow when no narrower installed 
 - Adversarial review -> `interrogate`; one change -> `change-review`; whole repository -> `repo-audit`; threat model or secrets -> `security-audit`; what a small change breaks elsewhere -> `blast-radius`.
 - Proving UI, CLI, or service behavior the way a user would -> `webapp-testing` for a web app now, `create-verification-skill` for a repeatable project harness.
 - Research question answered from papers -> `literature-review`.
-- Long or unattended run -> `agent-context`, `agent-completion`, and `show-me-your-work` when a reviewer needs the decisions.
+- Prior work across multiple conversations -> `recall`. Resume one known checkpoint, branch, or run -> `session-pickup.md`; do not duplicate completed work.
+- Live runtime diagnosis -> `runtime-forensics.md`; a supplied CPU profile, crash dump, or trace -> `trace-forensics.md`.
+- Sustained metric optimization with controlled repeated attempts -> `hillclimb.md`; visual rewrite with a reference UI -> `visual-parity.md`.
+- Long or unattended run -> `agent-context`, `agent-completion`, and `show-me-your-work` when a reviewer needs the decisions. Explicit pause -> `pause-safely.md`; authorized bounded continuation -> `autonomous-run.md` only with a real host wake mechanism.
 - Skill, rule, hook, or prompt change -> `prompt-audit`, then `continual-learning` when the change is meant to persist.
 - Agent loop, local model adapter, Pi package, or harness evaluation -> `agent-harness`.
 

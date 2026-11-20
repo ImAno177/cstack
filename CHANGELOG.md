@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.7.1
+
+- Review pstack 0.15.46 end to end: 58 skills, 22 playbooks, its agents, PR watcher, statechart scripts, and Benny automations. Document the reuse and exclusions in `docs/pstack-audit-2026-11-21.md`.
+- Add portable `recall` to reconstruct prior project work without reading unrelated workspaces.
+- Add seven default-mode playbooks: `session-pickup`, `pause-safely`, `hillclimb`, `runtime-forensics`, `trace-forensics`, `visual-parity`, and `autonomous-run`.
+- Add routing scenarios and regenerate the Grok skill index. Preserve native skill discovery and avoid Cursor-specific hooks and model slugs.
+
 ## 0.7.0
 
 - Add six model-specific skills, each loaded only by the model it names: `if-u-are-fable-5-2`, `if-u-are-opus-5-5`, `if-u-are-haiku-5-5`, `if-u-are-gpt-6-astra`, `if-u-are-gpt-6-1-sol`, and `if-u-are-gpt-5-6-luna`. Each pairs a behavior the vendor documented for that model with the correction, and links its sources. The Sol and Luna skills say where the vendor publishes only family-level guidance.

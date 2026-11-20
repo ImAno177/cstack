@@ -224,6 +224,40 @@
       "prompt": "What does the research say about LoRA rank versus accuracy for 7B models? Cite the papers.",
       "primary": "literature-review",
       "allowed_support": []
+    },
+    {
+      "id": "recall-cross-session",
+      "prompt": "Catch me up on the export feature from prior sessions, recent PRs, and reverted fixes; tell me where I left off.",
+      "primary": "recall",
+      "allowed_support": []
+    },
+    {
+      "id": "resume-one-run",
+      "prompt": "Take over yesterday's known feature branch and checkpoint, then continue only its unfinished work.",
+      "primary": "default-mode",
+      "allowed_support": [
+        "agent-context"
+      ]
+    },
+    {
+      "id": "bounded-hillclimb",
+      "prompt": "Improve this parser benchmark iteratively under a fixed budget; preserve baseline and one change per measurement.",
+      "primary": "default-mode",
+      "allowed_support": [
+        "benchmark-checklist"
+      ]
+    },
+    {
+      "id": "offline-trace",
+      "prompt": "Diagnose this existing CPU profile without rerunning the application or changing code.",
+      "primary": "default-mode",
+      "allowed_support": []
+    },
+    {
+      "id": "current-chat-recap",
+      "prompt": "Summarize what has changed in this chat since I last checked in.",
+      "primary": "ketchup",
+      "allowed_support": []
     }
   ]
 }
