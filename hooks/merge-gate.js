@@ -60,6 +60,7 @@ const executor = /(^|[\s;&|(])(bash|sh|zsh|ksh|dash|fish|pwsh|powershell|cmd|eva
 const substitution = /`|\$\(/;
 
 function dropHeredocData(cmd) {
+  if (/\|\s*(\S*[\\/])?(bash|sh|zsh|ksh|dash|fish|pwsh|powershell|cmd)(\.exe)?\b/i.test(cmd)) return cmd;
   return cmd.replace(/(\S*)\s*<<-?\s*(['"]?)(\w+)\2[^\n]*\n([\s\S]*?)\n\s*\3\s*(?=\n|$)/g, (whole, consumer, q, marker, body) => {
     const name = String(consumer).replace(/^.*[\\/]/, '');
     return shellNames.test(name) ? whole : `${consumer} <<${marker}\n${marker}`;

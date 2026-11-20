@@ -276,6 +276,7 @@ class HookTests(unittest.TestCase):
         self.assertEqual(bash("cat <<EOF > notes.md\nnext: gh pr merge 5 --squash\nEOF").returncode, 0)
         self.assertEqual(bash("cat > notes.md <<'EOF'\ngh pr merge 5\nEOF").returncode, 0)
         self.assertEqual(bash("bash <<EOF\ngh pr merge 5 --squash\nEOF").returncode, 2)
+        self.assertEqual(bash("cat <<EOF | bash\ngh pr merge 5 --squash\nEOF").returncode, 2)
         self.assertEqual(bash('echo "$(gh pr merge 5)"').returncode, 2)
 
     def test_merge_gate_blocks_env_var_paths_to_verdicts(self):
