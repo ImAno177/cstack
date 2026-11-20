@@ -12,6 +12,7 @@ skills/                         canonical skills, with platform groups where use
 .grok-plugin/                   Grok manifest, marketplace, and index
 .claude-plugin/                 Claude Code manifest and marketplace
 agents/                         Claude Code subagents (verifier, researcher, implementer)
+hooks/                          enforcement hooks (Claude Code, Codex, Grok Build)
 .cstack/                        routing policy, upstream manifest, and generated lock
 .agents/plugins/                Codex marketplace
 ```
@@ -71,7 +72,24 @@ cstack lists about 75 skill descriptions. Claude Code gives the listing 1% of th
 
 Grok Build also reads Claude Code marketplaces, plugins, skills, agents, and instruction files with no extra configuration.
 
-All examples describe the intended host integration; verify installation and native skill discovery on your specific client before reporting support as tested. cstack does not install or require any lifecycle hooks.
+All examples describe the intended host integration; verify installation and native skill discovery on your specific client before reporting support as tested.
+
+## Hooks
+
+Instructions in a prompt are followed probabilistically and fade: prohibitions weaken as a session grows ([arXiv 2604.20911](https://arxiv.org/abs/2604.20911), [arXiv 2605.10039](https://arxiv.org/abs/2605.10039)), and context compaction can drop rules entirely ([arXiv 2606.22528](https://arxiv.org/abs/2606.22528)). `hooks/hooks.json` loads with the plugin and backs the most important rules with code. Each block message says what to do next, because agents recover far more often from a denial that explains itself ([arXiv 2606.25189](https://arxiv.org/abs/2606.25189)).
+
+| Hook | Events | What it does |
+| --- | --- | --- |
+| `model-skill` | SessionStart, SubagentStart, PostModelSwitch | Injects the `if-u-are-<model>` skill for the model the host reports, so the model does not have to find it. |
+| `standing-rules` | SessionStart, SubagentStart, UserPromptSubmit | Re-injects `hooks/standing-rules.md` after every compaction and every 8 prompts (`CSTACK_REMIND_EVERY`), and pinned rules from `.claude/pinned-rules.md` and `~/.claude/pinned-rules.md` (see the `pin-rule` skill). |
+| `check-gate` | PostToolUse, Stop, SubagentStop | Blocks a stop once when code files in the project changed and no test, build, type-check, or run of the changed code followed. |
+| `merge-gate` | PreToolUse | Blocks `gh pr merge` unless it names `--match-head-commit <sha>` and a verifier recorded `PASS` or `PASS+NOTES` for that SHA; blocks edits to the verdict records. |
+| `verdict-record` | PreToolUse, PostToolUse, SubagentStop | Records a subagent's `VERDICT:` line against the SHA it names; makes `cstack:verifier` include both. |
+| `usage-log` | SessionStart, SubagentStart, PostToolUse | Logs which skills were injected and opened. `python scripts/skill_usage_report.py` summarizes it. |
+
+State and logs live in the plugin data directory (`~/.claude/plugins/data/cstack-cstack/` on Claude Code). Set `CSTACK_HOOKS=off` to turn every hook off, or `CSTACK_HOOKS_DISABLE=check-gate,merge-gate` to turn off named ones. The hooks need Node.js.
+
+Host support differs. Claude Code runs every hook. Codex loads plugin hooks only after you review and trust them in `/hooks`, and has no `PostModelSwitch`. Grok Build reads Claude Code plugin hooks but honors only blocking decisions, so context injection does not reach the model there. Hooks are a guardrail, not a sandbox: a command run from inside a script the agent wrote does not pass through them.
 
 ## Upstream synchronization
 
