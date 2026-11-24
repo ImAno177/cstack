@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.8.1
+
+- Review pstack 0.15.46 end to end: 58 skills, 22 playbooks, its agents, PR watcher, statechart scripts, and Benny automations. Document the reuse and exclusions in `docs/pstack-audit-2026-11-21.md`.
+- Add portable `recall` to reconstruct prior project work without reading unrelated workspaces.
+- Add seven default-mode playbooks: `session-pickup`, `pause-safely`, `hillclimb`, `runtime-forensics`, `trace-forensics`, `visual-parity`, and `autonomous-run`.
+- Add routing scenarios and regenerate the Grok skill index. Preserve native skill discovery and avoid Cursor-specific hooks and model slugs.
+
 ## 0.8.0
 
 Enforcement grounded in 2026 work on instruction decay and agent policy enforcement: prohibitions weaken with session length (arXiv 2604.20911, 2605.10039), compaction drops in-context rules and re-injecting them restores compliance (arXiv 2606.22528), and blocks that explain themselves are followed far more often than opaque ones (arXiv 2606.25189).

@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.8.0",
+      "version": "0.8.1",
       "components": {
         "skills": [
           {
@@ -300,6 +300,10 @@
           {
             "name": "prompt-audit",
             "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review`) or for writing a new skill from scratch (use `default-mode` and its authoring-a-skill playbook)."
+          },
+          {
+            "name": "recall",
+            "description": "Reconstruct recent work on a named project or topic from earlier agent sessions and shared repository records, including prior decisions, PRs, reversions, and next steps. Use for \"catch me up on X\", \"what have I been working on\", or \"where did I leave off\" across sessions. For only the current chat use ketchup; for resuming one exact branch or session use the session-pickup playbook."
           },
           {
             "name": "reflect",

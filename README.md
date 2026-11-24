@@ -19,6 +19,8 @@ hooks/                          enforcement hooks (Claude Code, Codex, Grok Buil
 
 Portable workflow control lives in `skills/default-mode/`. Its `SKILL.md` is the entrypoint; `playbooks/` contains short, task-shaped operating modes. `skills/agent-harness/` covers model loops and runtime boundaries. Every skill lives at `skills/<name>/SKILL.md`, the one-level layout that Claude Code, Codex, Cursor, Grok, and the Agent Skills ecosystem all scan, and hosts choose skills from their frontmatter descriptions. There is no router skill and no routing hook.
 
+Resume and diagnosis workflows: `skills/recall/` reconstructs prior work from scoped session and repository records. `default-mode/playbooks/` adds session pickup, safe pause, bounded autonomous runs, metric hillclimbing, live and offline forensics, and visual parity. Each is a task-specific playbook, not a new router. See [the pstack comparison](docs/pstack-audit-2026-11-21.md) for the 58-skill/22-playbook inventory and non-ports.
+
 Third-party skills (Cloudflare, Kaggle, Colab, Hugging Face) are copied verbatim from their upstream repositories by the entries in `.cstack/upstreams.json`; edit them upstream, not here. `validate_plugin.py` fails if any `SKILL.md` is nested deeper than `skills/<name>/`.
 
 ## Build and validate
