@@ -7,7 +7,7 @@ The repository root is the installable plugin. A skill is a portable capability;
 - A `default-mode` front door routes work through a small set of playbooks instead of making every workflow a top-level skill.
 - Conditional detail lives beside the entrypoint in `playbooks/` or `references/`, so normal work does not load every mode.
 - Documentation separates setup, routing, design, verification, and customization concerns.
-- Runtime behavior, if needed later, belongs to explicit host integrations; prose skills do not pretend to enforce lifecycle events.
+- Runtime behavior belongs to explicit host integrations; prose skills do not pretend to enforce lifecycle events. `hooks/` is that integration: deterministic Node.js scripts that inject the model's skill and pinned rules, re-inject rules after compaction, and gate stopping and merging. They decide in code, not with a model call, and every block message names the step that clears it. Hooks are a guardrail at the tool layer, not a sandbox; see the README for host support.
 
 ## What stays out of cstack
 
