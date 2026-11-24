@@ -1,0 +1,7 @@
+{
+  "paths": [
+    "./plugins/cstack/skills",
+    "./plugins/cstack-harness/skills",
+    "./plugins/cstack-research/skills"
+  ]
+}

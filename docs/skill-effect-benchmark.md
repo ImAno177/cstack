@@ -25,7 +25,7 @@ The routing benchmark (`docs/routing-benchmark.md`) checks which skill a descrip
 
 ## Exposure from the hooks
 
-`hooks/usage-log.js` records each skill the agent opens (through the Skill tool or a read of its `SKILL.md`) and each skill `hooks/model-skill.js` injects. `python scripts/skill_usage_report.py` prints both and the listed skills never opened. ACES scores the same thing as the activation check of its skill-execution metric: did the agent read the expected `SKILL.md` ([arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). A skill the agent never reads has no effect to measure.
+`plugins/cstack/hooks/usage-log.js` records each skill the agent opens (through the Skill tool or a read of its `SKILL.md`) and each skill `plugins/cstack/hooks/model-skill.js` injects. `python scripts/skill_usage_report.py` prints both and the listed skills never opened. ACES scores the same thing as the activation check of its skill-execution metric: did the agent read the expected `SKILL.md` ([arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). A skill the agent never reads has no effect to measure.
 
 ## What a result of this size can show
 

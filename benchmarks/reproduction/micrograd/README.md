@@ -11,8 +11,8 @@ and completion reliability, not merely skill-router classification.
 
 - **A / baseline:** Codex CLI without cstack skill files in the trial workspace.
 - **B / skills:** The same Codex CLI/model, with cstack's current skills copied into
-  the trial workspace under \`.agents/skills/\`. Nested platform groups are flattened
-  to top-level skill directories to support automatic discovery.
+  the trial workspace under \`.agents/skills/\`. The skills of every plugin under
+  \`plugins/\` are copied side by side so Codex discovers them.
 
 Both receive precisely the same task in [TASK.md](TASK.md), workspace permissions,
 and per-run timeout. Run the pair concurrently in separate directories. Repeat

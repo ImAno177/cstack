@@ -8,13 +8,37 @@
       "name": "cstack",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./plugins/cstack"
       },
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "cstack-harness",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cstack-harness"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "cstack-research",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cstack-research"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
     }
   ]
 }

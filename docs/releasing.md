@@ -1,35 +1,32 @@
-# Release and upstream update process
+# Release process
 
-## Updating managed upstream skills
+All plugins share one version, set in `.cstack/catalog.json`. Claude Code pins installed users to the version in each plugin's `.claude-plugin/plugin.json`, so users receive skill changes only after the version changes.
 
-- The weekly `sync-upstream-skills` workflow checks out upstream repositories and copies **only** destinations listed in `.cstack/upstreams.json`.
-- The updater rejects path traversal, overlapping destinations, and symlinks. Each replacement stages content first and retains the old tree for rollback.
-- A successful sync writes `.cstack/upstreams.lock.json`, recording each upstream's commit SHA, source coordinates, and SHA-256 digest of the vendored tree. The first successful run bootstraps the lockfile.
-- Run `python scripts/sync_upstream_skills.py --check` to compare vendored content with the lock **without network access** after the lock exists; before it exists, the command compares with live upstream branches.
-- The workflow creates a new `automation/upstream-sync-<run-id>` branch and a PR. It will not force-push or update `main`. If an earlier automation PR is open, the workflow skips creating another; review/close the previous PR before running again.
-- Review the diff, source SHA changes, and any new executable instructions or third-party licensing. Merge only after validation and independent review.
+## Checklist
 
-**Required GitHub setting:** The repository's Actions permissions must allow the workflow token to create pull requests. If GitHub returns `Resource not accessible by integration`, enable the applicable repository/organization Actions PR permission, or provide an appropriately scoped bot token. Do not work around this by enabling direct pushes to `main`.
-
-## Release checklist
-
-1. Update the version consistently in `plugin.json`, `.codex-plugin/plugin.json`, `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json`. Claude Code pins users to the `.claude-plugin/plugin.json` version, so installed users only receive skill changes after a bump.
-2. Check `LICENSE`, [third-party notices](../THIRD_PARTY_NOTICES.md), and changes to all upstream-vendored files. The root MIT license does not override upstream licenses.
-3. Run:
+1. Set the new `version` in `.cstack/catalog.json` and run `python scripts/build_manifests.py`. It rewrites every host manifest, the marketplaces, `skills.sh.json`, the Grok skill index, and each plugin's `LICENSE` copy.
+2. Check `LICENSE` and [third-party notices](../THIRD_PARTY_NOTICES.md) for any skill adapted from another project.
+3. Run the gate:
 
    ```sh
-   python scripts/validate_plugin.py --root .
-   python scripts/validate_skill_stack.py --source-root . --plugin-root . --policy .cstack/skill-policy.json
-   python scripts/generate_grok_plugin_index.py --check
+   python scripts/build_manifests.py --check
+   python scripts/validate_plugin.py
+   python scripts/validate_skill_stack.py
+   python -m unittest discover -s tests -p 'test_*.py'
    ```
 
-4. Update `CHANGELOG.md` and release notes. Verify marketplace install instructions on the target host before claiming platform compatibility; declared support alone does not prove native skill discovery.
-5. Open a PR with the version and index changes, review CI and the diff, then tag/release only the reviewed commit.
+   Run `claude plugin validate plugins/<plugin>` for each plugin when Claude Code is installed; it checks the Claude manifests and component files more strictly than the Python validators.
+4. Update `CHANGELOG.md`. Verify the install commands on each host you claim before you report it as supported.
+5. Open a PR with the version change, review CI and the diff, then tag only the reviewed commit.
 
-## Plugin entrypoints
+## Generated files
 
-- Codex: `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`
-- Grok: `.grok-plugin/plugin.json`, `.grok-plugin/marketplace.json`, generated `.grok-plugin/plugin-index.json`
-- Claude Code: `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
+`scripts/build_manifests.py` owns these files; edit `.cstack/catalog.json` or the skills instead:
 
-cstack's hooks in `hooks/hooks.json` enforce rules and inject the model's skill; none of them routes requests to skills. Use host-native skill discovery; there is no router skill. Run `python -m unittest tests.test_hooks` after changing a hook; Codex users must re-review changed hook scripts after an update. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.
+- Marketplaces: `.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json` (Codex), `.grok-plugin/marketplace.json`, `.cursor-plugin/marketplace.json`, `skills.sh.json`
+- Per plugin: `plugins/<plugin>/.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.grok-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `LICENSE`
+- `.grok-plugin/plugin-index.json`, listing every skill and hook event
+
+## Hooks
+
+The hooks in `plugins/cstack/hooks/` enforce rules and inject the model's skill; none of them routes requests to skills. Run `python -m unittest tests.test_hooks` after changing a hook. Codex users must re-review changed hook scripts after an update.

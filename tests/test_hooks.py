@@ -8,7 +8,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[1]
+ROOT = REPO / "plugins" / "cstack"
 HOOKS = ROOT / "hooks"
 NODE = shutil.which("node")
 SHA = "a" * 40
@@ -387,7 +388,7 @@ class HookTests(unittest.TestCase):
     def test_usage_report_lists_never_opened_skills(self):
         self.run_hook("usage-log.js", {"hook_event_name": "PostToolUse", "session_id": "s1", "tool_name": "Skill", "tool_input": {"skill": "cstack:tdd"}})
         report = subprocess.run(
-            ["python", str(ROOT / "scripts" / "skill_usage_report.py"), "--log", str(self.data / "logs" / "skill-usage.jsonl")],
+            ["python", str(REPO / "scripts" / "skill_usage_report.py"), "--log", str(self.data / "logs" / "skill-usage.jsonl")],
             capture_output=True, text=True,
         )
         self.assertEqual(report.returncode, 0, report.stderr)

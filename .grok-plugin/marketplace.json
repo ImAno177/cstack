@@ -1,21 +1,62 @@
 {
   "name": "cstack",
-  "description": "Portable cstack skills plugin for Grok Build and Grok Bot.",
   "owner": {
     "name": "ImAno177",
     "url": "https://github.com/ImAno177"
   },
+  "description": "Engineering workflow skills, agent-harness skills, and research skills, as three installable plugins.",
   "plugins": [
     {
       "name": "cstack",
-      "description": "Portable cstack skills for Grok Bot and compatible agent hosts.",
+      "description": "Engineering workflow: task playbooks, test-first fixes, review and audit, PR and commit conventions, verification subagents, and enforcement hooks.",
       "source": {
         "type": "local",
-        "path": "./"
+        "path": "./plugins/cstack"
       },
-      "category": "development",
+      "category": "productivity",
       "homepage": "https://github.com/ImAno177/cstack",
-      "keywords": ["cstack", "grok", "grok bot", "skills", "academic research", "continual learning"]
+      "keywords": [
+        "skills",
+        "engineering",
+        "workflow",
+        "tdd",
+        "code-review",
+        "hooks"
+      ]
+    },
+    {
+      "name": "cstack-harness",
+      "description": "Building and running agents: harness design, long-run context, completion checks, multi-agent work, tool orchestration, evaluation, and prompt and skill audits.",
+      "source": {
+        "type": "local",
+        "path": "./plugins/cstack-harness"
+      },
+      "category": "productivity",
+      "homepage": "https://github.com/ImAno177/cstack",
+      "keywords": [
+        "skills",
+        "agents",
+        "harness",
+        "evaluation",
+        "prompts"
+      ]
+    },
+    {
+      "name": "cstack-research",
+      "description": "Research and ML: literature reviews with verified citations, scientific figures and slides, Kaggle benchmarks, LoRA fine-tuning, and quantization.",
+      "source": {
+        "type": "local",
+        "path": "./plugins/cstack-research"
+      },
+      "category": "research",
+      "homepage": "https://github.com/ImAno177/cstack",
+      "keywords": [
+        "skills",
+        "research",
+        "literature-review",
+        "machine-learning",
+        "kaggle"
+      ]
     }
   ]
 }

@@ -7,22 +7,6 @@
     "Cursor's built-in"
   ],
   "max_entry_lines": 160,
-  "link_exclude_prefixes": [
-    "skills/agents-sdk/",
-    "skills/cf-cli/",
-    "skills/cloudflare/",
-    "skills/cloudflare-email-service/",
-    "skills/cloudflare-one/",
-    "skills/cloudflare-one-migrations/",
-    "skills/durable-objects/",
-    "skills/sandbox-migrate-to-next/",
-    "skills/sandbox-next/",
-    "skills/sandbox-stable/",
-    "skills/turnstile-spin/",
-    "skills/web-perf/",
-    "skills/workers-best-practices/",
-    "skills/wrangler/"
-  ],
   "overlap_groups": [
     [
       "change-review",
@@ -50,5 +34,6 @@
       "create-verification-skill",
       "webapp-testing"
     ]
-  ]
+  ],
+  "max_listed_skills_per_plugin": 30
 }

@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 0.9.0
+
+Breaking: the repository is now a marketplace of three plugins instead of one plugin at the root. See `docs/architecture.md` for the research behind each change.
+
+- Split the skills into `plugins/cstack` (engineering workflow, agents, hooks), `plugins/cstack-harness` (building and running agents), and `plugins/cstack-research` (research and ML). `cstack@cstack` still installs the core plugin; install the other two by name.
+- Move `agents/` and `hooks/` into `plugins/cstack/`, where Claude Code loads plugin components.
+- Cut the skills listed to the model from 76 to 27 in `cstack`. Sixteen user-started workflows (`arena`, `swarm`, `interrogate`, `figure-it-out`, `show-me-your-work`, `teach`, `correct`, `reflect`, `shortcut-debt`, `statechart`, `technical-writing`, the four verification skills, and `principle-fix-root-causes`) now set `disable-model-invocation`; `default-mode` links to them.
+- Remove the 18 vendored Cloudflare, Hugging Face, Kaggle, and Colab skills with the upstream sync workflow, script, lockfile, and Apache license copy. The README gives the owners' install commands.
+- Generate every host manifest, marketplace, `skills.sh.json`, and the Grok index from `.cstack/catalog.json` with `scripts/build_manifests.py`; it replaces `generate_grok_plugin_index.py`. Add Cursor manifests under `.cursor-plugin/` and drop the root `plugin.json`.
+- `validate_plugin.py` checks the catalog against `plugins/`, generated files, skill name and folder, description length, agent preloads, and hook script paths. `validate_skill_stack.py` checks every plugin and fails when a plugin lists more than 30 skills or a link leaves its plugin.
+- Replace cross-plugin links in `recall`, `agent-harness`, and `multi-agent-workflow` with skill names. Remove the nine routing cases for removed skills and expect `default-mode` for cases whose skill is now user-started.
+- CI runs on every pull request and sets up Node.js for the hook tests.
+
 ## 0.8.2
 
 - Add `reframe` from pstack 0.15.48: a user-invoked skill (`/reframe`) that names the expert terms for what the user is building, borrows terms from neighboring fields, and rewrites the description. Record the 0.15.46 to 0.15.48 upstream review in `docs/pstack-audit-2026-11-21.md`.
