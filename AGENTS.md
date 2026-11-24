@@ -16,6 +16,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 - Load a skill only when it clearly owns the task, and a supporting skill only for a concrete need. Load no other workflow unless the task or an applicable policy requires it.
 - Scan the installed skill list before each phase of non-trivial work and open the skill that owns that phase before acting, not after: `change-review` to review a diff, commit, branch, or PR; `tdd` to fix a reproducible bug that has a cheap local test path or when the user asks for it; `default-mode` to build a non-trivial feature or a new project that no narrower skill owns; `security-audit` for threat or secret questions; `conventional-commit` to write a commit message; `create-pr` to open a pull request; `principle-prove-it-works` before declaring done.
 - Open the `if-u-are-<model>` skill for the exact model your harness names you as, once, before non-trivial work: `if-u-are-fable-5-2`, `if-u-are-opus-5-5`, `if-u-are-haiku-5-5`, `if-u-are-gpt-6-astra`, `if-u-are-gpt-6-1-sol`, `if-u-are-gpt-5-6-luna`. Open none when no name matches; never open another model's. An agent definition may preload its model's skill instead.
+- When a cstack hook blocks an action or a stop, do what its message says; it names the missing step. Open `pin-rule` when the user states a rule to keep for the project or for all work.
 - Follow the output format of an opened skill exactly, including its first line, location format, and closing lines.
 - Name the skill you used in your reply whenever a skill shaped the work.
 
@@ -47,7 +48,7 @@ Follow the host's instruction hierarchy. These are cross-project defaults; expli
 
 - Commit and push the task's validated changes to the repository's configured GitHub remote as part of finishing any implementation in a Git repository. This is standing authorization; do not ask again unless the user requests local-only work or a material boundary is unresolved.
 - Work on a task branch. Create one before editing whenever the current branch is the default or a shared branch. Verify the remote, branch, staged diff, and outgoing commits. Include only task-owned changes; exclude secrets and unrelated work.
-- Push only after required checks pass. Never force-push or bypass hooks or branch protections. Direct pushes to default/shared branches and merges of PRs you did not author require explicit authorization; merge your own PRs under the policy below.
+- Push only after required checks pass. Push new commits instead of force-pushing, and let hooks and branch protections run. Direct pushes to default/shared branches and merges of PRs you did not author require explicit authorization; merge your own PRs under the policy below.
 - Verify the pushed commit is present on the remote branch; report the repository, branch, and commit SHA. If the repository, destination, access, or required validation is unavailable, preserve local work and report the precise limitation; do not invent a destination.
 
 ## Merging pull requests
@@ -64,4 +65,4 @@ Before merging:
 3. On `FAIL`, fix the problem, push, and go back to step 1. A verdict covers one commit.
 4. Merge with `gh pr merge <n> --squash --delete-branch --match-head-commit <sha>`,
    using the commit the gate and the verifier actually checked.
-Never force push, and never merge over a check that has failed or is still running.
+Push new commits instead of force-pushing, and merge only after every check that ran has passed.

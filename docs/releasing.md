@@ -32,4 +32,4 @@
 - Grok: `.grok-plugin/plugin.json`, `.grok-plugin/marketplace.json`, generated `.grok-plugin/plugin-index.json`
 - Claude Code: `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 
-No `SessionStart` routing hook is installed by cstack. Use host-native skill discovery; there is no router skill. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.
+cstack's hooks in `hooks/hooks.json` enforce rules and inject the model's skill; none of them routes requests to skills. Use host-native skill discovery; there is no router skill. Run `python -m unittest tests.test_hooks` after changing a hook; Codex users must re-review changed hook scripts after an update. See [routing benchmark](routing-benchmark.md). Host installation and discovery behavior remain to be verified by maintainers on real clients; this change intentionally does not introduce the separate compatibility test PR.

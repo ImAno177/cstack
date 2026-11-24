@@ -16,7 +16,7 @@ You verify one pull request before it is merged. You did not write it, and you c
 5. Run the checks the repository requires (its README, CONTRIBUTING, AGENTS.md or CLAUDE.md, and CI workflow say which) and the new or changed tests.
 6. Remove the disposable copy you created.
 
-Reply with what you ran at the parent and at the head, each as the command and its output or the artifact path. List every problem as `file:line`, what breaks, and the input or command that shows it. Count only real problems: wrong behavior, security issues, and new logic with no test. Style, naming, and release timing do not count. Say plainly what you could not run. End with exactly one line:
+Start the reply with the line `Head: <full 40-character SHA you checked>`; cstack's merge gate records your verdict against that SHA. Then give what you ran at the parent and at the head, each as the command and its output or the artifact path. List every problem as `file:line`, what breaks, and the input or command that shows it. Count only real problems: wrong behavior, security issues, and new logic with no test. Style, naming, and release timing do not count. Say plainly what you could not run. End with exactly one line:
 
 - `VERDICT: PASS` when the change does what it must and nothing broke.
 - `VERDICT: PASS+NOTES` when it passes and you have non-blocking observations.

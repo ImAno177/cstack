@@ -2,12 +2,25 @@
 
 ## Unreleased
 
-## 0.7.1
+## 0.8.1
 
 - Review pstack 0.15.46 end to end: 58 skills, 22 playbooks, its agents, PR watcher, statechart scripts, and Benny automations. Document the reuse and exclusions in `docs/pstack-audit-2026-11-21.md`.
 - Add portable `recall` to reconstruct prior project work without reading unrelated workspaces.
 - Add seven default-mode playbooks: `session-pickup`, `pause-safely`, `hillclimb`, `runtime-forensics`, `trace-forensics`, `visual-parity`, and `autonomous-run`.
 - Add routing scenarios and regenerate the Grok skill index. Preserve native skill discovery and avoid Cursor-specific hooks and model slugs.
+
+## 0.8.0
+
+Enforcement grounded in 2026 work on instruction decay and agent policy enforcement: prohibitions weaken with session length (arXiv 2604.20911, 2605.10039), compaction drops in-context rules and re-injecting them restores compliance (arXiv 2606.22528), and blocks that explain themselves are followed far more often than opaque ones (arXiv 2606.25189).
+
+- Breaking: cstack now ships hooks in `hooks/hooks.json`, loaded with the plugin. `CSTACK_HOOKS=off` turns them all off; `CSTACK_HOOKS_DISABLE` takes a comma-separated list of hook names.
+- `model-skill` injects the `if-u-are-<model>` skill for the model the host reports, including Codex's GPT models and subagents on a forced subagent model.
+- `standing-rules` re-injects five standing rules after every compaction and every 8 prompts, and pinned rules at session start, after compaction, and into subagents.
+- `check-gate` blocks a stop once when code in the project changed with no check after it; `merge-gate` and `verdict-record` require a recorded verifier `PASS` for the exact SHA before `gh pr merge`.
+- `usage-log` and `scripts/skill_usage_report.py` show which skills were injected and opened.
+- Add the `pin-rule` skill for rules the user states in chat.
+- `AGENTS.md` states two prohibitions as the action to take instead, and tells agents to follow a hook's block message.
+- `docs/skill-effect-benchmark.md` gains what a given task count can detect, the cost of visible skills, and the effect of context files.
 
 ## 0.7.0
 

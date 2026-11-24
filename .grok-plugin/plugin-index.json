@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.7.1",
+      "version": "0.8.1",
       "components": {
         "skills": [
           {
@@ -196,6 +196,10 @@
           {
             "name": "peft-lora-qlora",
             "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
+          },
+          {
+            "name": "pin-rule",
+            "description": "Pin a rule the user states in chat so it survives context compaction and long sessions. Use when the user says to always or never do something for this project or for all work, or asks to remember a rule. Not for facts or preferences the user did not state as a rule; those belong in memory."
           },
           {
             "name": "principle-attack-the-premise",
@@ -408,6 +412,44 @@
           {
             "name": "write-kaggle-benchmarks",
             "description": "Write, push, run, publish, and manage Kaggle Benchmark tasks using the kaggle CLI and the kaggle-benchmarks Python SDK. Use when the user wants to create or push a benchmark task (optionally with attached Kaggle datasets), run benchmarks against LLM models, check task/run status, stream or fetch execution logs, download results and source notebooks, publish a task to make it public, or troubleshoot benchmark workflows."
+          }
+        ],
+        "hooks": [
+          {
+            "name": "PostModelSwitch",
+            "description": ""
+          },
+          {
+            "name": "PostToolUse",
+            "description": "Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit|apply_patch, SubagentHandback, Skill|Read"
+          },
+          {
+            "name": "PostToolUseFailure",
+            "description": "Bash|PowerShell"
+          },
+          {
+            "name": "PreToolUse",
+            "description": "Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit|apply_patch, SubagentHandback"
+          },
+          {
+            "name": "SessionStart",
+            "description": "startup|resume|clear|compact"
+          },
+          {
+            "name": "Stop",
+            "description": ""
+          },
+          {
+            "name": "SubagentStart",
+            "description": ""
+          },
+          {
+            "name": "SubagentStop",
+            "description": ""
+          },
+          {
+            "name": "UserPromptSubmit",
+            "description": ""
           }
         ]
       }

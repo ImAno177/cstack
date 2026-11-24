@@ -23,6 +23,18 @@ The routing benchmark (`docs/routing-benchmark.md`) checks which skill a descrip
 
 `/skill-doctor` reports what each skill costs in the always-on listing and how often it was invoked. Use it before adding a skill, and to pick skills to mark `disable-model-invocation`.
 
+## Exposure from the hooks
+
+`hooks/usage-log.js` records each skill the agent opens (through the Skill tool or a read of its `SKILL.md`) and each skill `hooks/model-skill.js` injects. `python scripts/skill_usage_report.py` prints both and the listed skills never opened. ACES scores the same thing as the activation check of its skill-execution metric: did the agent read the expected `SKILL.md` ([arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). A skill the agent never reads has no effect to measure.
+
+## What a result of this size can show
+
+- Score instruction following and goal completion separately. With a relevant skill, goal completion is near its ceiling for most models while the overall score rises by 5.5 to 22 points, mostly from instruction following, and smaller models gain more ([arXiv 2606.17819](https://arxiv.org/abs/2606.17819)).
+- A held-out split of 20 to 26 tasks detects a skill effect only when the skill wins about four of every five tasks where the two arms disagree; pooled over 69 tasks, about two of three ([arXiv 2609.12742](https://arxiv.org/abs/2609.12742)). A few-point gain on fewer tasks is inside the agent's own variance.
+- Visible skill count costs time and success: lift held for 1 to 20 visible skills while wall time nearly doubled, and with 50 visible skills the with-skill pass rate fell from 0.725 to 0.55 ([arXiv 2608.20614](https://arxiv.org/abs/2608.20614)).
+- Context files are followed but raise cost: in one study they increased steps and cost by about 20% without a significant change in task success, and repository overviews did not reduce the steps agents took to reach a relevant file ([arXiv 2602.11988](https://arxiv.org/abs/2602.11988)). Add to `AGENTS.md` only what the repository and the model cannot supply.
+- Measure compliance across a long session, not only at the start: compliance drops as the agent writes more code within one session ([arXiv 2605.10039](https://arxiv.org/abs/2605.10039)).
+
 ## Runner
 
 `benchmarks/reproduction/run_codex_ab.py` runs paired, repeated arms on Codex for the micrograd fixture. Its arms are no skills versus the whole pack, so it measures the pack, not one change; to test one change, stage two cstack checkouts that differ only in that change and compare their results the same way:
