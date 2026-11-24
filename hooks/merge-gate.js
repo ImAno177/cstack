@@ -11,7 +11,8 @@ function touchesVerdicts(input) {
   const target = ti.file_path || ti.path || ti.notebook_path;
   if (target && slash(path.resolve(String(target))).startsWith(dir + '/')) return true;
   const text = slash([shellCommand(input), ti.patch || '', ti.input || ''].join('\n'));
-  return text.includes(dir) || verdictRef.test(text);
+  if (text.includes(dir) || verdictRef.test(text) || /verdict-record/.test(text)) return true;
+  return /verdicts/.test(text) && /plugin_data|plugins\/+data|cstack|datadir/.test(text);
 }
 
 const ghMerge = /(?:^|[\s;&|(`"'\/\\])gh(?:\.exe)?["']?\s+pr\s+merge\b([^\n;&|)`]*)/i;
