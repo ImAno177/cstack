@@ -1,6 +1,6 @@
 ---
 name: agent-completion
-description: Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd`; for diff review use `change-review`.
+description: Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd` (cstack plugin); for diff review use `change-review` (cstack plugin).
 ---
 
 # Agent completion

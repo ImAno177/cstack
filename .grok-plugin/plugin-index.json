@@ -332,7 +332,7 @@
         "skills": [
           {
             "name": "agent-completion",
-            "description": "Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd`; for diff review use `change-review`."
+            "description": "Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd` (cstack plugin); for diff review use `change-review` (cstack plugin)."
           },
           {
             "name": "agent-context",
@@ -340,7 +340,7 @@
           },
           {
             "name": "agent-evaluation",
-            "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena`; to promote learnings across episodes use `continual-learning`."
+            "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena` (cstack plugin); to promote learnings across episodes use `continual-learning`."
           },
           {
             "name": "agent-harness",
@@ -348,7 +348,7 @@
           },
           {
             "name": "continual-learning",
-            "description": "Help an agent improve its reusable skills, rules, and memory from ordered task experience with audit, replay, transfer checks, and retirement. Use when a learning should persist across many episodes and its retention must be measured. Not for mining one episode into skill edits; use `reflect`."
+            "description": "Help an agent improve its reusable skills, rules, and memory from ordered task experience with audit, replay, transfer checks, and retirement. Use when a learning should persist across many episodes and its retention must be measured. Not for mining one episode into skill edits; use `reflect` (cstack plugin)."
           },
           {
             "name": "find-skills",
@@ -356,11 +356,11 @@
           },
           {
             "name": "multi-agent-workflow",
-            "description": "Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena`), or coverage slices over a large surface (use `swarm`)."
+            "description": "Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena` (cstack plugin)), or coverage slices over a large surface (use `swarm` (cstack plugin))."
           },
           {
             "name": "prompt-audit",
-            "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review`) or for writing a new skill from scratch (use `default-mode` and its authoring-a-skill playbook)."
+            "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review` (cstack plugin)) or for writing a new skill from scratch (use `default-mode` (cstack plugin) and its authoring-a-skill playbook)."
           },
           {
             "name": "tool-orchestration",

@@ -1,6 +1,6 @@
 ---
 name: multi-agent-workflow
-description: Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena`), or coverage slices over a large surface (use `swarm`).
+description: Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena` (cstack plugin)), or coverage slices over a large surface (use `swarm` (cstack plugin)).
 ---
 
 # Multi-agent workflow

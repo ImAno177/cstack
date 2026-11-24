@@ -1,6 +1,6 @@
 ---
 name: agent-evaluation
-description: Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena`; to promote learnings across episodes use `continual-learning`.
+description: Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena` (cstack plugin); to promote learnings across episodes use `continual-learning`.
 ---
 
 # Agent evaluation

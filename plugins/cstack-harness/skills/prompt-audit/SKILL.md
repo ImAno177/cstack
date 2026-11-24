@@ -1,6 +1,6 @@
 ---
 name: prompt-audit
-description: Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review`) or for writing a new skill from scratch (use `default-mode` and its authoring-a-skill playbook).
+description: Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review` (cstack plugin)) or for writing a new skill from scratch (use `default-mode` (cstack plugin) and its authoring-a-skill playbook).
 license: MIT
 ---
 

@@ -38,7 +38,7 @@ Each host wants its own manifest: `.claude-plugin/`, `.codex-plugin/`, `.grok-pl
 
 ### No vendored third-party skills
 
-cstack 0.8 copied 18 skills from Cloudflare, Hugging Face, Kaggle, and Colab, with a sync workflow and lockfile to keep them current. Those owners publish the skills and their own marketplaces, so the copies only added listed skills and maintenance. A survey of agent-skill security also found vulnerabilities in 26.1% of 31,132 community skills, and skills that bundle scripts were 2.12 times as likely to contain one ([Xu and Yan 2026, arXiv 2602.12430](https://arxiv.org/abs/2602.12430)). Installing from the owner keeps provenance with the owner. The README lists the install commands.
+cstack 0.8 copied 18 skills from Cloudflare, Hugging Face, Kaggle, and Colab, with a sync workflow and lockfile to keep them current. Those owners publish the skills and their own marketplaces, so the copies only added listed skills and maintenance. A large-scale scan found vulnerabilities in 26.1% of 31,132 community skills, and skills that bundle scripts were 2.12 times as likely to contain one ([Liu et al. 2026, arXiv 2601.10338](https://arxiv.org/abs/2601.10338), as summarized in [Xu and Yan 2026, arXiv 2602.12430](https://arxiv.org/abs/2602.12430)). Installing from the owner keeps provenance with the owner. The README lists the install commands.
 
 ### Skill format
 
@@ -52,7 +52,7 @@ Each `SKILL.md` follows the Agent Skills format and Anthropic's authoring guidan
 
 ### Proof comes from runs, not from scans
 
-Static checks catch authoring mistakes but do not predict whether a skill helps. In ACES, structural and LLM-judge scores correlated with live skill lift at ρ = −0.02 and −0.03 ([arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). The validators here are a floor. Claims that a change improves agents need the paired runs in [skill-effect-benchmark.md](skill-effect-benchmark.md) and the routing runs in [routing-benchmark.md](routing-benchmark.md).
+Static checks catch authoring mistakes but do not predict whether a skill helps. In ACES, neither structural scores nor LLM-judge scores had a detectable correlation with live skill lift (Spearman ρ = −0.02 and −0.03, both indistinguishable from zero; [arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). The validators here are a floor. Claims that a change improves agents need the paired runs in [skill-effect-benchmark.md](skill-effect-benchmark.md) and the routing runs in [routing-benchmark.md](routing-benchmark.md).
 
 ## What was adopted from pstack
 

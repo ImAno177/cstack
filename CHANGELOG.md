@@ -12,7 +12,7 @@ Breaking: the repository is now a marketplace of three plugins instead of one pl
 - Remove the 18 vendored Cloudflare, Hugging Face, Kaggle, and Colab skills with the upstream sync workflow, script, lockfile, and Apache license copy. The README gives the owners' install commands.
 - Generate every host manifest, marketplace, `skills.sh.json`, and the Grok index from `.cstack/catalog.json` with `scripts/build_manifests.py`; it replaces `generate_grok_plugin_index.py`. Add Cursor manifests under `.cursor-plugin/` and drop the root `plugin.json`.
 - `validate_plugin.py` checks the catalog against `plugins/`, generated files, skill name and folder, description length, agent preloads, and hook script paths. `validate_skill_stack.py` checks every plugin and fails when a plugin lists more than 30 skills or a link leaves its plugin.
-- Replace cross-plugin links in `recall`, `agent-harness`, and `multi-agent-workflow` with skill names. Remove the nine routing cases for removed skills and expect `default-mode` for cases whose skill is now user-started.
+- Replace cross-plugin links in `recall`, `agent-harness`, and `multi-agent-workflow` with skill names, and label each mention of a `cstack` skill from the other two plugins with its plugin. Remove ten routing cases: nine for removed skills, and `current-chat-recap`, because `ketchup` is user-started and the model never routes to it. Cases whose skill is now user-started expect `default-mode`, which links to it.
 - CI runs on every pull request and sets up Node.js for the hook tests.
 
 ## 0.8.2
