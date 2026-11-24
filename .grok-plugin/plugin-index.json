@@ -2,29 +2,9 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.8.2",
+      "version": "0.9.0",
       "components": {
         "skills": [
-          {
-            "name": "agent-completion",
-            "description": "Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd`; for diff review use `change-review`."
-          },
-          {
-            "name": "agent-context",
-            "description": "Keep long-running agent work coherent with bounded phases, capped outputs, checkpoints, compact handoffs, and loop detection. Use for large repositories, many tool calls, compaction, repeated reads, or delegated work. Not for short tasks that fit in one pass."
-          },
-          {
-            "name": "agent-evaluation",
-            "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena`; to promote learnings across episodes use `continual-learning`."
-          },
-          {
-            "name": "agent-harness",
-            "description": "Design, debug, or evaluate the runtime around a model-driven agent: loop, model adapter, tools, context, permissions, orchestration, extensibility, and verification. Use for Codex, Claude Code, DSH, Pi, Prime Agent, local-model integrations, or coding-agent harnesses; not for ordinary application code."
-          },
-          {
-            "name": "agents-sdk",
-            "description": "Build, debug, or review Cloudflare Agents SDK applications using the agents package."
-          },
           {
             "name": "android-testing-setup",
             "description": "Analyze and create a testing strategy for native Android apps - install testing libraries, set up test infrastructure, create harnesses for unit tests, UI tests, screenshot tests, and end-to-end tests."
@@ -42,44 +22,12 @@
             "description": "Vet a perf measurement (limiter, tuning, limits, errors, repeatability, relevance, and whether the work happened) before you report or act on it. Use when you run a benchmark or report a speedup or regression you measured."
           },
           {
-            "name": "bitsandbytes-quantization",
-            "description": "Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers. Not for CPU-only inference (GGUF) or production serving throughput (GPTQ/AWQ)."
-          },
-          {
             "name": "blast-radius",
             "description": "Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it is safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', or reviewing a small diff you do not trust. Not for a general quality review of the change (use `change-review`), a whole-repository audit (use `repo-audit`), or a threat model and secrets review (use `security-audit`)."
           },
           {
-            "name": "cf-cli",
-            "description": "Cloudflare's official cf CLI (beta) for the public Cloudflare API and Workers projects. Use for finding and running Cloudflare commands from the terminal — sign-in and profiles, cf cli search, cf schema, cf deploy/dev/build, resource commands for DNS, zones, D1, KV, and R2 — and for choosing between cf and Wrangler in a project."
-          },
-          {
             "name": "change-review",
             "description": "Review a diff, commit, branch, or pull request before merge. Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
-          },
-          {
-            "name": "cloudflare",
-            "description": "Discover and choose Cloudflare products for apps, APIs, AI agents, storage, networking, and security. Use for architecture and product selection, including when the user describes a need without naming a Cloudflare product; then find the relevant skill or documentation. Also use when a Cloudflare-proxied site shows a Cloudflare error page, a `52x` status, a 1xxx error code, or a Cloudflare `403`, to decide whether to fix Cloudflare configuration or the origin."
-          },
-          {
-            "name": "cloudflare-email-service",
-            "description": "Implement or troubleshoot Cloudflare Email Sending and Email Routing integrations and their delivery configuration."
-          },
-          {
-            "name": "cloudflare-one",
-            "description": "Design, configure, troubleshoot, or review Cloudflare One Zero Trust and SASE deployments. Use cloudflare-one-migrations for migration planning from other vendors. Also use when an agent, script, crawler, or other non-browser client needs to reach a webpage or API protected by Cloudflare Access."
-          },
-          {
-            "name": "cloudflare-one-migrations",
-            "description": "Assess and plan migrations from existing VPN, SWG, or SASE platforms to Cloudflare One, including policy mapping, parity gaps, and rollout."
-          },
-          {
-            "name": "colab-operator",
-            "description": "Operate Google Colab environments via the `colab` CLI. Use when asked to create or manage GPU/TPU sessions, run Python/shell on a remote Colab VM, sync files, automate environment setup (packages, auth, Drive), or export session history."
-          },
-          {
-            "name": "continual-learning",
-            "description": "Help an agent improve its reusable skills, rules, and memory from ordered task experience with audit, replay, transfer checks, and retirement. Use when a learning should persist across many episodes and its retention must be measured. Not for mining one episode into skill edits; use `reflect`."
           },
           {
             "name": "conventional-commit",
@@ -106,24 +54,12 @@
             "description": "Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default."
           },
           {
-            "name": "durable-objects",
-            "description": "Build, debug, or review Cloudflare Durable Objects code for persistent state and coordination."
-          },
-          {
             "name": "figure-it-out",
             "description": "Design an auditable playbook when no narrower one fits - a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions. Use for \"figure it out\" or work too large for a single default-mode playbook. Not for work one existing playbook covers; use `default-mode`."
           },
           {
-            "name": "find-skills",
-            "description": "Finds and installs agent skills from the open skills ecosystem with the `npx skills` CLI. Use only when the user asks to find or install a skill, such as \"find a skill for X\" or \"is there a skill that can...\". Not for ordinary how-to questions or for skills already in this pack; read those directly."
-          },
-          {
             "name": "frontend-design",
             "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults."
-          },
-          {
-            "name": "hf-cli",
-            "description": "Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, buckets, repos, papers, jobs, and more on the Hugging Face Hub. Use when: handling authentication; managing local cache; managing Hugging Face Buckets; running or scheduling jobs on Hugging Face infrastructure; managing Hugging Face repos; discussions and pull requests; browsing models, datasets and spaces; reading, searching, or browsing academic papers; managing collections; querying datasets; configuring spaces; setting up webhooks; or deploying and managing HF Inference Endpoints. Make sure to use this skill whenever the user mentions 'hf', 'huggingface', 'Hugging Face', 'huggingface-cli', or 'hugging face cli', or wants to do anything related to the Hugging Face ecosystem and to AI and ML in general. Also use for cloud storage needs like training checkpoints, data pipelines, or agent traces. Use even if the user doesn't explicitly ask for a CLI command. Replaces the deprecated `huggingface-cli`."
           },
           {
             "name": "how",
@@ -162,20 +98,12 @@
             "description": "Adversarial review where independent adversaries try to break a change or design, and only findings proven by a run survive. Use for \"interrogate\", \"adversarial review\", \"multi-model review\", \"challenge this\", \"stress test this\", \"find blind spots\", or \"tear this apart\". Not for routine diff review (use `change-review`) or security-focused audits (use `security-audit`)."
           },
           {
-            "name": "kaggle-cli",
-            "description": "Use the local Kaggle CLI skill for command guidance, workflows, and troubleshooting across competitions, datasets, kernels/notebooks, models, model variations and versions, inbox file uploads, forums/discussions, benchmarks, configuration, OAuth/API-token authentication, and accelerator quota. Activate this skill when the user asks about kaggle CLI commands, examples, flags, metadata files, download/upload flows, submissions, benchmark tasks, or Kaggle CLI behavior."
-          },
-          {
             "name": "ketchup",
             "description": "Catch the user up on what changed in this chat since their last message, in plain words and small visuals. List every item waiting on them with what they need to decide it from the reply alone. Use for /ketchup."
           },
           {
             "name": "ketchup-video",
             "description": "Catch the user up like /ketchup, with a short subtitled video of slides for what happened and the waiting calls as text under it. Use for /ketchup-video."
-          },
-          {
-            "name": "literature-review",
-            "description": "Find, read, and synthesize primary research papers for a technical or scientific question, verify every citation, and record each claim with its evaluation conditions. Use for literature reviews, related work, \"what does the research say\", choosing a method from papers, or checking a cited claim."
           },
           {
             "name": "maintain-formal-verification-skill",
@@ -188,14 +116,6 @@
           {
             "name": "md-docs",
             "description": "Manages project documentation: CLAUDE.md, AGENTS.md, README.md, CONTRIBUTING.md, DOCS.md. Use when asked to update, create, or init these context files. Not for general markdown editing or sentence-level prose style; use `technical-writing`."
-          },
-          {
-            "name": "multi-agent-workflow",
-            "description": "Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena`), or coverage slices over a large surface (use `swarm`)."
-          },
-          {
-            "name": "peft-lora-qlora",
-            "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
           },
           {
             "name": "pin-rule",
@@ -298,10 +218,6 @@
             "description": "Apply when designing types, reviewing a function signature, or writing code in any statically-typed language. Make illegal states unrepresentable, brand semantic primitives, parse external data at boundaries, exhaust variants, derive from authoritative schemas."
           },
           {
-            "name": "prompt-audit",
-            "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review`) or for writing a new skill from scratch (use `default-mode` and its authoring-a-skill playbook)."
-          },
-          {
             "name": "recall",
             "description": "Reconstruct recent work on a named project or topic from earlier agent sessions and shared repository records, including prior decisions, PRs, reversions, and next steps. Use for \"catch me up on X\", \"what have I been working on\", or \"where did I leave off\" across sessions. For only the current chat use ketchup; for resuming one exact branch or session use the session-pickup playbook."
           },
@@ -316,26 +232,6 @@
           {
             "name": "repo-audit",
             "description": "Quality audit of a whole repo or folder: bugs, security holes, what breaks under real load, risky code without tests, slow paths, and what to delete, merge or split. Ranked, each finding explained in plain English. One-shot report, changes nothing. Use for \"audit this codebase\", \"review the whole repo\", \"find bloat\", or \"what can I delete\". Not for one diff, commit or PR (use `change-review`), a dedicated threat model or secrets review (use `security-audit`), or proving by running code what a small change breaks elsewhere (use `blast-radius`)."
-          },
-          {
-            "name": "sandbox-migrate-to-next",
-            "description": "Migrate Cloudflare Sandbox apps from stable @cloudflare/sandbox to @cloudflare/sandbox@next (SDK 1.0 preview). Use sandbox-next for apps already on the preview."
-          },
-          {
-            "name": "sandbox-next",
-            "description": "Build or maintain Cloudflare Sandbox apps on @cloudflare/sandbox@next (SDK 1.0 preview). Use sandbox-migrate-to-next when porting a stable app."
-          },
-          {
-            "name": "sandbox-stable",
-            "description": "Build or maintain Cloudflare Sandbox apps on the stable @cloudflare/sandbox package. Use sandbox-next for preview apps and sandbox-migrate-to-next for stable-to-preview migrations."
-          },
-          {
-            "name": "scientific-slides",
-            "description": "Use when building or reviewing research/scientific slide decks (conference talks, seminars, defenses) — minimal text, one idea per slide, visual hierarchy, data/results slides, timing, and visual review. Works with PowerPoint, Google Slides, and Beamer."
-          },
-          {
-            "name": "scientific-visualization",
-            "description": "Creates and audits truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use it for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
           },
           {
             "name": "security-audit",
@@ -374,18 +270,6 @@
             "description": "Layered technical-writing standard: Diátaxis structure, Google developer style sentences, STE instruction rules, Global English syntax. Use for /technical-writing or when writing or reviewing docs, RFCs, readmes, PR descriptions, or commit messages. Not for choosing or maintaining project context files; use md-docs."
           },
           {
-            "name": "tool-orchestration",
-            "description": "Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow; not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`)."
-          },
-          {
-            "name": "trl-training",
-            "description": "Post-train LLMs with TRL (Transformers Reinforcement Learning) — SFT, DPO, GRPO, KTO, and reward-model training. Use when writing or debugging training code with the TRL Python API or the trl CLI."
-          },
-          {
-            "name": "turnstile-spin",
-            "description": "Set up, repair, or migrate to Cloudflare Turnstile bot verification in an existing frontend and backend, including server-side Siteverify."
-          },
-          {
             "name": "typescript-best-practices",
             "description": "TypeScript best practices. Use when reading or editing any .ts or .tsx file."
           },
@@ -394,28 +278,12 @@
             "description": "Edits text to remove AI-writing tells such as filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression, keeping meaning and tone. Use when rewriting prose that reads AI-generated, before delivering docs, commit messages, PR bodies, or replies, or when asked to unslop or humanize text. Not for restructuring documents; use `technical-writing` or `md-docs`."
           },
           {
-            "name": "web-perf",
-            "description": "Audit, diagnose, or optimize website loading and interaction performance, Core Web Vitals, and Lighthouse performance scores."
-          },
-          {
             "name": "webapp-testing",
             "description": "Host-neutral browser QA that proves a web app works the way a user would: start the app, drive flows in a real browser with Playwright using role and label locators, assert what the user sees and what the system stored, and keep screenshots, console errors, and failed requests as rerunnable evidence. Use for QA of a web UI, reproducing a browser bug, writing or fixing Playwright tests, or verifying a frontend change. Not for a reusable project harness; use create-verification-skill."
           },
           {
             "name": "why",
             "description": "Investigate why code or a design has its current shape - design rationale, tradeoffs, regressions, postmortems, or data-backed thresholds - by querying every available evidence source (git history and PRs, issue tracker, docs, chat, observability, error tracking, analytics) in parallel and returning a cited read that separates facts from inference. Use for \"why does X work this way\" or \"why did we pick Y\". Not for what code does at runtime (use `how`) or for what a change would break (use `blast-radius`)."
-          },
-          {
-            "name": "workers-best-practices",
-            "description": "Cloudflare Workers best practices for production applications. Use when writing, reviewing, or configuring Workers."
-          },
-          {
-            "name": "wrangler",
-            "description": "Run or troubleshoot Wrangler CLI commands in projects that have a wrangler.jsonc, wrangler.json, or wrangler.toml file, including local development, Previews, deployment, and resource management. For new projects and projects without a Wrangler configuration file, use the cf CLI instead."
-          },
-          {
-            "name": "write-kaggle-benchmarks",
-            "description": "Write, push, run, publish, and manage Kaggle Benchmark tasks using the kaggle CLI and the kaggle-benchmarks Python SDK. Use when the user wants to create or push a benchmark task (optionally with attached Kaggle datasets), run benchmarks against LLM models, check task/run status, stream or fetch execution logs, download results and source notebooks, publish a task to make it public, or troubleshoot benchmark workflows."
           }
         ],
         "hooks": [
@@ -454,6 +322,80 @@
           {
             "name": "UserPromptSubmit",
             "description": ""
+          }
+        ]
+      }
+    },
+    "cstack-harness": {
+      "version": "0.9.0",
+      "components": {
+        "skills": [
+          {
+            "name": "agent-completion",
+            "description": "Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd` (cstack plugin); for diff review use `change-review` (cstack plugin)."
+          },
+          {
+            "name": "agent-context",
+            "description": "Keep long-running agent work coherent with bounded phases, capped outputs, checkpoints, compact handoffs, and loop detection. Use for large repositories, many tool calls, compaction, repeated reads, or delegated work. Not for short tasks that fit in one pass."
+          },
+          {
+            "name": "agent-evaluation",
+            "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena` (cstack plugin); to promote learnings across episodes use `continual-learning`."
+          },
+          {
+            "name": "agent-harness",
+            "description": "Design, debug, or evaluate the runtime around a model-driven agent: loop, model adapter, tools, context, permissions, orchestration, extensibility, and verification. Use for Codex, Claude Code, DSH, Pi, Prime Agent, local-model integrations, or coding-agent harnesses; not for ordinary application code."
+          },
+          {
+            "name": "continual-learning",
+            "description": "Help an agent improve its reusable skills, rules, and memory from ordered task experience with audit, replay, transfer checks, and retirement. Use when a learning should persist across many episodes and its retention must be measured. Not for mining one episode into skill edits; use `reflect` (cstack plugin)."
+          },
+          {
+            "name": "find-skills",
+            "description": "Finds and installs agent skills from the open skills ecosystem with the `npx skills` CLI. Use only when the user asks to find or install a skill, such as \"find a skill for X\" or \"is there a skill that can...\". Not for ordinary how-to questions or for skills already in this pack; read those directly."
+          },
+          {
+            "name": "multi-agent-workflow",
+            "description": "Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena` (cstack plugin)), or coverage slices over a large surface (use `swarm` (cstack plugin))."
+          },
+          {
+            "name": "prompt-audit",
+            "description": "Audit skills, rules, AGENTS files, hooks, tool descriptions, and agent configuration for stale model-specific cruft, conflicts, broken paths, and over-steering. Use before editing or after a model or host release. Not for code review (use `change-review` (cstack plugin)) or for writing a new skill from scratch (use `default-mode` (cstack plugin) and its authoring-a-skill playbook)."
+          },
+          {
+            "name": "tool-orchestration",
+            "description": "Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow; not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`)."
+          }
+        ]
+      }
+    },
+    "cstack-research": {
+      "version": "0.9.0",
+      "components": {
+        "skills": [
+          {
+            "name": "bitsandbytes-quantization",
+            "description": "Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers. Not for CPU-only inference (GGUF) or production serving throughput (GPTQ/AWQ)."
+          },
+          {
+            "name": "literature-review",
+            "description": "Find, read, and synthesize primary research papers for a technical or scientific question, verify every citation, and record each claim with its evaluation conditions. Use for literature reviews, related work, \"what does the research say\", choosing a method from papers, or checking a cited claim."
+          },
+          {
+            "name": "peft-lora-qlora",
+            "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
+          },
+          {
+            "name": "scientific-slides",
+            "description": "Use when building or reviewing research/scientific slide decks (conference talks, seminars, defenses) — minimal text, one idea per slide, visual hierarchy, data/results slides, timing, and visual review. Works with PowerPoint, Google Slides, and Beamer."
+          },
+          {
+            "name": "scientific-visualization",
+            "description": "Creates and audits truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use it for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
+          },
+          {
+            "name": "write-kaggle-benchmarks",
+            "description": "Write, push, run, publish, and manage Kaggle Benchmark tasks using the kaggle CLI and the kaggle-benchmarks Python SDK. Use when the user wants to create or push a benchmark task (optionally with attached Kaggle datasets), run benchmarks against LLM models, check task/run status, stream or fetch execution logs, download results and source notebooks, publish a task to make it public, or troubleshoot benchmark workflows."
           }
         ]
       }

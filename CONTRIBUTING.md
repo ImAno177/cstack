@@ -1,48 +1,53 @@
 # Contributing to cstack
 
-This file is for people changing this repository. The skills in `skills/` are what users load; `AGENTS.md` is the global instruction file users import.
+This file is for people changing this repository. Users install the plugins under `plugins/`; `AGENTS.md` is the cross-project instruction file they can import.
 
 ## Before you change anything
 
-- Read [README.md](README.md) for the layout and [docs/releasing.md](docs/releasing.md) for the release checklist.
+- Read [README.md](README.md) for the layout and [docs/architecture.md](docs/architecture.md) for why it is shaped this way.
 - Check `git status` and keep unrelated changes out of your commits. Stage paths explicitly.
+
+## Add or change a skill
+
+1. Pick the plugin by audience: `cstack` for engineering workflow, `cstack-harness` for building and running agents, `cstack-research` for research and ML. Put the skill at `plugins/<plugin>/skills/<name>/SKILL.md`; the folder name is the skill name.
+2. Decide whether the model should pick the skill on its own. A workflow the user starts on purpose sets `disable-model-invocation: true` and is linked from `default-mode` or another listed skill. Each plugin may list at most `max_listed_skills_per_plugin` skills (`.cstack/skill-policy.json`); when a new skill would exceed it, merge an overlapping skill or make one user-started first.
+3. Write the description in the third person: what the skill does, when to use it, and when to use a named sibling instead. At most 1,024 characters. When it overlaps a listed skill, add both to an `overlap_groups` entry.
+4. Keep the entrypoint under `max_entry_lines` lines. Move detail to `references/` one level deep and deterministic steps to `scripts/`.
+5. Link only to files inside the same plugin. Name a skill from another plugin in text, with its plugin, instead of linking to it.
+6. Run `python scripts/build_manifests.py`, because the Grok index lists every skill description.
+7. Before you claim the skill helps, run it: see [docs/skill-effect-benchmark.md](docs/skill-effect-benchmark.md).
+
+Do not copy another project's published skills into this repository. Link to them from the README instead. A skill adapted from another project keeps its license notice in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) or in the skill folder.
+
+## Add a plugin
+
+Add an entry to `.cstack/catalog.json`, create `plugins/<name>/skills/`, and run `python scripts/build_manifests.py`. `validate_plugin.py` fails when the catalog and the `plugins/` folders disagree.
 
 ## Validate before a pull request
 
 Run the same checks as `.github/workflows/validate-cstack.yml`:
 
 ```sh
-python scripts/validate_plugin.py --root .
+python scripts/build_manifests.py --check
+python scripts/validate_plugin.py
+python scripts/validate_skill_stack.py
 python -m unittest discover -s tests -p 'test_*.py'
-python scripts/validate_skill_stack.py --source-root . --plugin-root . --policy .cstack/skill-policy.json
-python scripts/generate_grok_plugin_index.py --check
-python scripts/sync_upstream_skills.py --check
+python -m py_compile benchmarks/reproduction/run_codex_ab.py benchmarks/reproduction/micrograd/grade.py
 ```
 
-Also run `python -m py_compile` on the benchmark scripts and `python benchmarks/reproduction/run_codex_ab.py --help`, as the workflow does. The Python dependency is `pyyaml`.
+The Python dependency is `pyyaml`; the hook tests need Node.js. Run `claude plugin validate plugins/<plugin>` when Claude Code is installed.
 
-## Upstream-synced skills are not hand-edited
+## Rules the validators enforce
 
-Skills listed in `.cstack/upstreams.json` are copied from their upstream repositories by the sync workflow. Edit them upstream. A local edit is overwritten by the next sync and fails `sync_upstream_skills.py --check`.
-
-## Keep the hosts in sync
-
-- Declare the version in `plugin.json`, `.codex-plugin/plugin.json`, `.grok-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json`. `validate_plugin.py` rejects a mismatch.
-- Regenerate `.grok-plugin/plugin-index.json` with `python scripts/generate_grok_plugin_index.py` after any change to a skill description or to a skill's name.
-- `agents/` holds Claude Code subagents. Grok Build loads them through its Claude Code compatibility; Codex ignores them. The Codex and Grok manifests do not reference `agents/`, and the validators do not scan it.
-- Run `claude plugin validate .` when Claude Code is installed. It checks the Claude manifests and component files, which the Python validators do not.
-- Claude Code reads the version from `.claude-plugin/plugin.json`. Users receive skill changes only after that version changes.
-
-## Skill rules enforced by the validators
-
-- Every `SKILL.md` has `name` and `description` frontmatter. Skill names are lowercase kebab-case and unique.
-- Entrypoints stay within `max_entry_lines` in `.cstack/skill-policy.json`.
+- Skill names are lowercase kebab-case, at most 64 characters, unique across all plugins, and equal to their folder name. Every `SKILL.md` sits at `skills/<name>/SKILL.md`.
+- Descriptions are non-empty and at most 1,024 characters.
+- Each plugin lists no more than the policy's limit of model-invoked skills.
 - Skills in an `overlap_groups` entry name each other in their descriptions.
-- Skill files must not contain the host-specific markers listed in the policy.
-- Internal links must resolve.
-
-Write descriptions that say when to use the skill, and when not to, in concrete terms.
+- Internal links resolve and stay inside their plugin.
+- Skill files do not contain the host-specific markers listed in the policy.
+- Generated manifests match `.cstack/catalog.json`.
+- Every hook command in `hooks.json` points at an existing script, and every agent's preloaded skill exists in its plugin.
 
 ## Changelog
 
-Update [CHANGELOG.md](CHANGELOG.md) for user-visible skill behaviour, manifests, agents, validators, or CI. Describe each change in one line.
+Update [CHANGELOG.md](CHANGELOG.md) for user-visible skill behavior, manifests, agents, hooks, validators, or CI. One line per change.

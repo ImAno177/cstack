@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / 'skills' / 'show-me-your-work' / 'scripts' / 'log.sh'
+SCRIPT = Path(__file__).resolve().parents[1] / 'plugins' / 'cstack' / 'skills' / 'show-me-your-work' / 'scripts' / 'log.sh'
 HEADER = 'ts\tphase\tdecision\twhy\tevidence\tresult'
 
 

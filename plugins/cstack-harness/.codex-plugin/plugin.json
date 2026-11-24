@@ -1,0 +1,19 @@
+{
+  "name": "cstack-harness",
+  "version": "0.9.0",
+  "description": "Building and running agents: harness design, long-run context, completion checks, multi-agent work, tool orchestration, evaluation, and prompt and skill audits.",
+  "author": {
+    "name": "ImAno177",
+    "url": "https://github.com/ImAno177"
+  },
+  "repository": "https://github.com/ImAno177/cstack",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "cstack harness",
+    "shortDescription": "Building and running agents: harness design, long-run context, completion checks, multi-agent work, tool orchestration, evaluation, and prompt and skill audits.",
+    "developerName": "ImAno177",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/ImAno177/cstack"
+  }
+}

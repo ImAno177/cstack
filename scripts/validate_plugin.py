@@ -1,111 +1,119 @@
+"""Validate the marketplace packaging: catalog, generated manifests, skills, agents, and hooks."""
+
 from __future__ import annotations
 
 import argparse
 import json
 import re
-from pathlib import Path
+import sys
 
 import yaml
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from build_manifests import CATALOG, frontmatter, outputs  # noqa: E402
+
+NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
+VERSION_PATTERN = re.compile(r"^\d+\.\d+\.\d+(?:[-+][A-Za-z0-9.-]+)?$")
+MAX_DESCRIPTION = 1024
+HOOK_SCRIPT = re.compile(r"\$\{CLAUDE_PLUGIN_ROOT\}/([^\"\\\s]+)")
 
 
-NAME_PATTERN = re.compile(r'^[a-z0-9][a-z0-9-]{0,63}$')
-VERSION_PATTERN = re.compile(r'^\d+\.\d+\.\d+(?:[-+][A-Za-z0-9.-]+)?$')
-
-
-def validate_skill(path: Path) -> str:
-    text = path.read_text(encoding='utf-8')
-    if not text.startswith('---\n'):
-        raise ValueError(f'missing frontmatter: {path}')
-    end = text.find('\n---', 4)
-    if end < 0:
-        raise ValueError(f'unclosed frontmatter: {path}')
-    frontmatter = yaml.safe_load(text[4:end])
-    if not isinstance(frontmatter, dict):
-        raise ValueError(f'frontmatter is not a mapping: {path}')
-    name = frontmatter.get('name')
-    description = frontmatter.get('description')
+def validate_skill(entry: Path, errors: list[str]) -> str | None:
+    try:
+        meta = frontmatter(entry)
+    except (ValueError, yaml.YAMLError) as error:
+        errors.append(str(error))
+        return None
+    name, description = meta.get("name"), meta.get("description")
     if not isinstance(name, str) or not NAME_PATTERN.fullmatch(name):
-        raise ValueError(f'invalid skill name: {path}')
+        errors.append(f"invalid skill name: {entry}")
+        return None
+    if name != entry.parent.name:
+        errors.append(f"skill name {name} differs from its folder: {entry}")
     if not isinstance(description, str) or not description.strip():
-        raise ValueError(f'invalid skill description: {path}')
+        errors.append(f"missing skill description: {entry}")
+    elif len(description) > MAX_DESCRIPTION:
+        errors.append(f"description over {MAX_DESCRIPTION} characters: {entry}")
     return name
 
 
-def load_json(path: Path) -> object:
-    try:
-        return json.loads(path.read_text(encoding='utf-8'))
-    except json.JSONDecodeError as error:
-        raise ValueError(f'invalid JSON: {path}: {error}') from error
-
-
-def claude_discovered_skill_dirs(root: Path, manifest: object) -> set[Path]:
-    """Mirror Claude Code discovery: skills/<name>/SKILL.md, plus each manifest
-    "skills" directory as either <dir>/SKILL.md or <dir>/<name>/SKILL.md."""
-    if not isinstance(manifest, dict):
-        raise ValueError('.claude-plugin/plugin.json must be an object')
-    extra = manifest.get('skills', [])
-    if isinstance(extra, str):
-        extra = [extra]
-    if not isinstance(extra, list) or not all(isinstance(item, str) and (item == '.' or item.startswith('./')) for item in extra):
-        raise ValueError('.claude-plugin/plugin.json "skills" must be "." or ./-relative paths')
-    found: set[Path] = set()
-    for base in [root / 'skills', *(root / item for item in extra)]:
-        base = base.resolve()
-        if not base.is_dir() or not base.is_relative_to(root):
-            raise ValueError(f'Claude Code skills path missing or outside plugin: {base}')
-        if (base / 'SKILL.md').is_file():
-            found.add(base)
+def validate_plugin_dir(root: Path, plugin: str, errors: list[str], seen: dict[str, str]) -> int:
+    base = root / "plugins" / plugin
+    count = 0
+    for entry in sorted(base.rglob("SKILL.md")):
+        relative = entry.relative_to(base)
+        if len(relative.parts) != 3 or relative.parts[0] != "skills":
+            errors.append(f"SKILL.md must sit at skills/<name>/SKILL.md: plugins/{plugin}/{relative.as_posix()}")
             continue
-        found.update(child.parent for child in base.glob('*/SKILL.md'))
-    return found
+        name = validate_skill(entry, errors)
+        if name is None:
+            continue
+        if name in seen:
+            errors.append(f"duplicate skill name {name} in {plugin} and {seen[name]}")
+        seen[name] = plugin
+        count += 1
+    for agent in sorted((base / "agents").glob("*.md")):
+        try:
+            meta = frontmatter(agent)
+        except ValueError as error:
+            errors.append(str(error))
+            continue
+        if not meta.get("name") or not meta.get("description"):
+            errors.append(f"agent needs name and description: {agent}")
+        for skill in meta.get("skills") or []:
+            if not (base / "skills" / skill / "SKILL.md").is_file():
+                errors.append(f"agent {agent.name} preloads a skill outside its plugin: {skill}")
+    hooks = base / "hooks" / "hooks.json"
+    if hooks.is_file():
+        text = hooks.read_text(encoding="utf-8")
+        json.loads(text)
+        for script in HOOK_SCRIPT.findall(text):
+            if not (base / script).is_file():
+                errors.append(f"hook command points at a missing file: plugins/{plugin}/{script}")
+    return count
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--root', required=True, type=Path)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
     args = parser.parse_args()
     root = args.root.resolve()
-    package = load_json(root / 'plugin.json')
-    if not isinstance(package, dict):
-        raise ValueError('plugin.json must be an object')
-    if not isinstance(package.get('name'), str) or not NAME_PATTERN.fullmatch(package['name']):
-        raise ValueError('plugin.json has an invalid name')
-    version = package.get('version')
-    if not isinstance(version, str) or not VERSION_PATTERN.fullmatch(version):
-        raise ValueError('plugin.json has an invalid semantic version')
-    if package.get('license') != 'MIT' or not (root / 'LICENSE').is_file():
-        raise ValueError('MIT license declaration requires a root LICENSE file')
+    errors: list[str] = []
 
-    for relative in ('.codex-plugin/plugin.json', '.grok-plugin/plugin.json', '.claude-plugin/plugin.json'):
-        manifest = load_json(root / relative)
-        if not isinstance(manifest, dict) or manifest.get('version') != version or manifest.get('name') != package['name']:
-            raise ValueError(f'inconsistent plugin version/name in {relative}')
-    for relative in ('.grok-plugin/marketplace.json', '.agents/plugins/marketplace.json'):
-        manifest = load_json(root / relative)
-        if not isinstance(manifest, dict) or not isinstance(manifest.get('plugins'), list):
-            raise ValueError(f'invalid marketplace: {relative}')
+    catalog = json.loads((root / CATALOG).read_text(encoding="utf-8"))
+    if not VERSION_PATTERN.fullmatch(str(catalog.get("version", ""))):
+        errors.append("catalog version is not semantic")
+    if catalog.get("license") != "MIT" or not (root / "LICENSE").is_file():
+        errors.append("MIT license declaration requires a root LICENSE file")
+    names = [p.get("name") for p in catalog.get("plugins", [])]
+    for name in names:
+        if not isinstance(name, str) or not NAME_PATTERN.fullmatch(name):
+            errors.append(f"invalid plugin name in catalog: {name}")
+    on_disk = sorted(p.name for p in (root / "plugins").iterdir() if p.is_dir())
+    if sorted(names) != on_disk:
+        errors.append(f"catalog plugins {sorted(names)} differ from plugins/ folders {on_disk}")
+    stray = [p.relative_to(root).as_posix() for p in root.glob("*/SKILL.md")] + (
+        ["skills/"] if (root / "skills").exists() else []
+    )
+    if stray:
+        errors.append(f"skills must live inside a plugin: {stray}")
 
-    claude_path = root / '.claude-plugin/marketplace.json'
-    claude = load_json(claude_path)
-    if not isinstance(claude, dict) or not isinstance(claude.get('plugins'), list):
-        raise ValueError('invalid Claude Code marketplace')
-    matches = [entry for entry in claude['plugins'] if isinstance(entry, dict) and entry.get('name') == package['name']]
-    if len(matches) != 1 or matches[0].get('version') != version:
-        raise ValueError('Claude Code marketplace version/name differs from plugin.json')
+    for relative, content in outputs(root).items():
+        path = root / relative
+        if not path.is_file() or path.read_text(encoding="utf-8") != content:
+            errors.append(f"generated file out of date: {relative} (run python scripts/build_manifests.py)")
 
-    skills_root = root / 'skills'
-    claude_skill_dirs = claude_discovered_skill_dirs(root, load_json(root / '.claude-plugin/plugin.json'))
-    seen: set[str] = set()
-    for entry in sorted(skills_root.rglob('SKILL.md')):
-        name = validate_skill(entry)
-        if name in seen:
-            raise ValueError(f'duplicate skill name: {name}')
-        seen.add(name)
-        if entry.parent.resolve() not in claude_skill_dirs:
-            raise ValueError(f'skill not discoverable by Claude Code; list its group in .claude-plugin/plugin.json "skills": {entry.relative_to(root)}')
-    print(f'validated plugin {package["name"]} {version} with {len(seen)} skills')
+    seen: dict[str, str] = {}
+    counts = {name: validate_plugin_dir(root, name, errors, seen) for name in names if name in on_disk}
+
+    if errors:
+        raise SystemExit("\n".join(errors))
+    summary = ", ".join(f"{name} {count}" for name, count in counts.items())
+    print(f"validated cstack {catalog['version']}: {summary} skills")
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     raise SystemExit(main())

@@ -1,3 +1,6 @@
+"""Validate skill content across every plugin: links, host markers, entry size,
+overlap groups, and how many skills each plugin puts in the model's listing."""
+
 from __future__ import annotations
 
 import argparse
@@ -7,19 +10,7 @@ from pathlib import Path
 
 import yaml
 
-
 LINK_PATTERN = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
-NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
-
-
-def skill_dirs(root: Path, excluded: set[str]) -> list[Path]:
-    if not root.is_dir():
-        return []
-    return [
-        path.parent
-        for path in sorted(root.rglob("SKILL.md"))
-        if path.parent.name not in excluded
-    ]
 
 
 def frontmatter(path: Path) -> dict:
@@ -35,24 +26,17 @@ def frontmatter(path: Path) -> dict:
     return value
 
 
-def validate_links(catalog_root: Path, path: Path, errors: list[str]) -> None:
+def validate_links(plugin_root: Path, path: Path, errors: list[str]) -> None:
     text = path.read_text(encoding="utf-8")
     for raw_target in LINK_PATTERN.findall(text):
         target = raw_target.strip().strip("<>").split("#", 1)[0]
         if not target or target.startswith(("http://", "https://", "mailto:", "data:", "/")):
             continue
         resolved = (path.parent / target).resolve()
-        if not resolved.exists() or catalog_root.resolve() not in resolved.parents:
+        if not resolved.exists():
             errors.append(f"broken internal link: {path}: {raw_target}")
-
-
-def link_check_excluded(path: Path, source_root: Path, prefixes: list[str]) -> bool:
-    relative = path.resolve().relative_to(source_root.resolve()).as_posix()
-    return any(
-        relative == prefix.rstrip("/")
-        or relative.startswith(f"{prefix.rstrip('/')}/")
-        for prefix in prefixes
-    )
+        elif plugin_root.resolve() not in resolved.parents:
+            errors.append(f"link leaves its plugin, so it breaks once installed: {path}: {raw_target}")
 
 
 def validate_overlap_groups(groups: list, descriptions: dict[str, str], errors: list[str]) -> None:
@@ -70,100 +54,65 @@ def validate_overlap_groups(groups: list, descriptions: dict[str, str], errors: 
                     errors.append(f"description of {name} does not name overlapping skill {sibling}")
 
 
+def listed(metadata: dict) -> bool:
+    return not metadata.get("disable-model-invocation")
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--source-root", required=True, type=Path)
-    parser.add_argument("--plugin-root", required=True, type=Path)
-    parser.add_argument("--policy", required=True, type=Path)
-    parser.add_argument("--upstreams", type=Path)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
+    parser.add_argument("--policy", type=Path)
     args = parser.parse_args()
-
-    policy = json.loads(args.policy.read_text(encoding="utf-8"))
-    excluded = set(policy.get("exclude", []))
+    root = args.root.resolve()
+    policy = json.loads((args.policy or root / ".cstack" / "skill-policy.json").read_text(encoding="utf-8"))
     host_markers = [marker.casefold() for marker in policy.get("host_markers", [])]
-    link_exclude_prefixes = [
-        prefix.replace("\\", "/")
-        for prefix in policy.get("link_exclude_prefixes", [])
-    ]
     max_entry_lines = int(policy.get("max_entry_lines", 160))
+    max_listed = int(policy.get("max_listed_skills_per_plugin", 30))
     errors: list[str] = []
-    upstreams_path = args.upstreams or (args.source_root / ".cstack" / "upstreams.json")
-    upstreams = {}
-    if upstreams_path.is_file():
-        upstreams = json.loads(upstreams_path.read_text(encoding="utf-8"))
-    managed_entrypoints = {
-        (args.plugin_root / entry["destination"] / "SKILL.md").resolve()
-        for entry in upstreams.get("skills", [])
-        if isinstance(entry, dict) and isinstance(entry.get("destination"), str)
-    }
-
-    plugin_skills = skill_dirs(args.plugin_root / "skills", excluded)
-    catalog: set[str] = set()
     descriptions: dict[str, str] = {}
-    for skill in plugin_skills:
-        entrypoint = skill / "SKILL.md"
-        try:
-            metadata = frontmatter(entrypoint)
-        except ValueError as error:
-            errors.append(str(error))
-            continue
-        name = metadata.get("name")
-        description = metadata.get("description")
-        if not isinstance(name, str) or not NAME_PATTERN.fullmatch(name):
-            errors.append(f"invalid skill name: {entrypoint}")
-        if not isinstance(description, str) or not description.strip():
-            errors.append(f"missing skill description: {entrypoint}")
-        if isinstance(name, str):
-            if name in catalog:
-                errors.append(f"duplicate skill name: {name}")
-            catalog.add(name)
-            if isinstance(description, str):
-                descriptions[name] = description
-        if entrypoint.resolve() not in managed_entrypoints and len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
-            errors.append(f"entrypoint exceeds {max_entry_lines} lines: {entrypoint}")
-        for artifact in skill.rglob("*"):
-            if not artifact.is_file():
-                continue
+    total = 0
+
+    for plugin_root in sorted(p for p in (root / "plugins").iterdir() if p.is_dir()):
+        listed_count = 0
+        for entrypoint in sorted((plugin_root / "skills").glob("*/SKILL.md")):
+            skill = entrypoint.parent
+            total += 1
             try:
-                text = artifact.read_text(encoding="utf-8").casefold()
-            except UnicodeDecodeError:
+                metadata = frontmatter(entrypoint)
+            except (ValueError, yaml.YAMLError) as error:
+                errors.append(str(error))
                 continue
-            for marker in host_markers:
-                if marker in text:
-                    errors.append(f"host-specific instruction in {artifact}: {marker}")
-        for document in skill.rglob("*.md"):
-            if link_check_excluded(document, args.plugin_root, link_exclude_prefixes):
-                continue
-            validate_links(args.plugin_root / "skills", document, errors)
+            name = metadata.get("name")
+            description = metadata.get("description")
+            if isinstance(name, str) and isinstance(description, str):
+                descriptions[name] = description
+            if listed(metadata):
+                listed_count += 1
+            if len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
+                errors.append(f"entrypoint exceeds {max_entry_lines} lines: {entrypoint}")
+            for artifact in skill.rglob("*"):
+                if not artifact.is_file():
+                    continue
+                try:
+                    text = artifact.read_text(encoding="utf-8").casefold()
+                except UnicodeDecodeError:
+                    continue
+                for marker in host_markers:
+                    if marker in text:
+                        errors.append(f"host-specific instruction in {artifact}: {marker}")
+            for document in skill.rglob("*.md"):
+                validate_links(plugin_root, document, errors)
+        if listed_count > max_listed:
+            errors.append(
+                f"{plugin_root.name} lists {listed_count} model-invoked skills; the policy allows {max_listed}. "
+                "Mark user-started workflows disable-model-invocation, merge overlapping skills, or move a group to its own plugin."
+            )
 
     validate_overlap_groups(policy.get("overlap_groups", []), descriptions, errors)
 
-    for excluded_name in excluded:
-        if (args.plugin_root / "skills" / excluded_name).exists():
-            errors.append(f"excluded skill is present in plugin: {excluded_name}")
-
-    standalone_root = args.source_root / "skills"
-    if not standalone_root.is_dir():
-        errors.append(f"canonical source root is missing: {standalone_root}")
-    source_roots = [standalone_root]
-    source_catalog = {skill.name for root in source_roots for skill in skill_dirs(root, excluded)}
-    for name in sorted(catalog - source_catalog):
-        errors.append(f"plugin skill has no source provenance: {name}")
-
-    if upstreams_path.is_file():
-        for entry in upstreams.get("skills", []):
-            destination = entry.get("destination")
-            name = entry.get("name")
-            if not isinstance(destination, str) or not isinstance(name, str):
-                errors.append(f"invalid upstream entry: {entry}")
-                continue
-            target = args.plugin_root / destination
-            if not target.is_dir() or not (target / "SKILL.md").is_file():
-                errors.append(f"upstream skill is missing: {name} -> {destination}")
-
     if errors:
         raise SystemExit("\n".join(errors))
-    print(f"validated skill stack: {len(catalog)} skills")
+    print(f"validated skill stack: {total} skills")
     return 0
 
 

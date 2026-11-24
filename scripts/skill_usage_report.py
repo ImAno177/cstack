@@ -17,7 +17,7 @@ def default_log() -> Path:
 
 def listed_skills(root: Path) -> set[str]:
     names = set()
-    for entry in root.glob("skills/*/SKILL.md"):
+    for entry in root.glob("plugins/*/skills/*/SKILL.md"):
         text = entry.read_text(encoding="utf-8")
         front = text.split("---", 2)[1] if text.startswith("---") else ""
         if not re.search(r"^disable-model-invocation:\s*true\s*$", front, re.M):

@@ -25,9 +25,8 @@ def stage_skills(source: Path, workspace: Path) -> int:
     skills_dir = workspace / ".agents" / "skills"
     skills_dir.mkdir(parents=True, exist_ok=True)
     count = 0
-    for entry in sorted((source / "skills").rglob("SKILL.md")):
+    for entry in sorted(source.glob("plugins/*/skills/*/SKILL.md")):
         original = entry.parent
-        # Each skill is a complete bundle, even when the cstack repo nests it by platform.
         name = original.name
         target = skills_dir / name
         if target.exists():
@@ -190,7 +189,7 @@ async def main_async(args: argparse.Namespace) -> int:
     if not shutil.which(args.codex):
         raise SystemExit(f"Codex CLI not found: {args.codex}; install/authenticate it first")
     cstack = args.cstack.resolve()
-    if not (cstack / "skills" / "default-mode" / "SKILL.md").is_file():
+    if not (cstack / "plugins" / "cstack" / "skills" / "default-mode" / "SKILL.md").is_file():
         raise SystemExit("Pass a checked-out cstack repo using --cstack")
     if not TASK.is_file() or not GRADER.is_file():
         raise SystemExit("Benchmark TASK.md/grade.py are missing")
