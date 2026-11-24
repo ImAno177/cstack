@@ -1,6 +1,6 @@
 ---
 name: why
-description: Investigate why code or a design has its current shape - design rationale, tradeoffs, regressions, postmortems, or data-backed thresholds - by querying every available evidence source (git history and PRs, issue tracker, docs, chat, observability, error tracking, analytics) in parallel and returning a cited read that separates facts from inference. Use for "why does X work this way" or "why did we pick Y". Not for what code does at runtime (use `how`) or for what a change would break (use `blast-radius`).
+description: 'Use whenever the user asks why code, a design, or a number is the way it is: design rationale, tradeoffs, a regression, or a threshold someone chose. Answers from the record, not from reading the code: git history and PRs, issues, docs, and other evidence, cited and with facts kept apart from inference. Not for what code does at runtime (use `how`) or for what a change would break (use `blast-radius`).'
 ---
 
 # Why

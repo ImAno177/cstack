@@ -1,10 +1,7 @@
 ---
 name: md-docs
 class: workflow
-description: >-
-  Manages project documentation: CLAUDE.md, AGENTS.md, README.md, CONTRIBUTING.md, DOCS.md.
-  Use when asked to update, create, or init these context files. Not for general
-  markdown editing or sentence-level prose style; use `technical-writing`.
+description: 'Use whenever the user wants a repository''s context or contributor files created or brought up to date: CLAUDE.md, AGENTS.md, README.md, CONTRIBUTING.md, or DOCS.md, including after a layout change or when a repo has none. Not for general markdown editing or sentence-level prose style; use `technical-writing`.'
 ---
 
 # Markdown Documentation

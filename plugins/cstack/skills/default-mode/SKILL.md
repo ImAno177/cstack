@@ -1,6 +1,6 @@
 ---
 name: default-mode
-description: Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default.
+description: 'Use first for multi-step engineering that no narrower skill owns: a feature built end to end, a migration, or a plan carried through with checks. Picks a task playbook, sets a verifiable outcome, and checks the result. Also the way in to the workflows the user starts by name: competing attempts judged against a rubric (`arena`), parallel workers over many slices (`swarm`), adversarial stress tests (`interrogate`), and an auditable playbook for a large migration (`figure-it-out`). Do not load on top of a more specific skill.'
 ---
 
 # Default mode

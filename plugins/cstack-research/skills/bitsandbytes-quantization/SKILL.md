@@ -1,8 +1,6 @@
 ---
 name: bitsandbytes-quantization
-description: Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory
-  is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit
-  optimizers. Works with HuggingFace Transformers. Not for CPU-only inference (GGUF) or production serving throughput (GPTQ/AWQ).
+description: 'Use whenever a model does not fit in GPU memory or needs cheaper inference: quantize LLMs to 8-bit or 4-bit (INT8, NF4, FP4) with bitsandbytes and Hugging Face Transformers, check the accuracy cost, or set up QLoRA training and 8-bit optimizers. Use it even if the user only says the model is too big for their GPU. Not for CPU-only inference (GGUF) or production serving throughput (GPTQ/AWQ).'
 license: MIT
 ---
 

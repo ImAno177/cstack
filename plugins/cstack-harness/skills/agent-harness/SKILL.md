@@ -1,6 +1,6 @@
 ---
 name: agent-harness
-description: "Design, debug, or evaluate the runtime around a model-driven agent: loop, model adapter, tools, context, permissions, orchestration, extensibility, and verification. Use for Codex, Claude Code, DSH, Pi, Prime Agent, local-model integrations, or coding-agent harnesses; not for ordinary application code."
+description: 'Use whenever the work is the runtime around a model-driven agent rather than application code: the agent loop, model adapter, tool registry, context handling, permissions, orchestration, or verification. Covers building a custom loop around a local model, debugging tool calls that loop or vanish between turns, and changes to Codex, Claude Code, Pi, or other coding-agent harnesses. Not for ordinary application code.'
 ---
 
 # Agent harness

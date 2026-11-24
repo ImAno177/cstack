@@ -1,6 +1,6 @@
 ---
 name: principle-prove-it-works
-description: Use before declaring a change done, when the work is a feature, fix, or interface that must be checked against its real artifact. Run the feature, read the actual value, or inspect the diff, not a self-report or 'it compiles'. Probe any input-accepting surface with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported).
+description: Use before saying any feature, fix, migration, or interface change is done, and whenever the user asks for proof it works. Run the feature the way a user would, read the actual value or output, and show it; a self-report or 'it compiles' is not proof. Probe input-accepting surfaces with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported).
 ---
 
 # Prove It Works

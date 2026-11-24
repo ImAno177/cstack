@@ -27,11 +27,11 @@
           },
           {
             "name": "change-review",
-            "description": "Review a diff, commit, branch, or pull request before merge. Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
+            "description": "Use whenever the user asks to review a change before it lands: a PR, a branch, a commit, or uncommitted work. Checks whether the logic is right, safe, holds under real load, is tested where risky, is fast enough, and needs every line, reading the connected code and not only the diff. Use for 'review this', 'review my PR', 'look over this before I merge', or 'is this over-engineered'. Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
           },
           {
             "name": "conventional-commit",
-            "description": "Create conventional commit messages following best conventions. Use when committing code changes, writing commit messages, or formatting git history. Follows conventional commits specification. Not for branch, push, or PR policy; follow the repository's AGENTS.md for those."
+            "description": "Use whenever you write a commit message, including when the user asks you to commit or describe staged changes. Writes it in the Conventional Commits format (type(scope): subject, body, breaking-change footer) and picks the type from what the diff does. Not for branch, push, or PR policy; follow the repository's AGENTS.md for those."
           },
           {
             "name": "correct",
@@ -51,7 +51,7 @@
           },
           {
             "name": "default-mode",
-            "description": "Coordinate non-trivial engineering work that has no clearly matching narrow skill. Select a small task playbook, set a verifiable outcome, and inspect the resulting artifact. Do not load on top of a more specific skill by default."
+            "description": "Use first for multi-step engineering that no narrower skill owns: a feature built end to end, a migration, or a plan carried through with checks. Picks a task playbook, sets a verifiable outcome, and checks the result. Also the way in to the workflows the user starts by name: competing attempts judged against a rubric (`arena`), parallel workers over many slices (`swarm`), adversarial stress tests (`interrogate`), and an auditable playbook for a large migration (`figure-it-out`). Do not load on top of a more specific skill."
           },
           {
             "name": "figure-it-out",
@@ -115,7 +115,7 @@
           },
           {
             "name": "md-docs",
-            "description": "Manages project documentation: CLAUDE.md, AGENTS.md, README.md, CONTRIBUTING.md, DOCS.md. Use when asked to update, create, or init these context files. Not for general markdown editing or sentence-level prose style; use `technical-writing`."
+            "description": "Use whenever the user wants a repository's context or contributor files created or brought up to date: CLAUDE.md, AGENTS.md, README.md, CONTRIBUTING.md, or DOCS.md, including after a layout change or when a repo has none. Not for general markdown editing or sentence-level prose style; use `technical-writing`."
           },
           {
             "name": "pin-rule",
@@ -191,7 +191,7 @@
           },
           {
             "name": "principle-prove-it-works",
-            "description": "Use before declaring a change done, when the work is a feature, fix, or interface that must be checked against its real artifact. Run the feature, read the actual value, or inspect the diff, not a self-report or 'it compiles'. Probe any input-accepting surface with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported)."
+            "description": "Use before saying any feature, fix, migration, or interface change is done, and whenever the user asks for proof it works. Run the feature the way a user would, read the actual value or output, and show it; a self-report or 'it compiles' is not proof. Probe input-accepting surfaces with hostile inputs (empty, oversized, non-ASCII, concurrent, unsupported)."
           },
           {
             "name": "principle-redesign-from-first-principles",
@@ -259,7 +259,7 @@
           },
           {
             "name": "tdd",
-            "description": "Fix a bug test-first: write a focused regression test, watch it fail for the right reason, then fix. Use when the user explicitly asks for TDD, a failing test, or a regression test, or when the bug has an obvious cheap local test target. Not for unclear, expensive, integration-heavy, or unrequested test paths; run the closest executable check instead."
+            "description": "Use whenever you fix a bug that a test can reproduce cheaply, and whenever the user asks for TDD, a failing test, or a regression test first. Write a focused test, watch it fail for the right reason, then fix the code. Not for unclear, expensive, integration-heavy, or unrequested test paths; run the closest executable check instead."
           },
           {
             "name": "teach",
@@ -275,7 +275,7 @@
           },
           {
             "name": "unslop",
-            "description": "Edits text to remove AI-writing tells such as filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression, keeping meaning and tone. Use when rewriting prose that reads AI-generated, before delivering docs, commit messages, PR bodies, or replies, or when asked to unslop or humanize text. Not for restructuring documents; use `technical-writing` or `md-docs`."
+            "description": "Use whenever prose reads AI-generated or the user asks to humanize, de-slop, or make text sound like a person wrote it: removes filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression while keeping meaning and tone. Also use before delivering docs, commit messages, PR bodies, or announcements. Not for restructuring documents; use `technical-writing` or `md-docs`."
           },
           {
             "name": "webapp-testing",
@@ -283,7 +283,7 @@
           },
           {
             "name": "why",
-            "description": "Investigate why code or a design has its current shape - design rationale, tradeoffs, regressions, postmortems, or data-backed thresholds - by querying every available evidence source (git history and PRs, issue tracker, docs, chat, observability, error tracking, analytics) in parallel and returning a cited read that separates facts from inference. Use for \"why does X work this way\" or \"why did we pick Y\". Not for what code does at runtime (use `how`) or for what a change would break (use `blast-radius`)."
+            "description": "Use whenever the user asks why code, a design, or a number is the way it is: design rationale, tradeoffs, a regression, or a threshold someone chose. Answers from the record, not from reading the code: git history and PRs, issues, docs, and other evidence, cited and with facts kept apart from inference. Not for what code does at runtime (use `how`) or for what a change would break (use `blast-radius`)."
           }
         ],
         "hooks": [
@@ -332,7 +332,7 @@
         "skills": [
           {
             "name": "agent-completion",
-            "description": "Establish whether an agent task actually completed after tool calls or side effects by separating attempted, executed, verified, partial, blocked, and failed states. Use when changing files, running commands, or handing off work; not for abstract explanations. For test-driven changes use `tdd` (cstack plugin); for diff review use `change-review` (cstack plugin)."
+            "description": "Use whenever an agent says it finished, deployed, fixed, or ran something and you need to know what really happened. Sorts the work into attempted, executed, verified, partial, blocked, and failed from the tool calls and side effects, before a handoff or a done report. Use it even if the user only asks whether the agent's claim is true. For test-driven changes use `tdd` (cstack plugin); for diff review use `change-review` (cstack plugin)."
           },
           {
             "name": "agent-context",
@@ -340,11 +340,11 @@
           },
           {
             "name": "agent-evaluation",
-            "description": "Evaluate an agent workflow across representative repeated tasks using outcome, trajectory, reliability, cost, latency, and cleanup evidence. Use when comparing models, skills, hooks, prompts, or agent configurations; not for a single code test. To compare independent alternatives use `arena` (cstack plugin); to promote learnings across episodes use `continual-learning`."
+            "description": "Use whenever someone wants to know if a model, prompt, skill, hook, or agent configuration is actually better: designs and runs repeated representative tasks and compares outcome, trajectory, reliability, cost, latency, and cleanup. Use it even when the user just asks 'is the new config better?'. Not for a single code test. To compare independent alternatives use `arena` (cstack plugin); to promote learnings across episodes use `continual-learning`."
           },
           {
             "name": "agent-harness",
-            "description": "Design, debug, or evaluate the runtime around a model-driven agent: loop, model adapter, tools, context, permissions, orchestration, extensibility, and verification. Use for Codex, Claude Code, DSH, Pi, Prime Agent, local-model integrations, or coding-agent harnesses; not for ordinary application code."
+            "description": "Use whenever the work is the runtime around a model-driven agent rather than application code: the agent loop, model adapter, tool registry, context handling, permissions, orchestration, or verification. Covers building a custom loop around a local model, debugging tool calls that loop or vanish between turns, and changes to Codex, Claude Code, Pi, or other coding-agent harnesses. Not for ordinary application code."
           },
           {
             "name": "continual-learning",
@@ -356,7 +356,7 @@
           },
           {
             "name": "multi-agent-workflow",
-            "description": "Coordinate two or more agents for bounded parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification. Use when delegating independent work. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena` (cstack plugin)), or coverage slices over a large surface (use `swarm` (cstack plugin))."
+            "description": "Use whenever work is split across two or more agents or subagents: parallel research, review, or implementation with isolated ownership, explicit handoffs, and independent verification of what each returns. Use it even if the user only says 'have a few agents look at this'. Not for short, sequential, or shared-state tasks (stay direct), same-task alternatives (use `arena` (cstack plugin)), or coverage slices over a large surface (use `swarm` (cstack plugin))."
           },
           {
             "name": "prompt-audit",
@@ -364,7 +364,7 @@
           },
           {
             "name": "tool-orchestration",
-            "description": "Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow; not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`)."
+            "description": "Use whenever many tool or API calls make a task slow or fragile: decides which calls run directly, in parallel, programmatically, asynchronously, or as an offline batch, from their dependencies, side effects, and latency. Not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`)."
           }
         ]
       }
@@ -375,7 +375,7 @@
         "skills": [
           {
             "name": "bitsandbytes-quantization",
-            "description": "Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers. Not for CPU-only inference (GGUF) or production serving throughput (GPTQ/AWQ)."
+            "description": "Use whenever a model does not fit in GPU memory or needs cheaper inference: quantize LLMs to 8-bit or 4-bit (INT8, NF4, FP4) with bitsandbytes and Hugging Face Transformers, check the accuracy cost, or set up QLoRA training and 8-bit optimizers. Use it even if the user only says the model is too big for their GPU. Not for CPU-only inference (GGUF) or production serving throughput (GPTQ/AWQ)."
           },
           {
             "name": "literature-review",
@@ -383,7 +383,7 @@
           },
           {
             "name": "peft-lora-qlora",
-            "description": "Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem."
+            "description": "Use whenever someone fine-tunes a large language model on limited GPU memory: LoRA, QLoRA, and other PEFT methods for 7B to 70B models, including target modules, rank and alpha, training config, adapter merging, and multi-adapter serving with Hugging Face PEFT. Use it even if the user only names a model and a GPU size."
           },
           {
             "name": "scientific-slides",
@@ -391,7 +391,7 @@
           },
           {
             "name": "scientific-visualization",
-            "description": "Creates and audits truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use it for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
+            "description": "Use whenever you make or fix figures for a paper, thesis, or report in Matplotlib, Seaborn, or Plotly: multi-panel layouts, error bars and uncertainty, missing data, colorblind-safe color and contrast, misleading axes, and journal export. Use it even if the user only says the plots look amateur."
           },
           {
             "name": "write-kaggle-benchmarks",

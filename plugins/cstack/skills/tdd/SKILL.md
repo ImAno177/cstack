@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: "Fix a bug test-first: write a focused regression test, watch it fail for the right reason, then fix. Use when the user explicitly asks for TDD, a failing test, or a regression test, or when the bug has an obvious cheap local test target. Not for unclear, expensive, integration-heavy, or unrequested test paths; run the closest executable check instead."
+description: Use whenever you fix a bug that a test can reproduce cheaply, and whenever the user asks for TDD, a failing test, or a regression test first. Write a focused test, watch it fail for the right reason, then fix the code. Not for unclear, expensive, integration-heavy, or unrequested test paths; run the closest executable check instead.
 ---
 
 # TDD Bug Fix

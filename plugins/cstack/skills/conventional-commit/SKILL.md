@@ -1,7 +1,6 @@
 ---
 name: conventional-commit
-description: Create conventional commit messages following best conventions. Use when committing code changes, writing commit
-  messages, or formatting git history. Follows conventional commits specification. Not for branch, push, or PR policy; follow the repository's AGENTS.md for those.
+description: 'Use whenever you write a commit message, including when the user asks you to commit or describe staged changes. Writes it in the Conventional Commits format (type(scope): subject, body, breaking-change footer) and picks the type from what the diff does. Not for branch, push, or PR policy; follow the repository''s AGENTS.md for those.'
 license: MIT
 metadata:
   version: 1.0.1

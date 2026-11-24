@@ -1,6 +1,6 @@
 ---
 name: change-review
-description: "Review a diff, commit, branch, or pull request before merge. Quality review of one change (uncommitted work, a commit, a branch or a PR): is the logic right, is it safe, does it hold under real load, is risky code tested, is it fast enough, and is every line needed. Reads the connected code, not only the diff. Each finding is explained in plain English. Use for \"review this\", \"code review\", \"review the last commit\", \"review my PR\", or \"is this over-engineered\". Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`."
+description: 'Use whenever the user asks to review a change before it lands: a PR, a branch, a commit, or uncommitted work. Checks whether the logic is right, safe, holds under real load, is tested where risky, is fast enough, and needs every line, reading the connected code and not only the diff. Use for ''review this'', ''review my PR'', ''look over this before I merge'', or ''is this over-engineered''. Not for a whole repository (use `repo-audit`), a threat model or secrets sweep (use `security-audit`), or running code to prove what a small change breaks elsewhere (use `blast-radius`); for adversarial, run-proven findings use `interrogate`.'
 ---
 
 Review a change like the senior developer who will be paged when it breaks.

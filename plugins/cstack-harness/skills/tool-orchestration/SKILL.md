@@ -1,6 +1,6 @@
 ---
 name: tool-orchestration
-description: Choose direct, parallel, programmatic, async, or offline batch tool execution from dependencies, side effects, and latency. Use when optimizing tool calls or designing an agent workflow; not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`).
+description: 'Use whenever many tool or API calls make a task slow or fragile: decides which calls run directly, in parallel, programmatically, asynchronously, or as an offline batch, from their dependencies, side effects, and latency. Not for building the runtime loop (`agent-harness`) or for fanning out whole agents (`multi-agent-workflow`).'
 ---
 
 # Tool orchestration

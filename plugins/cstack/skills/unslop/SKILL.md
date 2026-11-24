@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: Edits text to remove AI-writing tells such as filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression, keeping meaning and tone. Use when rewriting prose that reads AI-generated, before delivering docs, commit messages, PR bodies, or replies, or when asked to unslop or humanize text. Not for restructuring documents; use `technical-writing` or `md-docs`.
+description: 'Use whenever prose reads AI-generated or the user asks to humanize, de-slop, or make text sound like a person wrote it: removes filler, inflated vocabulary, em dashes, vague attributions, mannered metaphor, and over-compression while keeping meaning and tone. Also use before delivering docs, commit messages, PR bodies, or announcements. Not for restructuring documents; use `technical-writing` or `md-docs`.'
 ---
 
 # Unslop
