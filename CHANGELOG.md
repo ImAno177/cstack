@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.8.2
+
+- Add `reframe` from pstack 0.15.48: a user-invoked skill (`/reframe`) that names the expert terms for what the user is building, borrows terms from neighboring fields, and rewrites the description. Record the 0.15.46 to 0.15.48 upstream review in `docs/pstack-audit-2026-11-21.md`.
+
 ## 0.8.1
 
 - Review pstack 0.15.46 end to end: 58 skills, 22 playbooks, its agents, PR watcher, statechart scripts, and Benny automations. Document the reuse and exclusions in `docs/pstack-audit-2026-11-21.md`.

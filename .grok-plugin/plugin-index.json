@@ -2,7 +2,7 @@
   "version": 1,
   "plugins": {
     "cstack": {
-      "version": "0.8.1",
+      "version": "0.8.2",
       "components": {
         "skills": [
           {
@@ -308,6 +308,10 @@
           {
             "name": "reflect",
             "description": "Mine a completed or failed agent episode for durable learnings with three parallel reviewers (judgment, tooling, divergent) and a synthesizer, then route each accepted learning to a concrete edit on an existing skill, with rejected and backlog items listed separately. Use when the user says reflect, or after a long task whose recipe should be captured. Not for measuring or promoting learnings across many episodes; use `continual-learning`."
+          },
+          {
+            "name": "reframe",
+            "description": "Teach the expert words for what the user is building, borrow words from neighboring fields that solved the same problem, then rewrite their description with them. Use for /reframe, when the user cannot name what they want. Not for deepening an already clear prompt; that is sharpen."
           },
           {
             "name": "repo-audit",

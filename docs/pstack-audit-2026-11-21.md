@@ -92,3 +92,15 @@ Three cstack names omit words from their pstack names (`principle-exhaust-the-de
 5. A paused task should have a readable checkpoint and no accidental merge, deletion, or claimed background worker.
 
 The 37-case pre-change routing suite is an evaluation dataset, not measured proof. New routing cases cover these boundaries; repeat host-native trials before attributing quality gains to this port.
+
+## Update: pstack 0.15.48
+
+Reviewed on 2026-11-24 against cursor/plugins commit 005d8f6e8ec057b738adcd08a08b30db0478402d (2026-11-23). Since aaeb0ea, pstack changed six files under `pstack/`.
+
+| Upstream change | cstack outcome |
+| --- | --- |
+| New `/reframe` skill (#1324, #1326) | Added as `reframe`, user-invoked like `sharpen`, with the description saying when to use `sharpen` instead. |
+| `poteto-help` and guide rows for `/reframe` | Not copied: cstack has no router skill. |
+| Version bump to 0.15.48 | Not applicable. |
+
+The earlier statechart fix for native Windows (#1292, pstack 0.15.46) replaces `/bin/sh` with Node.js `kill.ts` and `janitor.ts` and splits TLC output on `\r?\n`. cstack's statechart scripts have diverged and carry no tests, and a line-ending fix alone does not make Windows work while the scripts still spawn `/bin/sh`. It remains a candidate for a dedicated PR with its own tests.
