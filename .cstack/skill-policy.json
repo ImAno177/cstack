@@ -35,5 +35,8 @@
       "webapp-testing"
     ]
   ],
-  "max_listed_skills_per_plugin": 30
+  "max_listed_skills_per_plugin": 30,
+  "routing_eval_exempt_prefixes": [
+    "if-u-are-"
+  ]
 }

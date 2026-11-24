@@ -104,7 +104,7 @@ python scripts/validate_skill_stack.py # links, entry size, overlap groups, list
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-CI runs the same commands. [CONTRIBUTING.md](CONTRIBUTING.md) has the rules for adding a skill or a plugin, [docs/releasing.md](docs/releasing.md) the release steps, and [docs/routing-benchmark.md](docs/routing-benchmark.md) and [docs/skill-effect-benchmark.md](docs/skill-effect-benchmark.md) how to measure a change.
+CI runs the same commands. [CONTRIBUTING.md](CONTRIBUTING.md) has the rules for adding a skill or a plugin, [docs/releasing.md](docs/releasing.md) the release steps, and [docs/routing-evals.md](docs/routing-evals.md) and [docs/skill-effect-benchmark.md](docs/skill-effect-benchmark.md) how to measure a change.
 
 ## License
 

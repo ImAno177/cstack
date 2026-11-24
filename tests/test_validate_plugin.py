@@ -99,6 +99,19 @@ class MarketplaceTests(unittest.TestCase):
         result = run("validate_skill_stack.py", self.root, "--policy", str(policy))
         self.assertIn("link leaves its plugin", result.stderr)
 
+    def test_listed_skill_needs_train_and_test_routing_evals(self):
+        policy = self.root / "policy.json"
+        policy.write_text(json.dumps({"max_listed_skills_per_plugin": 5}), encoding="utf-8")
+        case = self.root / "evals" / "routing" / "alpha-1"
+        (case / "graders").mkdir(parents=True)
+        (case / "prompt.md").write_text("---\ntags: [routing, train]\n---\n\nDo alpha things.\n", encoding="utf-8")
+        (case / "graders" / "routes.md").write_text(
+            "---\ntype: tool_used\ntool: Skill\ninput_match: '\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?alpha\"'\n---\n", encoding="utf-8"
+        )
+        errors = run("validate_skill_stack.py", self.root, "--policy", str(policy)).stderr
+        self.assertIn("listed skill alpha has no routing eval tagged test", errors)
+        self.assertIn("listed skill beta has no routing eval tagged test, train", errors)
+
 
 if __name__ == "__main__":
     unittest.main()

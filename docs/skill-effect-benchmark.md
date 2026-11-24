@@ -1,6 +1,6 @@
 # Skill effect benchmark
 
-The routing benchmark (`docs/routing-benchmark.md`) checks which skill a description selects. This protocol checks whether a skill or rule change makes an agent produce better work. Use it before keeping a new skill, a large rewrite, or a deletion.
+The routing evals (`docs/routing-evals.md`) check which skill a description selects. This protocol checks whether a skill or rule change makes an agent produce better work. Use it before keeping a new skill, a large rewrite, or a deletion.
 
 ## Why paired, repeated runs
 

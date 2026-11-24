@@ -58,6 +58,26 @@ def listed(metadata: dict) -> bool:
     return not metadata.get("disable-model-invocation")
 
 
+ROUTE_TARGET = re.compile(r"\?([a-z0-9][a-z0-9-]*)\"'\s*$", re.M)
+
+
+def routing_coverage(evals: Path) -> dict[str, set[str]]:
+    """Map each skill a routing case expects to the tags of the cases that expect it."""
+    coverage: dict[str, set[str]] = {}
+    for grader in sorted(evals.glob("*/graders/routes.md")):
+        text = grader.read_text(encoding="utf-8")
+        if "max: 0" in text:
+            continue
+        match = ROUTE_TARGET.search(text)
+        if not match:
+            continue
+        prompt = (grader.parent.parent / "prompt.md").read_text(encoding="utf-8")
+        tags = re.search(r"^tags: \[(.*)\]$", prompt, re.M)
+        names = {t.strip() for t in tags.group(1).split(",")} if tags else set()
+        coverage.setdefault(match.group(1), set()).update(names)
+    return coverage
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parent.parent)
@@ -71,6 +91,9 @@ def main() -> int:
     errors: list[str] = []
     descriptions: dict[str, str] = {}
     total = 0
+    evals = root / "evals" / "routing"
+    coverage = routing_coverage(evals) if evals.is_dir() else None
+    exempt = tuple(policy.get("routing_eval_exempt_prefixes", []))
 
     for plugin_root in sorted(p for p in (root / "plugins").iterdir() if p.is_dir()):
         listed_count = 0
@@ -88,6 +111,13 @@ def main() -> int:
                 descriptions[name] = description
             if listed(metadata):
                 listed_count += 1
+                if coverage is not None and isinstance(name, str) and not name.startswith(exempt):
+                    missing = {"train", "test"} - coverage.get(name, set())
+                    if missing:
+                        errors.append(
+                            f"listed skill {name} has no routing eval tagged {', '.join(sorted(missing))} in evals/routing; "
+                            "add a realistic prompt that should trigger it"
+                        )
             if len(entrypoint.read_text(encoding="utf-8").splitlines()) > max_entry_lines:
                 errors.append(f"entrypoint exceeds {max_entry_lines} lines: {entrypoint}")
             for artifact in skill.rglob("*"):

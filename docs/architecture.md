@@ -52,7 +52,7 @@ Each `SKILL.md` follows the Agent Skills format and Anthropic's authoring guidan
 
 ### Proof comes from runs, not from scans
 
-Static checks catch authoring mistakes but do not predict whether a skill helps. In ACES, neither structural scores nor LLM-judge scores had a detectable correlation with live skill lift (Spearman ρ = −0.02 and −0.03, both indistinguishable from zero; [arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). The validators here are a floor. Claims that a change improves agents need the paired runs in [skill-effect-benchmark.md](skill-effect-benchmark.md) and the routing runs in [routing-benchmark.md](routing-benchmark.md).
+Static checks catch authoring mistakes but do not predict whether a skill helps. In ACES, neither structural scores nor LLM-judge scores had a detectable correlation with live skill lift (Spearman ρ = −0.02 and −0.03, both indistinguishable from zero; [arXiv 2608.20614](https://arxiv.org/abs/2608.20614)). The validators here are a floor. Claims that a change improves agents need the paired runs in [skill-effect-benchmark.md](skill-effect-benchmark.md) and the routing evals in [routing-evals.md](routing-evals.md).
 
 ## What was adopted from pstack
 
