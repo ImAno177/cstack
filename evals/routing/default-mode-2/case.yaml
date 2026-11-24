@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: default-mode-2
+context:
+  scaffold_script: scaffold.sh
